@@ -1,0 +1,34 @@
+.com{
+    background-color:white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    box-shadow: 2px;
+}
+.ti{
+    margin: 10px; 
+    font-size: 25px;
+    font-family: Markazi Text;
+    display: flex;
+}
+
+.tit{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    font-size: 25px;
+    font-family: Markazi Text;
+    justify-content: center;
+    align-items: center;
+}
+.cas{
+    margin: 6px;
+}
+.time{
+    display: flex;
+    flex-direction: row;
+}
+.day{
+    display: flex;
+    flex-direction: row;
+}

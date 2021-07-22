@@ -1,0 +1,19 @@
+.back1{
+    background-image: url("./backlog.jpg");
+    height: 100%;
+    width: 100%;
+    /* background-color: chartreuse; */
+}
+.ent{
+    /* background-image: url("./back.jpg");  */
+    background-color: #efefef;
+    display:flex;
+    flex-direction: column;
+    padding:30px;
+    margin: 30px;
+    border-radius: 20px;
+    
+}
+.back2{
+    background-color: #efefef;
+}

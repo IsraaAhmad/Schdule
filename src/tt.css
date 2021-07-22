@@ -1,0 +1,20 @@
+.editable-row .ant-form-item-explain {
+    position: absolute;
+    top: 100%;
+    font-size: 12px;
+  }
+  table{
+    font-family: Markazi Text;
+    display: flex;
+    align-content: flex-end;
+    text-align: center;
+    ruby-align: center;
+    
+  }
+  .mat-row:nth-child(even){
+    background-color: red;
+}
+        
+.mat-row:nth-child(odd){
+    background-color: black;
+}
