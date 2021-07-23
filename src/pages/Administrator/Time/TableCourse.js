@@ -48,8 +48,13 @@ export default function App() {
      <div className={classes.title}>
          <div>تفعيل/تعطيل</div>
          <div>المجموعة</div>
+
+
          <div>مدة المحاضرة</div>
          <div> فراغ الجامعة</div>
+
+
+         
          <div>الدوام الى الساعة </div>
          <div> الدوام من الساعة</div>
          <div>اليوم</div>
