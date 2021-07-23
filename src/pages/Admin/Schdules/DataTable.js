@@ -72,16 +72,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:'white',
     width:'100%',
     display:'flex',
+     margin:7,
     align:'left',
     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         border: "2px solid #045F5F",
 
       },
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        border: "2px solid #045F5F"
+        border: "2px solid #D4AC0D"
       },
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        border: "2px solid red",
+        border: "2px solid #D4AC0D",
     // borderRadius: 4,
     // border: "2px solid #045F5F",
       }
@@ -107,8 +108,8 @@ const useStyles = makeStyles((theme) => ({
   },
   cont:{
     
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   
@@ -225,12 +226,12 @@ export default function CSSGrid() {
 
 
         <Grid item xs={2}>
-          <div className={classes.papertext}>اسم الجدول</div>
+          <div className={classes.papertext}>اسم الجدول </div>
           </Grid>
           <Grid item xs={12}>
           <div className={classes.papertext}></div>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={7}>
           <div className={classes.papertext}></div>
           </Grid>
 
@@ -241,6 +242,8 @@ export default function CSSGrid() {
           value={time}
           onChange={handleChangeTime}
           input={<BootstrapInput />}
+          style={{width:160}}
+          width='150px'
         >
           <option aria-label="None" value="" />
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>2018/2019</option>
@@ -256,8 +259,8 @@ export default function CSSGrid() {
             </Grid>
 
 
-        <Grid item xs={2}>
-          <div className={classes.papertext}>تاريح الجدول</div>
+        <Grid item xs={3}>
+          <span className={classes.papertext}> السنة الدراسية للجدول</span>
           </Grid>
           <Grid item xs={12}>
           <div className={classes.papertext}></div>

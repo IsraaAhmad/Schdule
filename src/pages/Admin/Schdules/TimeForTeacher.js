@@ -8,8 +8,14 @@ import TextField from '@material-ui/core/TextField';
         title={<span  style={{fontFamily: 'Markazi Text',
         fontSize:'25px',}}>"مراجعة على مواعيد المدرسين"</span>}
         columns={[
-            {title: ' الايام',field: 'days', },
-            { title: 'وقت الانتهاء', field: 'end',render:(rowData) => 
+            {title: ' الايام',field: 'days',cellStyle: {
+              //  fontFamily: 'Markazi Text',
+               fontSize:'25px',
+                    }, },
+            { title: 'وقت الانتهاء', field: 'end',cellStyle: {
+              //  fontFamily: 'Markazi Text',
+               fontSize:'25px',
+                    },render:(rowData) => 
      
             <TextField
            id="time2"

@@ -13,21 +13,37 @@ const useStyles = makeStyles({
     pos:{
         position:'absolute',
         right: 800,
-        top:200
+        top:200,
+        
     },
     ent:{
         display:'flex',
         flexDirection:'column',
-        border: '2px solid #008089',
+        border: '2px solid white',
         padding:10,
         borderRadius:20,
+        boxShadow: "5px 5px 5px white"
 
         
     },
-    textField:{
-        margin:20,
-        backgroundColor:'white',
+    textField: {
+      textAlign:'right',
+      backgroundColor:'white',
+      margin:20,
+      "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+          border: "2px solid black",
+  
+        },
+        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+          border: "2px solid #7F7F83"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          border: "3px solid #045F5F",
+      // borderRadius: 4,
+      // border: "2px solid #045F5F",
+        }
     },
+    
     text:{
         display:'flex',
         justifyContent:'center',
@@ -68,7 +84,7 @@ const handelOnChange = (event)=>{
   return (
     <div className={classes.pos}>
         <div className={classes.text}>تسجيل الدخول</div>
-        <div className="ent" style={{border: '2px solid #008089',}}>
+        <div className="ent" >
 
         <TextField 
          inputProps={{min: 0, style: { textAlign: 'right' ,

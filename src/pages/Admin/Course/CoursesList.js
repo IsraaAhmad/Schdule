@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   table:{
-width:600
+width:600,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -51,7 +51,8 @@ width:600
     display:'flex',
     alignItems:'end',
     justifyContent:'right',
-    width:500
+    width:500,
+    
     
   },
   hed:{
@@ -62,12 +63,12 @@ width:600
   },
   tit:{
     width:'100%',
-    backgroundColor:'black',
+    backgroundColor:'#37474f',
     color:'white',
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
-    height:50,
+    height:65,
     fontFamily:'Markazi Text',
     fontSize:'35px'
 
@@ -89,7 +90,12 @@ width:600
   cor:{
     fontFamily:'Markazi Text',
     fontSize:'20px'
-  }
+  },
+  t3:{
+    display:'flex',
+    justifyContent:'flex-end',
+  },
+ 
 }));
 
 export default function SimpleAccordion() {
@@ -102,9 +108,12 @@ export default function SimpleAccordion() {
 
   return (
     <div className={classes.root} dir="rtl">
-        <Button variant="contained" onClick={HandelAddCourse} style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='small'>
+      <div className={classes.t3}>
+
+        <Button variant="contained" onClick={HandelAddCourse}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
            اضافة مساق جديد 
       </Button>
+      </div>
       <div className={classes.tit}>الخطة الدراسية</div>
       <Accordion>
         <AccordionSummary
@@ -113,18 +122,30 @@ export default function SimpleAccordion() {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            <div className={classes.hed} style={{fontSize:'30px'}}>
+            <div className={classes.hed} style={{fontSize:'28px'}}>
              مواد سنة اولى
               </div>
               </Typography>
         </AccordionSummary>
         <AccordionDetails>
+        {/* #045F5F */}
           <Typography>
-          <Accordion>
-        <AccordionSummary
+          <Accordion style={{
+               borderBottom: '2px solid #37474f',
+               borderLeft: '2px solid #37474f',
+               borderTop: '1px solid #37474f',
+               borderRight: '1px solid #37474f',
+               borderTopLeftRadius:10,
+               borderTopRightRadius:10,
+              marginRight:20,
+               
+            }}>
+        <AccordionSummary 
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pan6el1a-header"
+          
+          
         >
           <Typography className={classes.heading1}  style={{fontSize:'25px'}}> فصل اول</Typography>
         </AccordionSummary>
@@ -134,7 +155,7 @@ export default function SimpleAccordion() {
             <div>
             <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead style={{backgroundColor:'#4f5467' }}>
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
           <TableRow>
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
@@ -169,7 +190,15 @@ export default function SimpleAccordion() {
       </Accordion>
 
 
-      <Accordion>
+      <Accordion style={{
+        borderBottom: '2px solid #37474f',
+        borderLeft: '2px solid #37474f',
+        borderTop: '1px solid #37474f',
+        borderRight: '1px solid #37474f',
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+        marginRight:20,
+    }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -182,7 +211,7 @@ export default function SimpleAccordion() {
           <div>
             <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead style={{backgroundColor:'#4f5467' }}>
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
           <TableRow>
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
@@ -227,7 +256,7 @@ export default function SimpleAccordion() {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            <div className={classes.hed} style={{fontSize:'30px'}}>
+            <div className={classes.hed} style={{fontSize:'28px'}}>
              مواد سنة ثانية
               </div>
               </Typography>
@@ -340,7 +369,7 @@ export default function SimpleAccordion() {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            <div className={classes.hed} style={{fontSize:'30px'}}>
+            <div className={classes.hed} style={{fontSize:'28px'}}>
              مواد سنة ثالثة
               </div>
               </Typography>
@@ -453,7 +482,7 @@ export default function SimpleAccordion() {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            <div className={classes.hed} style={{fontSize:'30px'}}>
+            <div className={classes.hed} style={{fontSize:'28px'}}>
              مواد سنة رابعة
               </div>
               </Typography>
@@ -504,7 +533,7 @@ export default function SimpleAccordion() {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            <div className={classes.hed} style={{fontSize:'30px'}}>
+            <div className={classes.hed} style={{fontSize:'28px'}}>
              مواد سنة خامسة
               </div>
               </Typography>

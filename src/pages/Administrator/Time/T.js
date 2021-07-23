@@ -212,6 +212,8 @@ export default function App(Props) {
       step: 300, // 5 min
     }}
   />
+  </div>
+  <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
     <TextField
     
     id="time2"

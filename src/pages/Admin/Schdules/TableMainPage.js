@@ -96,6 +96,7 @@ function TableR() {
         }}
         data={data}
         actions={[
+
           {
             icon: 'edit',
           tooltip: ' تعديل الجدول',
@@ -126,12 +127,16 @@ function TableR() {
           exportDelimiter:"doc",
           actionsColumnIndex:0,
           addRowPosition:'first',
+          
           headerStyle:{
+            hover: {
+              color: 'green',
+           },
             backgroundColor:'#37474f',
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
-            
+           
             
             
 

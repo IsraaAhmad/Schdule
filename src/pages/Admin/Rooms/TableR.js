@@ -84,7 +84,7 @@ function TableR() {
     
   ]
   useEffect(()=>{
-     axios.get("http://37.218.217.196:3002/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
+     axios.get("https://virtual-grad.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
     // axios.get("https://jsonplaceholder.typicode.com/todos/1")
         .then(res => {
             console.log(res)})
@@ -130,6 +130,7 @@ function TableR() {
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            paddingRight:0
             
             
 

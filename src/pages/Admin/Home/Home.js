@@ -12,7 +12,7 @@ import "../back.css"
 
 const useStyles = makeStyles({
   tot:{
-    marginRight:110,
+    marginRight:65,
     marginTop:150,
     display:'flex',
     flexDirection:'row',

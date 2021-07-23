@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"center",
     width:'100%',
     height:'100%',
+    color:'black'
 
   },
   toText1 :{
@@ -108,11 +109,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   drawer: {
-    width: drawerWidth,
+    // width: 400,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: 300,
   },
   drawerHeader: {
     display: 'flex',
@@ -132,7 +133,6 @@ const useStyles = makeStyles((theme) => ({
   active:{
     padding:'0px',
     margin:'0px',
-    color:'black',
     display:"flex",
     justifyContent:"flex-end",
     flexDirection:"row",
@@ -140,6 +140,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"center",
     width:'100%',
     height:'100%',
+    color:'white'
   },
   grow: {
     flexGrow: 1,
@@ -234,27 +235,27 @@ export default function PersistentDrawerRight() {
   const menuItems = [
     {
       text:'الرئيسية',
-      icon: <AppstoreFilled style={{ fontSize: '20px', color: 'white' ,marginLeft:'7px' }}/>,
+      icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
       path:'/AdminHome',
     },
     {
       text:'المساقات',
-      icon: <AppstoreFilled style={{ fontSize: '20px', color: 'white' ,marginLeft:'7px' }}/>,
+      icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
       path:'/Course',
     },
     {
       text:'الجدول الدراسي',
-      icon: <AppstoreFilled style={{ fontSize: '20px', color: 'white' ,marginLeft:'7px' }}/>,
+      icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
       path:'/Schdule',
     },
     {
       text:'المدرسين',
-      icon: <AppstoreFilled style={{ fontSize: '20px', color: 'white' ,marginLeft:'7px' }}/>,
+      icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
       path:'/Teacher',
     },
     {
       text:'القاعات',
-      icon: <AppstoreFilled style={{ fontSize: '20px', color: 'white' ,marginLeft:'7px' }}/>,
+      icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
       path:'/Rooms',
     },
     
@@ -388,19 +389,20 @@ export default function PersistentDrawerRight() {
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        style={{marginTop:'0px'}}
+        style={{marginTop:'0px',width:150}}
+    
         open={open}
         classes={{
           paper: classes.drawerPaper,
         }}
         >
-        <div style={{backgroundColor: 'black', color: 'white',height:'100%',padding:'0px'}}>
+        <div style={{backgroundColor: '#efefef ', color: 'white',height:'100%',padding:'0px'}}>
 
         <div className={classes.drawerHeader} className={classes.heedername} style={{backgroundColor: 'white', color: 'black',padding:'0px',margin:'0px'}}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-          <div style={{fontFamily:'Markazi Text',fontSize:'30px'}}>رئيس القسم</div>
+          <div style={{fontFamily:'Markazi Text',fontSize:'28px'}}>رئيس القسم-سامر العرندي</div>
         </div>
         <Divider />
        
@@ -411,9 +413,9 @@ export default function PersistentDrawerRight() {
             
             onClick={() => {
               history.push(item.path);
-              setOpen(false)
+              
             }}
-            style={location.pathname == item.path?{backgroundColor: 'white',width:'100%',height:'100%',marginBottom:'1px'}:{backgroundColor: '#37474f',width:'100%',height:'100%',marginBottom:'1px'}}
+            style={location.pathname == item.path?{backgroundColor: '#045F5F',width:'100%',height:'100%',marginBottom:'1px',color:'#045F5F'}:{backgroundColor: '#efefef',width:'100%',height:'100%',marginBottom:'1px'}}
             className={classes.toText}
             >
               <div  className={location.pathname == item.path?classes.active:classes.toText}>
@@ -424,7 +426,7 @@ export default function PersistentDrawerRight() {
                 </div>
                 </ListItemText>  
                 </div>
-              <ListItemIcon>
+              <ListItemIcon  style={location.pathname === item.path?{color: 'white'}:{color: 'black'}}>
               {item.icon}
               </ListItemIcon>
               </div>

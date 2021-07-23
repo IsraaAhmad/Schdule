@@ -12,7 +12,8 @@ import DrawerAdmin from "../DrawerAdmin.js"
 
 const useStyles = makeStyles({
   mar:{
-      margin:100,
+      marginTop:120,
+      marginRight:150,
       width:1000
   }
   

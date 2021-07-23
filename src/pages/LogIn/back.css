@@ -7,12 +7,14 @@
 
 .ent{
     /* background-image: url("./back.jpg");  */
-    background-color: #efefef;
+    background-color: white;
     display:flex;
     flex-direction: column;
     padding:30px;
     margin: 30px;
     border-radius: 20px;
+    box-shadow:3px 3px 3px 3px #9E9E9E ;
+    
     
 }
 .back2{

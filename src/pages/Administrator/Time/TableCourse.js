@@ -50,7 +50,8 @@ export default function App() {
          <div>المجموعة</div>
          <div>مدة المحاضرة</div>
          <div> فراغ الجامعة</div>
-         <div>أوقات الدوام</div>
+         <div>الدوام الى الساعة </div>
+         <div> الدوام من الساعة</div>
          <div>اليوم</div>
      </div>
      <div><T backColor="#E5E8E8" day ="السبت"/></div>

@@ -18,7 +18,8 @@ import TableSS1 from "./TableSS1";
 import DataTable from "./DataTable"
 import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
-import DrawerAdmin from "../DrawerAdmin.js"
+import DrawerAdmin from "../DrawerAdmin.js";
+import "./b1.css"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   indicator:{
-    backgroundColor:'red'
+    backgroundColor:'#D4AC0D'
   },
   bot:{
     display:'flex',
@@ -84,8 +85,8 @@ export default function ScrollableTabsButtonPrevent() {
   return (
     <div>
 <DrawerAdmin/>
-    <div className={classes.root}>
-      <AppBar position="static">
+    <div className={classes.root} className="b1">
+      <AppBar position="static" >
         <Tabs
           value={value}
           onChange={handleChange}

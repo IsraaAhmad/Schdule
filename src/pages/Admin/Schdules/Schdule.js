@@ -60,12 +60,12 @@ export default function App() {
 <DrawerAdmin/>
     <div className = {classes.mar}>
         <div>
-        <Button  variant="contained" className = {classes.create} onClick={HandelOnClick}>
+        <Button  variant="contained" className = {classes.create} onClick={HandelOnClick} size='large'>
           إنشاء جدول
         </Button>
 
         </div>
-        <div className={classes.tit}>الجداول الدراسية</div>
+        {/* <div className={classes.tit}>الجداول الدراسية</div> */}
         <TableMainPage/>
     </div>
     </div>
