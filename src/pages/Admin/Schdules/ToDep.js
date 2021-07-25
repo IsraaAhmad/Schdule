@@ -7,10 +7,10 @@ import TextField from '@material-ui/core/TextField';
 
 
 const empList = [
-  { course: 10, type: 10, department:10},
-  { course: 20, type: 20, department:20},
-  { course: 30, type: 30, department:30},
-  { course: 10, type: 40, department:10},
+  { course: 10, teacher: 10, department:10},
+  { course: 20, teacher: 20, department:20},
+  { course: 30, teacher: 30, department:30},
+  { course: 10, teacher: 40, department:10},
 ]
 
 function TableR() {
@@ -116,9 +116,9 @@ function TableR() {
     },
    
 
-    { title: "السنة الدراسية",
-    field: "type" ,
-    lookup: {10:'خامسة فصل ثاني',20:'خامسة فصل اول',30:'رابعة فصل ثاني',40:'رابعة فصل اول',50:'ثالثة فصل ثاني',60:'ثالثة فصل اول',70:'ثانية فصل ثاني',80:'ثانية فصل اول',90:'اولى فصل ثاني',100:'اولى فصل اول' },
+    { title: "المدرس",
+    field: "teacher" ,
+    lookup: {10:'عماد النتشة',20:'منار قمحية',30:'منى الضميدي',40:'انس طعمة' },
  
       cellStyle: {
         //  fontFamily: 'Markazi Text',

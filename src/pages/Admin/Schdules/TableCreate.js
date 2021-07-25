@@ -19,6 +19,7 @@ import DataTable from "./DataTable"
 import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
 import DrawerAdmin from "../DrawerAdmin.js";
+import ToDep from "./ToDep.js"
 import "./b1.css"
 
 function TabPanel(props) {
@@ -88,6 +89,7 @@ export default function ScrollableTabsButtonPrevent() {
     <div className={classes.root} className="b1">
       <AppBar position="static" >
         <Tabs
+      
           value={value}
           onChange={handleChange}
           className= {classes.tab}
@@ -98,23 +100,28 @@ export default function ScrollableTabsButtonPrevent() {
           }}
           >
           <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين" {...a11yProps(0)} />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" {...a11yProps(1)} />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" {...a11yProps(2)} />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="بيانات الجدول" {...a11yProps(3)} />
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" {...a11yProps(1)} />
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" {...a11yProps(2)} />
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" {...a11yProps(3)} />
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="بيانات الجدول" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <TimeForTeacher/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <TableSS1/>
+     <ToDep/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS/>
+      <TableSS1/>
       </TabPanel>
       <TabPanel value={value} index={3}>
+      <TableSS/>
+      </TabPanel>
+      <TabPanel value={value} index={4}>
      <DataTable/>
       </TabPanel>
+      
       <div className={classes.bot}>
 
       <Button variant="contained"  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>

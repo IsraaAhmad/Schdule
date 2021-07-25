@@ -50,13 +50,19 @@ export default function App() {
          <div>المجموعة</div>
 
 
-         <div>مدة المحاضرة</div>
-         <div> فراغ الجامعة</div>
+         <div> مدة المحاضرة</div>
+         <div style={{display:'flex',flexDirection:'row'}}>
+         بدء فراغ الجامعة 
+         - انتهاء فراغ الجامعة
 
-
+          
+         </div>
+         <div>تفعيل</div>
+         <div style={{marginRight:35}}>
+         الدوام من الساعة - 
+           الدوام الى الساعة 
          
-         <div>الدوام الى الساعة </div>
-         <div> الدوام من الساعة</div>
+          </div>
          <div>اليوم</div>
      </div>
      <div><T backColor="#E5E8E8" day ="السبت"/></div>

@@ -16,6 +16,12 @@ import InputBase from "@material-ui/core/InputBase";
 import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useHistory ,useLocation } from 'react-router-dom';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -120,14 +126,125 @@ export default function CSSGrid() {
   const [year, setYear] = React.useState('');
   const [room, setRoom] = React.useState('');
   const [time, setTime] = React.useState('');
+  const [value, setValue] = React.useState();
+  const  history  = useHistory();
   const [openYear, setOpenYear] = React.useState(false);
   const [openRoom, setOpenRoom] = React.useState(false);
   const [openTime, setOpenTime] = React.useState(false);
   
+  
   const handleChangeTime = (event) => {
     setTime(event.target.value);
   };
+  const handleChangeRadio = (event) => {
+    setValue(event.target.value);
+  };
 
+  const handelSave = () =>{
+    let number = document.getElementById('number').value
+    let name = document.getElementById('name').value
+    let hour = document.getElementById('hour').value
+    let type1 = value
+    let type = "اجباري"
+    let year = 0 
+    let semester = 0
+    console.log("type1="+type1)
+    
+
+   
+    
+    let time=document.getElementById('time').value
+    switch(time){
+      case "10":
+        year = 1
+        semester =1
+        break;
+      
+      case "20":
+          year = 1
+          semester =2
+          break;
+
+      case "30":
+        year = 2
+        semester =1
+        break;
+
+      case "40":
+          year = 2
+          semester =2
+          break;
+
+      case "50":
+            year = 3
+            semester =1
+            break;
+      
+      case "60":
+        year = 3
+        semester =2
+        break;
+
+      case "70":
+          year = 4
+          semester =1
+          break;
+      
+      case "80":
+            year = 4
+            semester =2
+            break;
+
+      case "90":
+        year = 5
+        semester =1
+        break;
+
+
+      case "100":
+          year = 5
+          semester =2
+          break;
+
+      case "110":
+            year = -1
+            semester =-1
+            type = "اختياري"
+            break;
+        
+      default:
+        break;
+    }
+
+    if (type1 == "s2"){
+      type = "اختياري"
+      year = -1
+      semester = -1
+    }
+    console.log(time)
+    console.log("year" + year)
+    console.log("semester" + semester)
+    console.log("type" + type)
+    let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="+
+    number+"&type="+type+"&year="+year+"&sem="+semester+"&name="+name+"&numberOfHour="+hour
+    // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+  axios.get(url)
+    
+        .then(res => {
+          console.log(res)
+            console.log(res.data.response);
+          },
+ 
+            )
+
+
+
+  }
+
+  const handelCancel = () => {
+    history.goBack()
+
+  }
   const handleCloseTime = () => {
     setOpenTime(false);
   };
@@ -216,7 +333,7 @@ export default function CSSGrid() {
         
     fontFamily:'Markazi Text',
     fontSize:'20px',}}}
-          id="outlined-basic"
+          id="name"
           label=" "
           variant="outlined"
           required='true'
@@ -236,16 +353,16 @@ export default function CSSGrid() {
           <Grid item xs={1}>
             <FormControl className={classes.choose}>
         <NativeSelect
-          id="demo-customized-select-native"
+          id="hour"
           value={time}
           onChange={handleChangeTime}
           input={<BootstrapInput />}
         >
           <option aria-label="None" value="" />
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>1</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>2</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={30}>3</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={40}>4</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={0}>0</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={1}>1</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={2}>2</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={3}>3</option>
         </NativeSelect>
       </FormControl>
             </Grid>
@@ -264,7 +381,7 @@ export default function CSSGrid() {
           inputProps={{min: 0, style: { textAlign: 'right',
           fontFamily:'Markazi Text',
           fontSize:'20px', }}}
-          id="outlined-basic"
+          id="number"
           label=" "
           variant="outlined"
           required='true'
@@ -276,34 +393,36 @@ export default function CSSGrid() {
         <Grid item xs={2}>
           <div className={classes.papertext}>رقم المساق</div>
           </Grid>
+          <Grid item xs={1}>
+          </Grid>
+
+          <Grid item xs={4}>
+            <div style={{display:'flex',flexDirection:'row'}}>
 
 
-          <Grid item xs={3}>
-            <FormControl className={classes.margin}>
-        <NativeSelect
-          id="demo-customized-select-native"
-          value={room}
-          onChange={handleChangeRoom}
-          
-          input={<BootstrapInput />}
-        >
-          <option aria-label="None" value="" />
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>قاعة</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={30}>مختبر شبكات</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={40}>مختبر متحكمات دقيقة</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={50}>مختبر تصميم دوائر رقمية 1</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={60}>مختبر تصميم الكمبيوتر</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={70}>مختبر معالجات دقيقة</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={80}>مختبر تصميم دوائر رقمية 2</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={90}>مختبر صغير1</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={100}>مختبر صغير2</option>
-          
-        </NativeSelect>
-      </FormControl>
-            </Grid>
+          <FormControl component="fieldset">
+      
+      <RadioGroup row aria-label="position" name="position" id="type" value={value} onChange={handleChangeRadio}>
+       
+        <FormControlLabel
+          value="s1"
+          control={<Radio style={{color:"#045F5F"}} />}
+          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اجباري</span>}
+          labelPlacement="start"
+          />
 
-            <Grid item xs={1}>
-          <div className={classes.papertext}>نوع القاعة</div>
+<FormControlLabel
+          value="s2"
+          control={<Radio style={{color:"#045F5F"}} />}
+          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اختياري</span>}
+          labelPlacement="start"
+          />
+      
+      </RadioGroup>
+    </FormControl>
+            
+          <div className={classes.papertext}>:نوع المساق</div>
+          </div>
           </Grid>
 
          
@@ -311,10 +430,10 @@ export default function CSSGrid() {
           <div className={classes.papertext}> </div>
           </Grid>
       
-            <Grid item xs={3}>
+            <Grid item xs={2}>
             <FormControl className={classes.choose}>
         <NativeSelect
-          id="demo-customized-select-native"
+          id="time"
           value={year}
           onChange={handleChangeYear}
           input={<BootstrapInput />}
@@ -330,6 +449,8 @@ export default function CSSGrid() {
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={80}>سنة رابعة فصل ثاني</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={90}>سنة خامسة فصل اول</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={100}>سنة خامسة فصل ثاني</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={110}>غير ذلك</option>
+
           
         </NativeSelect>
       </FormControl>
@@ -350,7 +471,7 @@ export default function CSSGrid() {
           </Grid>
 
           <Grid item xs={1}>
-          <Button variant="contained" style={{backgroundColor:'#37474f'}}>
+          <Button variant="contained" style={{backgroundColor:'#37474f'}} onClick={handelCancel}>
           <CancelIcon style={{color:'white'}}/>
               <div style = {{textAlign: 'right',
           fontFamily:'Markazi Text',
@@ -364,7 +485,7 @@ export default function CSSGrid() {
           </Grid>
 
           <Grid item xs={1}>
-          <Button variant="contained" style={{backgroundColor:'#045F5F'}}>
+          <Button variant="contained" style={{backgroundColor:'#045F5F'}} onClick={handelSave}>
           <SaveAltIcon style={{color:'white'}}/>
               <div style = {{textAlign: 'right',
           fontFamily:'Markazi Text',

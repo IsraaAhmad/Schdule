@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TableR from "./TableR.js"
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,7 +22,7 @@ export default function App() {
 
 
   return (
-    <div style={{height:1000}} className="back">
+    <div style={{height:10000}} className="back">
 <DrawerAdmin/>
     <div className = {classes.mar}>
         <TableR/>

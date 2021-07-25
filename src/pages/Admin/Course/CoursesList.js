@@ -15,17 +15,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const empList = [
-  { number: "117859", name: "ديجتال", year:"1",sem:"1"},
-  { number: "5955695", name: "1ديجتال", year:"1",sem:"2"},
-  { number: "5595646", name: "2ديجتال", year:"1",sem:"2"},
-  { number: "57424", name: "3ديجتال", year:"1",sem:"1"},
-  { number: "1178459", name: "4ديجتال", year:"2",sem:"1"},
-  { number: "59554695", name: "5ديجتال", year:"2",sem:"2"},
-  { number: "55954646", name: "6ديجتال", year:"2",sem:"2"},
-  { number: "457424", name: "7ديجتال", year:"2",sem:"1"},
-]
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -99,12 +91,33 @@ width:600,
 }));
 
 export default function SimpleAccordion() {
-  const [data, setData] = useState(empList)
+  const [data, setData] = useState([])
   const classes = useStyles();
   const  history  = useHistory();
   const HandelAddCourse = ()=>{
          history.push('/AddCourse')
   }
+
+
+  useEffect(()=>{
+    let list1 =[];
+     axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+    
+        .then(res => {
+          console.log(res)
+            console.log(res.data.response);
+  
+            setData(res.data.response)
+          },
+
+          
+            
+            
+            )
+          
+  },[]) 
+  
 
   return (
     <div className={classes.root} dir="rtl">
@@ -165,7 +178,7 @@ export default function SimpleAccordion() {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "1") && (course.sem === "1")).map(cor => (
+            {data.filter(course => (course.year === "1") && (course.semester === "1")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -221,7 +234,7 @@ export default function SimpleAccordion() {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "1") && (course.sem === "2")).map(cor => (
+            {data.filter(course => (course.year === "1") && (course.semester === "2")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -246,6 +259,9 @@ export default function SimpleAccordion() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+
+
+
 
 
 
@@ -262,21 +278,34 @@ export default function SimpleAccordion() {
               </Typography>
         </AccordionSummary>
         <AccordionDetails>
+        {/* #045F5F */}
           <Typography>
-          <Accordion>
-        <AccordionSummary
+          <Accordion style={{
+               borderBottom: '2px solid #37474f',
+               borderLeft: '2px solid #37474f',
+               borderTop: '1px solid #37474f',
+               borderRight: '1px solid #37474f',
+               borderTopLeftRadius:10,
+               borderTopRightRadius:10,
+              marginRight:20,
+               
+            }}>
+        <AccordionSummary 
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pan6el1a-header"
+          
+          
         >
-          <Typography className={classes.heading}  style={{fontSize:'25px'}}> فصل اول</Typography>
+          <Typography className={classes.heading1}  style={{fontSize:'25px'}}> فصل اول</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
+        <AccordionDetails >
+          <Typography >
           <div>
+            <div>
             <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead style={{backgroundColor:'#4f5467' }}>
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
           <TableRow>
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
@@ -286,7 +315,7 @@ export default function SimpleAccordion() {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "2") && (course.sem === "1")).map(cor => (
+            {data.filter(course => (course.year === "2") && (course.semester === "1")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -305,25 +334,34 @@ export default function SimpleAccordion() {
       </Table>
     </TableContainer>
             </div>
+               </div>
           </Typography>
         </AccordionDetails>
       </Accordion>
 
 
-      <Accordion>
+      <Accordion style={{
+        borderBottom: '2px solid #37474f',
+        borderLeft: '2px solid #37474f',
+        borderTop: '1px solid #37474f',
+        borderRight: '1px solid #37474f',
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+        marginRight:20,
+    }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pane2l1a-header"
         >
-          <Typography className={classes.heading} style={{fontSize:'25px'}}> فصل ثاني</Typography>
+          <Typography className={classes.heading2} style={{fontSize:'25px'}}> فصل ثاني</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
           <div>
             <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead style={{backgroundColor:'#4f5467' }}>
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
           <TableRow>
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
@@ -333,7 +371,7 @@ export default function SimpleAccordion() {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "2") && (course.sem === "2")).map(cor => (
+            {data.filter(course => (course.year === "2") && (course.semester === "2")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -358,6 +396,11 @@ export default function SimpleAccordion() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+
+      
+        
+      
+     
 
 
 
@@ -375,21 +418,34 @@ export default function SimpleAccordion() {
               </Typography>
         </AccordionSummary>
         <AccordionDetails>
+        {/* #045F5F */}
           <Typography>
-          <Accordion>
-        <AccordionSummary
+          <Accordion style={{
+               borderBottom: '2px solid #37474f',
+               borderLeft: '2px solid #37474f',
+               borderTop: '1px solid #37474f',
+               borderRight: '1px solid #37474f',
+               borderTopLeftRadius:10,
+               borderTopRightRadius:10,
+              marginRight:20,
+               
+            }}>
+        <AccordionSummary 
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pan6el1a-header"
+          
+          
         >
-          <Typography className={classes.heading}  style={{fontSize:'25px'}}> فصل اول</Typography>
+          <Typography className={classes.heading1}  style={{fontSize:'25px'}}> فصل اول</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
+        <AccordionDetails >
+          <Typography >
           <div>
+            <div>
             <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead style={{backgroundColor:'#4f5467' }}>
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
           <TableRow>
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
@@ -399,7 +455,7 @@ export default function SimpleAccordion() {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "3") && (course.sem === "1")).map(cor => (
+            {data.filter(course => (course.year === "3") && (course.semester === "1")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -418,25 +474,34 @@ export default function SimpleAccordion() {
       </Table>
     </TableContainer>
             </div>
+               </div>
           </Typography>
         </AccordionDetails>
       </Accordion>
 
 
-      <Accordion>
+      <Accordion style={{
+        borderBottom: '2px solid #37474f',
+        borderLeft: '2px solid #37474f',
+        borderTop: '1px solid #37474f',
+        borderRight: '1px solid #37474f',
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+        marginRight:20,
+    }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pane2l1a-header"
         >
-          <Typography className={classes.heading} style={{fontSize:'25px'}}> فصل ثاني</Typography>
+          <Typography className={classes.heading2} style={{fontSize:'25px'}}> فصل ثاني</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
           <div>
             <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead style={{backgroundColor:'#4f5467' }}>
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
           <TableRow>
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
@@ -446,7 +511,7 @@ export default function SimpleAccordion() {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "3") && (course.sem === "2")).map(cor => (
+            {data.filter(course => (course.year === "3") && (course.semester === "2")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -471,6 +536,8 @@ export default function SimpleAccordion() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+
+
 
 
 
@@ -488,42 +555,128 @@ export default function SimpleAccordion() {
               </Typography>
         </AccordionSummary>
         <AccordionDetails>
+        {/* #045F5F */}
           <Typography>
-          <Accordion>
-        <AccordionSummary
+          <Accordion style={{
+               borderBottom: '2px solid #37474f',
+               borderLeft: '2px solid #37474f',
+               borderTop: '1px solid #37474f',
+               borderRight: '1px solid #37474f',
+               borderTopLeftRadius:10,
+               borderTopRightRadius:10,
+              marginRight:20,
+               
+            }}>
+        <AccordionSummary 
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pan6el1a-header"
+          
+          
         >
-          <Typography className={classes.heading}  style={{fontSize:'25px'}}> فصل اول</Typography>
+          <Typography className={classes.heading1}  style={{fontSize:'25px'}}> فصل اول</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
+        <AccordionDetails >
+          <Typography >
+          <div>
+            <div>
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
+          <TableRow>
+            
+            <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+         
+        
+            {data.filter(course => (course.year === "4") && (course.semester === "1")).map(cor => (
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
+
+                     <TableRow className={classes.even}>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.name}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.number}
+                     </TableCell>
+                    </TableRow>
+               ))}
+               </TableBody>
+      </Table>
+    </TableContainer>
+            </div>
+               </div>
           </Typography>
         </AccordionDetails>
       </Accordion>
 
 
-      <Accordion>
+      <Accordion style={{
+        borderBottom: '2px solid #37474f',
+        borderLeft: '2px solid #37474f',
+        borderTop: '1px solid #37474f',
+        borderRight: '1px solid #37474f',
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+        marginRight:20,
+    }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pane2l1a-header"
         >
-          <Typography className={classes.heading} style={{fontSize:'25px'}}> فصل ثاني</Typography>
+          <Typography className={classes.heading2} style={{fontSize:'25px'}}> فصل ثاني</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
+          <div>
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
+          <TableRow>
+            
+            <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+         
+        
+            {data.filter(course => (course.year === "4") && (course.semester === "2")).map(cor => (
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
+
+                     <TableRow className={classes.even}>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.name}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.number}
+                     </TableCell>
+                    </TableRow>
+               ))}
+               </TableBody>
+      </Table>
+    </TableContainer>
+            </div>
           </Typography>
         </AccordionDetails>
       </Accordion>
           </Typography>
         </AccordionDetails>
       </Accordion>
+
+
+
+
 
 
       <Accordion>
@@ -539,47 +692,215 @@ export default function SimpleAccordion() {
               </Typography>
         </AccordionSummary>
         <AccordionDetails>
+        {/* #045F5F */}
           <Typography>
-          <Accordion>
-        <AccordionSummary
+          <Accordion style={{
+               borderBottom: '2px solid #37474f',
+               borderLeft: '2px solid #37474f',
+               borderTop: '1px solid #37474f',
+               borderRight: '1px solid #37474f',
+               borderTopLeftRadius:10,
+               borderTopRightRadius:10,
+              marginRight:20,
+               
+            }}>
+        <AccordionSummary 
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="pan6el1a-header"
+          
+          
         >
-          <Typography className={classes.heading}  style={{fontSize:'25px'}}> فصل اول</Typography>
+          <Typography className={classes.heading1}  style={{fontSize:'25px'}}> فصل اول</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
+        <AccordionDetails >
+          <Typography >
+          <div>
+            <div>
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
+          <TableRow>
+            
+            <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+         
+        
+            {data.filter(course => (course.year === "5") && (course.semester === "1")).map(cor => (
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
+
+                     <TableRow className={classes.even}>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.name}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.number}
+                     </TableCell>
+                    </TableRow>
+               ))}
+               </TableBody>
+      </Table>
+    </TableContainer>
+            </div>
+               </div>
           </Typography>
         </AccordionDetails>
       </Accordion>
+
+
+      <Accordion style={{
+        borderBottom: '2px solid #37474f',
+        borderLeft: '2px solid #37474f',
+        borderTop: '1px solid #37474f',
+        borderRight: '1px solid #37474f',
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+        marginRight:20,
+    }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="pane2l1a-header"
+        >
+          <Typography className={classes.heading2} style={{fontSize:'25px'}}> فصل ثاني</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+          <div>
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
+          <TableRow>
+            
+            <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+         
+        
+            {data.filter(course => (course.year === "5") && (course.semester === "2")).map(cor => (
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
+
+                     <TableRow className={classes.even}>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.name}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.number}
+                     </TableCell>
+                    </TableRow>
+               ))}
+               </TableBody>
+      </Table>
+    </TableContainer>
+            </div>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+
+
+
 
 
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
-          id="pane2l1a-header"
+          id="panel1a-header"
         >
-          <Typography className={classes.heading} style={{fontSize:'25px'}}> فصل ثاني</Typography>
+          <Typography className={classes.heading}>
+            <div className={classes.hed} style={{fontSize:'28px'}}>
+             المواد الاختيارية  
+              </div>
+              </Typography>
         </AccordionSummary>
         <AccordionDetails>
+        {/* #045F5F */}
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
+          <Accordion style={{
+               borderBottom: '2px solid #37474f',
+               borderLeft: '2px solid #37474f',
+               borderTop: '1px solid #37474f',
+               borderRight: '1px solid #37474f',
+               borderTopLeftRadius:10,
+               borderTopRightRadius:10,
+              marginRight:20,
+               
+            }}>
+        <AccordionSummary 
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="pan6el1a-header"
+          
+          
+        >
+          <Typography className={classes.heading1}  style={{fontSize:'25px'}}> جميع الفصول </Typography>
+        </AccordionSummary>
+        <AccordionDetails >
+          <Typography >
+          <div>
+            <div>
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
+          <TableRow>
+            
+            <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+         
+        
+            {data.filter(course => (course.year === "-1") && (course.semester === "-1")).map(cor => (
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
+
+                     <TableRow className={classes.even}>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.name}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.number}
+                     </TableCell>
+                    </TableRow>
+               ))}
+               </TableBody>
+      </Table>
+    </TableContainer>
+            </div>
+               </div>
           </Typography>
         </AccordionDetails>
       </Accordion>
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-
 
 
       
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+
+
+
+
+
     </div>
   );
 }

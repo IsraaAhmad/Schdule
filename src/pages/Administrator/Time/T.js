@@ -60,7 +60,8 @@ const BootstrapInput = withStyles((theme) => ({
 const useStyles = makeStyles({
   time:{
       display:'flex',
-      flexDirection:'column'
+      flexDirection:'column',
+      margin:5
   },
   tot:{
     display:'flex',
@@ -72,7 +73,7 @@ const useStyles = makeStyles({
     fontFamily:'Markazi Text',
     fontSize:'20px',
     color:'white',
-    height:150,
+    height:80,
   },
   break:{
       display:'flex',
@@ -94,6 +95,7 @@ export default function App(Props) {
   const classes = useStyles();
   const [group, setGroup] = React.useState('');
   const [sum, setSum] = React.useState('');
+  const [disabledTotal,setDisabledTotal] = React.useState(true);
   const [disabled1,setDisabled1] = React.useState(true);
   const [color, setColor] = React.useState({
     checkedB: true,
@@ -116,6 +118,7 @@ export default function App(Props) {
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+    setDisabledTotal(event.target.checked)
   };
   return (
     <div className={classes.tot} style={{backgroundColor:backColor}}>
@@ -131,6 +134,7 @@ export default function App(Props) {
         <div className={classes.margin}> 
         <FormControl className={classes.choose}>
         <NativeSelect
+        disabled={!disabledTotal}
           id="demo-customized-select-native"
           input={<BootstrapInput />}
           value={group}
@@ -148,6 +152,7 @@ export default function App(Props) {
         <div>
         <FormControl className={classes.choose}>
         <NativeSelect
+        disabled={!disabledTotal}
           id="demo-customized-select-native"
           input={<BootstrapInput />}
           value={sum}
@@ -164,10 +169,10 @@ export default function App(Props) {
         </div>
         <div className={classes.break} >
 
-        {disabled1&&<div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
+        <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
       <TextField
        
-      
+       disabled={!disabled1 || !disabledTotal}
     id="time3"
     label="من"
     type="time"
@@ -179,8 +184,13 @@ export default function App(Props) {
         step: 300, // 5 min
     }}
   />
+ 
+      </div>
+      
+      <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
+     
     <TextField
-    
+    disabled={!disabled1 || !disabledTotal}
     id="time4"
     label="الى"
     type="time"
@@ -192,30 +202,35 @@ export default function App(Props) {
         step: 300, // 5 min
     }}
   /> 
-      </div>}
+      </div>
+
+
+
     <FormControlLabel
-    control={<ColorCheckbox checked={color.checkedB} onChange={handleChangeBox} name="checkedB" />}
+    control={<ColorCheckbox  disabled={!disabledTotal} checked={color.checkedB} onChange={handleChangeBox} name="checkedB" />}
     label=""
   />
         </div>
+<div style={{display:'flex',flexDirection:'row'}}>
 
         <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
      <TextField
-    id="time1"
-    label="من"
-    type="time"
-    defaultValue="07:30"
-    InputLabelProps={{
-      shrink: true,
-    }}
-    inputProps={{
-      step: 300, // 5 min
-    }}
-  />
+     disabled={!disabledTotal}
+     id="time1"
+     label="من"
+     type="time"
+     defaultValue="07:30"
+     InputLabelProps={{
+       shrink: true,
+      }}
+      inputProps={{
+        step: 300, // 5 min
+      }}
+      />
   </div>
   <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
     <TextField
-    
+    disabled={!disabledTotal}
     id="time2"
     label="الى"
     type="time"
@@ -226,8 +241,9 @@ export default function App(Props) {
     inputProps={{
       step: 300, // 5 min
     }}
-  />
+    />
   </div>
+    </div>
   <div style={{color:'black'}}>
       {day}
   </div>

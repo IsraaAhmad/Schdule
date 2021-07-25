@@ -17,6 +17,10 @@ import InputBase from "@material-ui/core/InputBase";
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CancelIcon from '@material-ui/icons/Cancel';
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
@@ -121,10 +125,17 @@ export default function CSSGrid() {
   const [year, setYear] = React.useState('');
   const [room, setRoom] = React.useState('');
   const [time, setTime] = React.useState('');
+  const [value, setValue] = React.useState();
   const [openYear, setOpenYear] = React.useState(false);
   const [openRoom, setOpenRoom] = React.useState(false);
   const [openTime, setOpenTime] = React.useState(false);
   
+
+  const handleChangeRadio = (event) => {
+    setValue(event.target.value);
+  };
+
+
   const handleChangeTime = (event) => {
     setTime(event.target.value);
   };
@@ -231,9 +242,42 @@ export default function CSSGrid() {
           <Grid item xs={12}>
           <div className={classes.papertext}></div>
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={1}>
           <div className={classes.papertext}></div>
           </Grid>
+
+
+          <Grid item xs={6} >
+
+            <div style={{display:'flex',flexDirection:'row'}}>
+          <FormControl component="fieldset" >
+      
+      <RadioGroup  row aria-label="position" name="position" id="type" value={value} onChange={handleChangeRadio}>
+       
+        <FormControlLabel
+          value="s1"
+          control={<Radio style={{color:"#045F5F"}} />}
+          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>فصل ثاني</span>}
+          labelPlacement="start"
+          />
+
+<FormControlLabel
+          value="s2"
+          control={<Radio style={{color:"#045F5F"}} />}
+          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>فصل اول</span>}
+          labelPlacement="start"
+          />
+      
+      </RadioGroup>
+    </FormControl>
+    <div className={classes.papertext}>:الفصل الدراسي الحالي  </div>
+          </div>
+            </Grid>
+
+
+        
+
+
 
           <Grid item xs={2}>
             <FormControl className={classes.choose}>

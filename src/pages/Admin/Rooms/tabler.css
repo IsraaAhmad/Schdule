@@ -3,6 +3,7 @@
     top: 100%;
     font-size: 12px;
   }
+
   table{
     font-family: Markazi Text;
     display: flex;
@@ -17,4 +18,11 @@
         
 .mat-row:nth-child(odd){
     background-color: black;
+}
+.dep{
+  
+    background-image: url("./dep.png");
+    height: 100%;
+    width: 100%;
+    /* background-color: chartreuse; */
 }

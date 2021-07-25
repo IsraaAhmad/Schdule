@@ -45,8 +45,18 @@ export default function App() {
      <div className={classes.title}>
          <div>تفعيل/تعطيل</div>
          <div>مدة المختبر</div>
-         <div> فراغ الجامعة</div>
-         <div>أوقات الدوام</div>
+         <div style={{display:'flex',flexDirection:'row'}}>
+         بدء فراغ الجامعة 
+         - انتهاء فراغ الجامعة
+
+          
+         </div>
+         <div style={{marginRight:25}}>تفعيل</div>
+         <div style={{marginRight:35}}>
+         الدوام من الساعة - 
+           الدوام الى الساعة 
+         
+          </div>
          <div>اليوم</div>
      </div>
      <div><TLab backColor="#E5E8E8" day ="السبت"/></div>
