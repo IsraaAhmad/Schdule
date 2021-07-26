@@ -16,10 +16,13 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { useHistory ,useLocation } from 'react-router-dom';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -117,6 +120,18 @@ const useStyles = makeStyles((theme) => ({
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   
+  },
+  hed:{
+    width:'100%',
+    height:60,
+    backgroundColor:'#37474f',
+    fontSize:'30px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    fontFamily:'Markazi Text',
+    color:'white'
+
   }
 }));
 
@@ -126,20 +141,108 @@ export default function CSSGrid() {
   const [room, setRoom] = React.useState('');
   const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
+  const [name,setName] = React.useState('');
+  const [date,setDate] = React.useState('');
+  const [currentSem,setCurrentSem] = React.useState('');
+
+
+  const  history  = useHistory();
   const [openYear, setOpenYear] = React.useState(false);
   const [openRoom, setOpenRoom] = React.useState(false);
   const [openTime, setOpenTime] = React.useState(false);
+ 
+  const handelOnChangeName = (event) =>{
+    setName(event.target.value)
+  }
   
+  const handelNext =  () =>{ 
+    let date1 
+    let value1 = "2"
+
+    switch(date){
+      case "10":
+        date1 ="2018/2019"
+        break;
+      
+      case "20":
+        date1 ="2019/2020"
+        break;
+
+      case "30":
+        date1 ="2020/2021"
+        break;
+
+      case "40":
+        date1 ="2021/2022"
+        break;
+
+      case "50":
+        date1 ="2022/2023"
+        break;
+      
+      case "60":
+        date1 ="2023/2024"
+        break;
+
+      case "70":
+        date1 ="2024/2025"
+        break;
+      
+      case "80":
+        date1 ="2025/2026"
+        break;
+
+     
+        
+      default:
+        break;
+    }
+    if (value == "s2"){
+      value1 = "1"
+    }
+    console.log("name:  "+ name)
+    console.log("date:  "+ date1)
+    console.log("sem:   "+ value1)
+
+
+  //   let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep=60ddc9735b4d43f8eaaabf83&name="+
+  //   name+"&date="+date1+"&sem="+value1
+  //   // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+  // axios.get(url)
+    
+  //       .then(res => {
+  //         console.log(res)
+  //           console.log(res.data.response);
+  //         },
+ 
+  //           )
+
+
+
+
+    
+     history.push({
+      pathname: './tableCreate',
+      state: { name: name }
+    })
+  }
 
   const handleChangeRadio = (event) => {
     setValue(event.target.value);
   };
+   const handelSem = (event) =>{
+     setCurrentSem(event.target.Select)
+
+   }
 
 
   const handleChangeTime = (event) => {
     setTime(event.target.value);
   };
-
+  const handelDate =(event)=>{
+   setDate(event.target.value)
+   
+  }
   const handleCloseTime = () => {
     setOpenTime(false);
   };
@@ -208,6 +311,9 @@ export default function CSSGrid() {
 
   return (
     <div>
+      <div className={classes.hed}>
+        بيانات الجدول 
+      </div>
         <Box boxShadow={3}
         bgcolor="background.paper"
         m={1}
@@ -228,6 +334,7 @@ export default function CSSGrid() {
     fontSize:'20px',}}}
           id="outlined-basic"
           label=" "
+          onChange={handelOnChangeName}
           variant="outlined"
           required='true'
           className={classes.textField}
@@ -250,9 +357,9 @@ export default function CSSGrid() {
           <Grid item xs={6} >
 
             <div style={{display:'flex',flexDirection:'row'}}>
-          <FormControl component="fieldset" >
+          <FormControl component="fieldset"  >
       
-      <RadioGroup  row aria-label="position" name="position" id="type" value={value} onChange={handleChangeRadio}>
+      <RadioGroup  row aria-label="position" name="position" id="sem" value={value} onChange={handleChangeRadio}>
        
         <FormControlLabel
           value="s1"
@@ -282,14 +389,14 @@ export default function CSSGrid() {
           <Grid item xs={2}>
             <FormControl className={classes.choose}>
         <NativeSelect
-          id="demo-customized-select-native"
-          value={time}
-          onChange={handleChangeTime}
+          id="date"
+          value={date}
+          onChange={handelDate}
           input={<BootstrapInput />}
           style={{width:160}}
           width='150px'
         >
-          <option aria-label="None" value="" />
+          <option aria-label="None"   />
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>2018/2019</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>2019/2020</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={30}>2020/2021</option>
@@ -317,6 +424,11 @@ export default function CSSGrid() {
       
      
        </Box>
+       <Button variant="contained"  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} onClick={handelNext} size='medium'>
+       التالي
+      </Button>
+
+
     </div>
   );
 }

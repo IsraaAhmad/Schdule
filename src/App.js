@@ -16,6 +16,7 @@ import Login from "./pages/LogIn/LogIn.js"
 import AdminHome from "./pages/Admin/Home/Home.js"
 import UsersHome from "./pages/Users/Home/Home.js"
 import AdministratorHome from "./pages/Administrator/Home/Home.js";
+import TableCreate from "./pages/Admin/Schdules/TableCreate.js"
 
 
 
@@ -50,6 +51,7 @@ export default function App() {
         <Route exact path="/AdminHome" render={props => <AdminHome {...props} />} />
         <Route exact path="/UsersHome" render={props => <UsersHome {...props} />} />
         <Route exact path="/AdministratorHome" render={props => <AdministratorHome {...props} />} />
+        <Route exact path="/tableCreate" render={props => <TableCreate {...props} />} />
 
         <Route exact path="/course" render={props => <Course {...props} />} />
         <Route exact path="/Rooms" render={props => <Rooms {...props} />} />

@@ -7,6 +7,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import DataTable from "./DataTable.js"
 import TableCreate from "./TableCreate.js"
 import DrawerAdmin from "../DrawerAdmin.js"
 const useStyles = makeStyles({
@@ -23,7 +24,7 @@ export default function App() {
     <div style={{height:1000}} className="back">
 <DrawerAdmin/>
     <div className={classes.mar}>
-     <TableCreate/>
+     <DataTable/>
     </div>
     </div>
   );

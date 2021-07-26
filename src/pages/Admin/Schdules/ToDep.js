@@ -6,16 +6,10 @@ import TextField from '@material-ui/core/TextField';
 
 
 
-const empList = [
-  { course: 10, teacher: 10, department:10},
-  { course: 20, teacher: 20, department:20},
-  { course: 30, teacher: 30, department:30},
-  { course: 10, teacher: 40, department:10},
-]
 
 function TableR() {
   
-  const [data, setData] = useState(empList)
+  const [data, setData] = useState([])
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);

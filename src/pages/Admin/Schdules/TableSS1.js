@@ -6,27 +6,10 @@ import TextField from '@material-ui/core/TextField';
 
 
 
-const empList = [
-  { course: 10, type: 10, department:10},
-  { course: 20, type: 20, department:20},
-  { course: 30, type: 30, department:30},
-  { course: 10, type: 40, department:10},
-]
 
 function TableR() {
   
-  const [data, setData] = useState(empList)
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const [data, setData] = useState([])
   const columns = [
 
     { title: "الى الساعة",

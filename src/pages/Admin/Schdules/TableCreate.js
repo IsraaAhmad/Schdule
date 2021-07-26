@@ -21,6 +21,8 @@ import { Button } from '@material-ui/core';
 import DrawerAdmin from "../DrawerAdmin.js";
 import ToDep from "./ToDep.js"
 import "./b1.css"
+import { useHistory ,useLocation } from 'react-router-dom';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,7 +60,8 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '100%',
+    width: '1000',
+    margin:100,
     backgroundColor: theme.palette.background.paper,
   },
   tab:{
@@ -75,7 +78,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ScrollableTabsButtonPrevent() {
+export default function ScrollableTabsButtonPrevent(props) {
+  const  location  = useLocation();
+  const {state} = location;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -86,6 +91,7 @@ export default function ScrollableTabsButtonPrevent() {
   return (
     <div>
 <DrawerAdmin/>
+<div>name from state = {state.name}</div>
     <div className={classes.root} className="b1">
       <AppBar position="static" >
         <Tabs
@@ -103,23 +109,20 @@ export default function ScrollableTabsButtonPrevent() {
           <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" {...a11yProps(1)} />
           <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" {...a11yProps(2)} />
           <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" {...a11yProps(3)} />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="بيانات الجدول" {...a11yProps(4)} />
+          
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <TimeForTeacher/>
+        <TimeForTeacher name = {state.name}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <ToDep/>
+     <ToDep name = {state.name}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS1/>
+      <TableSS1 name = {state.name}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <TableSS/>
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-     <DataTable/>
+      <TableSS name = {state.name}/>
       </TabPanel>
       
       <div className={classes.bot}>
