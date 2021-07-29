@@ -1,15 +1,63 @@
 import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import TextField from '@material-ui/core/TextField';
+import  { useEffect } from 'react';
 
 
 
 
 
 
-function TableR() {
+function TableR(props) {
+  const {name} = props
   
   const [data, setData] = useState([])
+  const [course,setCourse] = React.useState({})
+  const [department,setDepartment] = React.useState({})
+  
+
+
+  const mapCourse =[
+    {id:0,name:'سيركت',dep:'كيماوي'},
+    {id:1,name:'الكترونيه',dep:'كهربا'},
+    {id:2,name:'نيوماركل',dep:'كيماوي'},
+    {id:3,name:'سيجنال',dep:'كهربا'}
+  ]
+
+  const mapDepartment =[
+    {id:0,name:'كيماوي'},
+    {id:1,name:'كهربا'},
+    {id:2,name:'معماري'},
+    {id:3,name:'مدني'}
+  ]
+
+  const FilledData = async() =>{
+   
+
+    let list1 ={}
+    let list2 ={}
+    let list3 ={}
+
+    let x = 0
+    let y = 0
+    let z = 0 
+  
+    mapCourse.map(row =>list3[z++] = row.name)
+
+
+
+    
+    mapDepartment.map(row =>list2[x++] = row.name)
+
+          setCourse(list3)
+          setDepartment(list2)
+  
+ }
+ useEffect(()=>{
+  FilledData()
+
+     
+},[]) 
   const columns = [
 
     { title: "الى الساعة",
@@ -111,8 +159,7 @@ function TableR() {
     },
     { title: "اسم المساق",
     field: "course" ,
-    lookup: { 10: 'برمجة حاسوب', 20: 'مختبر متحكمات دقيقة',30: ' تصميم دوائر رقمية 1', 40: 'مختبر شبكات', },
- 
+    lookup: course,
       cellStyle: {
         //  fontFamily: 'Markazi Text',
          fontSize:'25px',
@@ -121,7 +168,7 @@ function TableR() {
     },
     { title: "اسم القسم",
     field: "department" ,
-    lookup: { 10: 'الكيمياوي ', 20: 'المعماري',30: 'الاتصالات', 40: 'الكهرباء ', },
+    lookup:department,
  
       cellStyle: {
         //  fontFamily: 'Markazi Text',
@@ -167,6 +214,9 @@ function TableR() {
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            display:'flex',
+            flexDirection:'row-reverse',
+            backgroundColor:'white',
             
           },
           paging:false,
@@ -175,7 +225,7 @@ function TableR() {
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
-            backgroundColor:'#37474f',
+            backgroundColor:'#D4AC0D',
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
@@ -193,13 +243,14 @@ function TableR() {
         //     labelRowsSelect:"صفوف"
         // },
         body: {
-          emptyDataSourceMessage:"لا يوجد قاعات مضافه بعد",
+          emptyDataSourceMessage:<span style={{fontFamily: 'Markazi Text',
+          fontSize:'25px',}} >لا يوجد مواد مضافه بعد</span>,
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
-          addTooltip:"اضافة قاعة جديدة",
+          addTooltip:"اضافة ماده جديدة",
           exportName:"csv حفظ",
           editRow:{
-            deleteText:"هل انت متأكد من حذف هذه القاعة",
+            deleteText:"هل انت متأكد من حذف هذه الماده",
             cancelTooltip:"إلغاء",
             saveTooltip:"حفظ"
           },

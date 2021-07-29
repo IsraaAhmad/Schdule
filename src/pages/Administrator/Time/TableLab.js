@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     alignItems:'center',
     fontFamily:'Markazi Text',
     fontSize:'20px',
-    backgroundColor:'#045F5F',
+    backgroundColor:'#D4AC0D',
     color:'white',
     height:50,
 

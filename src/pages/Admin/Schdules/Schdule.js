@@ -42,7 +42,11 @@ const useStyles = makeStyles({
       fontFamily:'Markazi Text',
       fontSize:'20px',
       color:'white',
-      margin:5
+      margin:5,
+      '&:hover': {
+        backgroundColor:'#white',
+        color: '#37474f',
+    },
   }
 });
 

@@ -26,7 +26,7 @@ const ColorCheckbox = withStyles({
     root: {
       color: 'black',
       '&$checked': {
-        color: 'red',
+        color: '#37474f',
       },
     },
     checked: {},
@@ -136,7 +136,7 @@ export default function App(Props) {
         <NativeSelect
         disabled={!disabledTotal}
           id="demo-customized-select-native"
-          input={<BootstrapInput />}
+          // input={<BootstrapInput />}
           value={group}
           onChange={handleChangeGroup}
         >
@@ -154,7 +154,7 @@ export default function App(Props) {
         <NativeSelect
         disabled={!disabledTotal}
           id="demo-customized-select-native"
-          input={<BootstrapInput />}
+          // input={<BootstrapInput />}
           value={sum}
           onChange={handleChangeSum}
         >
@@ -169,7 +169,7 @@ export default function App(Props) {
         </div>
         <div className={classes.break} >
 
-        <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
+        <div className={classes.time} >
       <TextField
        
        disabled={!disabled1 || !disabledTotal}
@@ -187,7 +187,7 @@ export default function App(Props) {
  
       </div>
       
-      <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
+      <div className={classes.time} s>
      
     <TextField
     disabled={!disabled1 || !disabledTotal}
@@ -213,7 +213,7 @@ export default function App(Props) {
         </div>
 <div style={{display:'flex',flexDirection:'row'}}>
 
-        <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
+        <div className={classes.time} >
      <TextField
      disabled={!disabledTotal}
      id="time1"
@@ -228,7 +228,7 @@ export default function App(Props) {
       }}
       />
   </div>
-  <div className={classes.time} style={{backgroundColor:'white',border: '1px solid black',borderRadius:10 , padding:10}}>
+  <div className={classes.time} >
     <TextField
     disabled={!disabledTotal}
     id="time2"

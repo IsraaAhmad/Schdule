@@ -58,11 +58,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   tab:{
-    backgroundColor:'#045F5F',
+    backgroundColor:'#37474f',
 
   },
   indicator:{
-    backgroundColor:'red'
+    backgroundColor:'#D4AC0D'
   },
   bot:{
     display:'flex',

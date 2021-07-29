@@ -191,6 +191,9 @@ export default function SimpleAccordion() {
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
                      </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       X
+                     </TableCell>
                     </TableRow>
                ))}
                </TableBody>
@@ -246,6 +249,9 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       X
                      </TableCell>
                     </TableRow>
                ))}

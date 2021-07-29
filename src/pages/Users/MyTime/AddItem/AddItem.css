@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: flex-end;
     box-shadow: 2px;
+    
 }
 .ti{
     margin: 10px; 
@@ -20,7 +21,10 @@
     font-family: Markazi Text;
     justify-content: center;
     align-items: center;
+    margin-Top: 30px;
+    
 }
+
 .cas{
     margin: 6px;
 }

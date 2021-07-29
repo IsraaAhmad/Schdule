@@ -26,7 +26,7 @@ const ColorCheckbox = withStyles({
     root: {
       color: 'black',
       '&$checked': {
-        color: 'red',
+        color: '#37474f',
       },
     },
     checked: {},

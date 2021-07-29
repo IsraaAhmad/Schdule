@@ -28,7 +28,7 @@ export const theme = createTheme({
 		},
 		secondary: {
 			light: '#ccc',
-			main: '#6BB8AA',
+			main: '#37474f',
 			dark: '#666',
 			contrastText: '#000',
             fontFamily: 'Roboto',

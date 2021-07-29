@@ -4,14 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
-import HelpIcon from '@material-ui/icons/Help';
-import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
-import ThumbDown from '@material-ui/icons/ThumbDown';
-import ThumbUp from '@material-ui/icons/ThumbUp';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
+import  { useEffect } from 'react';
 import TimeForTeacher from './TimeForTeacher.js'
 import TableSS from "./TableSS";
 import TableSS1 from "./TableSS1";
@@ -65,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   tab:{
-    backgroundColor:'#045F5F',
+    backgroundColor:'#37474f',
 
   },
   indicator:{
@@ -75,26 +70,60 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     justifyContent:'center',
     alignItems:'center'
+  },
+  b1:{
+    '&:hover': {
+      backgroundColor:'#white',
+      color: '#37474f',
+
+  },
+  margin:10,
+  backgroundColor:'#045F5F', 
+  color:'white',
+  fontFamily:'Markazi Text',
+  fontSize:'30px'
   }
 }));
 
 export default function ScrollableTabsButtonPrevent(props) {
   const  location  = useLocation();
+  const  history  = useHistory();
+
   const {state} = location;
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [flag,setFlag] = React.useState(false);
+  const [savedData,setSavedDate] = React.useState(0);
+  const [value, setValue] = React.useState(state.index);
+  const testing = () =>{
+    console.log(savedData)
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+   
   };
-
+  useEffect(()=>{
+      
+      axios.get("https://core-graduation.herokuapp.com/getFromDraft?idDep=60ddc9735b4d43f8eaaabf83")
+      .then(res => {
+        setSavedDate(res.data.response)
+        console.log(res.data.response)
+        console.log("SSSSSSSSSSSSSSs")
+          console.log(savedData)
+          setFlag(true)
+        }, 
+            )
+      }
+  ,[value]) 
   return (
     <div>
 <DrawerAdmin/>
+<Button onClick={testing}>click here</Button>
 <div>name from state = {state.name}</div>
-    <div className={classes.root} className="b1">
+    {flag&&<div className={classes.root} className="b1">
       <AppBar position="static" >
         <Tabs
+        
       
           value={value}
           onChange={handleChange}
@@ -105,37 +134,37 @@ export default function ScrollableTabsButtonPrevent(props) {
             indicator: classes.indicator
           }}
           >
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين" {...a11yProps(0)} />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" {...a11yProps(1)} />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" {...a11yProps(2)} />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" {...a11yProps(3)} />
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData}/>
           
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <TimeForTeacher name = {state.name}/>
+        <TimeForTeacher TableName = {state.name} savedData={savedData}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <ToDep name = {state.name}/>
+     <ToDep TableName = {state.name} savedData={savedData}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS1 name = {state.name}/>
+      <TableSS1 TableName = {state.name} savedData={savedData}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <TableSS name = {state.name}/>
+      <TableSS TableName = {state.name} savedData={savedData}/>
       </TabPanel>
       
       <div className={classes.bot}>
 
-      <Button variant="contained"  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>
+      <Button variant="contained" className={classes.b1}  size='medium'>
            حفظ
        </Button>
-      <Button variant="contained"  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>
+      <Button variant="contained" className={classes.b1}  size='medium'>
         حفظ وانشاء
       </Button>
       </div>
   
-    </div>
+    </div>}
           </div>
   );
 }

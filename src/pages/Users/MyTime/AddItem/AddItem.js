@@ -155,7 +155,7 @@ class App extends Component{
 
           <div className="tit" style={{marginLeft:50}}>:الايام</div>
           </div>
-          <Button variant="contained"type ="submit" size="small" style={{marginRight:600,  backgroundColor:'#045F5F',color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} >
+          <Button variant="contained"type ="submit" size="small" style={{marginRight:600,marginBottom:30,  backgroundColor:'#045F5F',color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} >
           اضافة الفراغ
         </Button>
                   {/* <input type ="submit" value="Add"></input> */}

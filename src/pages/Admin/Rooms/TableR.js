@@ -196,18 +196,33 @@ const handelEditInDataBase =(rowUp) =>{
         title=""
         data={data}
         icons={{
-          Delete: props => <DeleteIcon {...props} style={{color:'#045F5F'}} />,
-          Edit: props => <EditIcon {...props} style={{color:'#045F5F'}} />,
+          Delete: props =>
+          <div style={{marginLeft:20}}>
+             <DeleteIcon {...props} style={{color:'#963333'}} />
+             </div>,
+          Edit: props =>
+            
+              <div style={{marginLeft:20}}>
+
+            <EditIcon {...props} style={{color:'#045F5F'}} />
+              </div>
+           
       }}
       
         
 
         columns={columns}
-        
+       
         options={{
+        
+
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            display:'flex',
+            flexDirection:'row-reverse',
+          
+            
             
 
             
@@ -232,7 +247,10 @@ const handelEditInDataBase =(rowUp) =>{
         }}
         localization={{
           header: {
-              actions: '',
+              actions: <div  style={{display:'flex',flexDirection:'row'}}>
+                <div style={{marginLeft:20}}>تعديل</div>
+                <div style={{marginLeft:20}}>حذف</div>
+                </div>,
           },
         //   pagination: {
         //     labelRowsSelect:"صفوف"

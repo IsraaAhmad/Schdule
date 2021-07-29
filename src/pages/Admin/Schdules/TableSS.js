@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import MaterialTable from 'material-table';
-import firstLoad ,{MTableToolbar,MTablePagination,MTableEditRow} from 'material-table';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TablePagination from '@material-ui/core/TablePagination';
 import  { useEffect } from 'react';
 import axios from 'axios';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
+import { useHistory ,useLocation } from 'react-router-dom';
 
 
 
 
 
-function TableR(props) {
-  const {name} = props
-  
-  
+
+function TableR(Props) {
+  let {TableName , savedData} = Props
+  console.log("from top saved ="+ savedData)
+  const [savDate,setSavDate] = React.useState(savedData)
+  const  history  = useHistory();
+
+
+  const [nameTable,setNameTable] = React.useState(TableName)
   const [data, setData] = useState([])
   const [rooms,setRooms] = React.useState({})
   const [inst,setInst] = React.useState({})
@@ -50,17 +52,25 @@ function TableR(props) {
 
   const room1 =() =>{
     return new Promise((Resolve,Reject)=>{
+
       axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
   
      
       .then(res => {
         console.log(res)
           console.log(res.data.response);
-          let w = res.data.response;
           let x = 1
-          w.map(row =>(
-           mapRoom[x++] = {number:row.number}
-          ))
+          res.data.response.filter(room => (room.type === "مختبر") ).map(cor => (
+            
+            mapRoom[x++] = {number:cor.number}
+               ))
+               setTimeout(() => {
+                setSavDate(savedData)
+               
+              }, 2000)
+          
+         
+         
           Resolve()
          },
           )
@@ -72,27 +82,83 @@ function TableR(props) {
   const inst1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
-      axios.get("https://core-graduation.herokuapp.com/getAllInstOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep=60ddc9735b4d43f8eaaabf83")
   
      
       .then(res => {
-        // console.log(res)
-        //   console.log(res.data.response);
-          // let w = res.data.response;
-          // let x = 0
-          // w.map(row =>(
-          //   mapIns[x++] = {name:row.name}
-          // ))
+        console.log(res)
+          console.log(res.data.response);
+          let w = res.data.response;
+          let x = 0
+          w.map(row =>(
+            mapIns[x++] = {name:row.name}
+          ))
           Resolve()
          },
           )
           
     })
   }
+  const findInedx =(obj,da) =>{
+     for(let i = 0;i<obj.length;i++){
+       if (obj[i].number === da){
+
+         return i
+       }
+      }
+      return -1 
+  }
+
+  const findInedx1 =(obj,da) =>{
+    for(let i = 0;i<obj.length;i++){
+      if (obj[i].name === da){
+
+        return i
+      }
+     }
+     return -1 
+ }
+
+
+  const initialData=() =>{
+
+    
+    console.log("form inital data")
+     let listd=[]
+     let x = 0 
+     console.log("saved mat="+savedData)
+     console.log("saveData mat="+savDate)
+     
+     savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="false") ).map(cor => (
+           listd[x++] = {type:cor.roomType,teacher:cor.courseIns,course:cor.courseName}
+
+    ))
+    
+    console.log("listd = ")
+    console.log(listd)
+    for (let i = 0;i<listd.length;i++){
+      console.log("to func" +listd[i].rooms)
+      let index= findInedx(mapRoom,listd[i].type)
+      listd[i].type = index
+      index = findInedx1(mapCourse,listd[i].course)
+      listd[i].course = index
+      index = findInedx1(mapIns,listd[i].teacher)
+      listd[i].teacher = index
+      // if(i == listd.length -1) 
+    }
+    
+    console.log(" after roooms listd = ")
+    console.log(listd)
+  
+    setData(listd)
+ 
+  }
    const FilledData = async() =>{
+     
      await course1()
-    //  await inst1()
+     await inst1()
      await room1()
+      initialData()
 
      let list1 ={}
      let list2 ={}
@@ -108,8 +174,6 @@ function TableR(props) {
      mapCourse.map(row =>list3[z++] = row.name)
            setRooms(list1) 
            setInst(list2)
-           console.log("mapcourse = "+mapCourse)
-           console.log("list3 = "+list3)
            setCourse(list3)
    
   }
@@ -121,13 +185,36 @@ function TableR(props) {
     console.log("room = " + room1)
     console.log("inst = " + inst1)
     console.log("course = " + course1)
+    console.log("tableName = " + nameTable)
+
+
 
 
   let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
-   +name+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
-  console.log(url)
+   +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
+  console.log("url="+ url)
     axios.get(url)
   // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+  
+      .then(res => {
+        console.log(res)
+       
+          },
+          )
+
+          
+  }
+
+  const handelDeleteInDataBase =(row) =>{
+    let room1 = rooms[row.type]
+    let inst1 = inst[row.teacher]
+    let course1 = course[row.course]
+    let tableN = nameTable
+    let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="+
+    tableN+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
+  console.log(url)
+    axios.get(url)
+  // // axios.get("https://jsonplaceholder.typicode.com/todos/1")
   
       .then(res => {
         console.log(res)
@@ -135,38 +222,13 @@ function TableR(props) {
           )
   }
 
-  const handelDeleteInDataBase =(row) =>{
-    let room1 = rooms[row.type]
-    let inst1 = inst[row.teacher]
-    let course1 = course[row.course]
-  //   let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
-  //  +name+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
-  // console.log(url)
-  //   axios.get(url)
-  // // axios.get("https://jsonplaceholder.typicode.com/todos/1")
-  
-  //     .then(res => {
-  //       console.log(res)
-  //         },
-  //         )
-  }
 
-
-  const handelEditInDataBase =(updateRow,OldRow) =>{
-    let room1 = rooms[updateRow.type]
-    let inst1 = inst[updateRow.teacher]
-    let course1 = course[updateRow.course]
-
-
-    let room2 = rooms[OldRow.type]
-    let inst2 = inst[OldRow.teacher]
-    let course2 = course[OldRow.course]
-
-  }
+ 
 
    useEffect(()=>{
+     console.log("from use effect")
     FilledData()
-  
+    console.log("end use effect")
        
   },[]) 
   const columns = [
@@ -239,6 +301,9 @@ function TableR(props) {
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            display:'flex',
+            flexDirection:'row-reverse',
+            backgroundColor:'white',
             
           },
           paging:false,
@@ -247,7 +312,7 @@ function TableR(props) {
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
-            backgroundColor:'#37474f',
+            backgroundColor:'#D4AC0D',
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
@@ -265,13 +330,14 @@ function TableR(props) {
         //     labelRowsSelect:"صفوف"
         // },
         body: {
-          emptyDataSourceMessage:"لا يوجد قاعات مضافه بعد",
+          emptyDataSourceMessage:<span style={{fontFamily: 'Markazi Text',
+          fontSize:'25px',}} >لا يوجد مواد مضافه بعد</span>,
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
-          addTooltip:"اضافة قاعة جديدة",
+          addTooltip:"اضافة ماده جديدة",
           exportName:"csv حفظ",
           editRow:{
-            deleteText:"هل انت متأكد من حذف هذه القاعة",
+            deleteText:"هل انت متأكد من حذف هذه الماده",
             cancelTooltip:"إلغاء",
             saveTooltip:"حفظ"
           },
@@ -291,6 +357,9 @@ function TableR(props) {
           onRowAdd: (newRow) => new Promise((resolve, reject) => {
             const updatedRows = [...data, { id: Math.floor(Math.random() * 100), ...newRow }]
             handelAddInDataBase(newRow)
+           
+            
+            
             setTimeout(() => {
               setData(updatedRows)
               resolve()
@@ -298,24 +367,15 @@ function TableR(props) {
           }),
           onRowDelete: selectedRow => new Promise((resolve, reject) => {
             const index = selectedRow.tableData.id;
+            handelDeleteInDataBase(selectedRow)
             const updatedRows = [...data]
             updatedRows.splice(index, 1)
-            handelDeleteInDataBase(selectedRow)
             setTimeout(() => {
               setData(updatedRows)
               resolve()
             }, 2000)
           }),
-          onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
-            const index=oldRow.tableData.id;
-            const updatedRows=[...data]
-            handelEditInDataBase(updatedRow,oldRow)
-            updatedRows[index]=updatedRow
-            setTimeout(() => {
-              setData(updatedRows)
-              resolve()
-            }, 2000)
-          })
+      
 
         }}
        

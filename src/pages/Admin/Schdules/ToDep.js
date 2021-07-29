@@ -178,6 +178,9 @@ function TableR() {
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            display:'flex',
+            flexDirection:'row-reverse',
+            backgroundColor:'white',
             
           },
           paging:false,
@@ -186,7 +189,7 @@ function TableR() {
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
-            backgroundColor:'#37474f',
+            backgroundColor:'#D4AC0D',
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
@@ -204,13 +207,15 @@ function TableR() {
         //     labelRowsSelect:"صفوف"
         // },
         body: {
-          emptyDataSourceMessage:"لا يوجد قاعات مضافه بعد",
+          emptyDataSourceMessage:<span style={{fontFamily: 'Markazi Text',
+          fontSize:'25px',}} >لا يوجد مواد مضافه بعد</span>
+          ,
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
-          addTooltip:"اضافة قاعة جديدة",
+          addTooltip:"اضافة ماده جديدة",
           exportName:"csv حفظ",
           editRow:{
-            deleteText:"هل انت متأكد من حذف هذه القاعة",
+            deleteText:"هل انت متأكد من حذف هذه الماده",
             cancelTooltip:"إلغاء",
             saveTooltip:"حفظ"
           },

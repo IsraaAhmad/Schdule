@@ -98,6 +98,17 @@ const useStyles = makeStyles((theme) => ({
       height:5
 
   },
+  bto:{
+    margin:20,
+    backgroundColor:'#045F5F',
+     color:'white',
+     fontFamily:'Markazi Text',
+     fontSize:'30px',
+    '&:hover': {
+      backgroundColor:'#white',
+      color: '#37474f',
+  },
+  },
   papertext: {
     textAlign: 'center',
     color: 'black',
@@ -114,23 +125,28 @@ const useStyles = makeStyles((theme) => ({
       flexDirection:'row'
   },
   cont:{
-    
+    marginTop:0,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+
   
   },
   hed:{
-    width:'100%',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    width:'98.5%',
+    marginRight:8,
     height:60,
     backgroundColor:'#37474f',
-    fontSize:'30px',
+    // borderColor:'#37474f',
+    // border: '2px solid #37474f',
+    fontSize:'35px',
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
     fontFamily:'Markazi Text',
-    color:'white'
+    color:'white',
+    marginBottom:0,
 
   }
 }));
@@ -223,7 +239,9 @@ export default function CSSGrid() {
     
      history.push({
       pathname: './tableCreate',
-      state: { name: name }
+      state: { name: name ,
+        index:3
+      }
     })
   }
 
@@ -323,7 +341,10 @@ export default function CSSGrid() {
       <Grid container className={classes.cont} spacing={1} >
           
         
-        
+      <Grid item xs={12}>
+          <div style={{height:30}}></div>
+          </Grid>
+          
 
         <Grid item xs={10}>
           
@@ -347,7 +368,7 @@ export default function CSSGrid() {
           <div className={classes.papertext}>اسم الجدول </div>
           </Grid>
           <Grid item xs={12}>
-          <div className={classes.papertext}></div>
+          <div style={{height:10}}></div>
           </Grid>
           <Grid item xs={1}>
           <div className={classes.papertext}></div>
@@ -424,7 +445,7 @@ export default function CSSGrid() {
       
      
        </Box>
-       <Button variant="contained"  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} onClick={handelNext} size='medium'>
+       <Button variant="contained" className={classes.bto}  onClick={handelNext} size='medium'>
        التالي
       </Button>
 

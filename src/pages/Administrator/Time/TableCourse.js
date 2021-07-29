@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import TableTime from "./TableCourse.js";
+import Divider from '@material-ui/core/Divider';
 import T from "./T.js"
 import {
   BrowserRouter as Router,
@@ -32,7 +33,7 @@ const useStyles = makeStyles({
     alignItems:'center',
     fontFamily:'Markazi Text',
     fontSize:'20px',
-    backgroundColor:'#045F5F',
+    backgroundColor:'#D4AC0D',
     color:'white',
     height:50,
 
@@ -65,11 +66,18 @@ export default function App() {
           </div>
          <div>اليوم</div>
      </div>
-     <div><T backColor="#E5E8E8" day ="السبت"/></div>
-     <div><T backColor="#CCD1D1" day ="الاحد"/></div>
-     <div><T backColor="#99A3A4" day ="الاثنين"/></div>
-     <div><T backColor="#707B7C" day ="الثلاثاء"/></div>
-     <div><T backColor="#515A5A" day ="الاربعاء"/></div>
+     <div><T backColor="white" day ="السبت"/></div>
+     <Divider variant="middle"/>
+     <div><T backColor="white" day ="الاحد"/></div>
+     <Divider variant="middle"/>
+     <div><T backColor="white" day ="الاثنين"/></div>
+     <Divider variant="middle"/>
+     <div><T backColor="white" day ="الثلاثاء"/></div>
+     <Divider variant="middle"/>
+     <div><T backColor="white" day ="الاربعاء"/></div>
+     <Divider variant="middle"/>
+     <div><T backColor="white" day ="الخميس"/></div>
+     <Divider variant="middle"/>
     </div>
     </div>
   );

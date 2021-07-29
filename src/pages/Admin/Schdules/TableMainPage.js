@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MaterialTable from 'material-table';
-import firstLoad ,{MTableToolbar,MTablePagination,MTableEditRow} from 'material-table';
+import {MTableToolbar} from 'material-table';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,6 +12,8 @@ import { CallMissedSharp, FlareSharp } from '@material-ui/icons';
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory ,useLocation } from 'react-router-dom';
 import { Link} from "react-router-dom";
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 
@@ -59,6 +61,7 @@ function TableR() {
      cellStyle: {
       // fontFamily: 'Markazi Text',
       fontSize:'25px',
+     
    
              }, 
     },
@@ -95,9 +98,23 @@ function TableR() {
           )
         }}
         data={data}
+        icons={{
+          Delete: props =>
+          <div style={{marginLeft:20}}>
+             <DeleteIcon {...props} style={{color:'#963333'}} />
+             </div>,
+          Edit: props =>
+            
+              <div style={{marginLeft:20}}>
+
+            <EditIcon {...props} style={{color:'#045F5F'}} />
+              </div>
+           
+      }}
         actions={[
 
           {
+           
             icon: 'edit',
           tooltip: ' تعديل الجدول',
           onClick: (event, rowData) =>{
@@ -136,6 +153,7 @@ function TableR() {
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            
            
             
             
