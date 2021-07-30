@@ -258,6 +258,12 @@ export default function PersistentDrawerRight() {
       icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
       path:'/Rooms',
     },
+
+    {
+      text:'test',
+      icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
+      path:'/testing',
+    },
     
    
   ]

@@ -21,6 +21,10 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useHistory ,useLocation } from 'react-router-dom';
 import axios from 'axios';
+import  { useEffect } from 'react';
+import { DepartureBoard } from '@material-ui/icons';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -122,12 +126,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CSSGrid() {
+  const [dataDep,setDataDep] = React.useState([]);
+  const [dataCourse,setDataCourse] = React.useState([]);
   const classes = useStyles();
+  const [nameCourse,setNameCourse] = React.useState(''); 
   const [year, setYear] = React.useState('');
   const [room, setRoom] = React.useState('');
   const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
-  const [value1, setValue1] = React.useState();
+  const [dep, setDep] = React.useState();
+  const [course, setCourse] = React.useState();
+
 
   const  history  = useHistory();
   const [openYear, setOpenYear] = React.useState(false);
@@ -142,20 +151,14 @@ export default function CSSGrid() {
     setValue(event.target.value);
   };
 
-  const handleChangeRadio1 = (event) => {
-    setValue1(event.target.value);
-  };
-
   const handelSave = () =>{
-    let number = document.getElementById('number').value
-    let name = document.getElementById('name').value
+    let course = document.getElementById('course').value
+    // let name = document.getElementById('name').value
     let hour = document.getElementById('hour').value
+    let idDepartmant = dep
+    let idCourse = course
+    let flag = 1
     let type1 = value
-    let dep = value1
-    let flag = 0
-    if (dep === "s2"){
-      flag = 2
-    }
     let type = "اجباري"
     let year = 0 
     let semester = 0
@@ -220,24 +223,31 @@ export default function CSSGrid() {
       case "110":
             year = -1
             semester =-1
-            type = "اختياري"
+            
             break;
         
       default:
         break;
     }
 
-    if (type1 == "s2"){
-      type = "اختياري"
-      year = -1
-      semester = -1
-    }
-    console.log(time)
+   
+    
+    console.log("course = " + course )
+    // console.log("name" + name)
+    console.log("hour" + hour)
     console.log("year" + year)
-    console.log("semester" + semester)
-    console.log("type" + type)
+    console.log("sem" + semester)
+    console.log("coursename = "+nameCourse)
+    console.log("id dep" + idDepartmant)
+    console.log("id course" + idCourse)
+    console.log("flag" + flag)
+
+
+
+
     let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="+
-    number+"&type="+type+"&year="+year+"&sem="+semester+"&name="+name+"&numberOfHour="+hour
+    course+"&type=اجباري"+"&year="+year+"&sem="+semester+"&name="+nameCourse+"&numberOfHour="+hour+
+    "&flag=1&toDepartments="+idDepartmant
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
   axios.get(url)
     
@@ -267,7 +277,58 @@ export default function CSSGrid() {
   const handleChangeYear = (event) => {
     setYear(event.target.value);
   };
+  const getIdForName =(name) =>{
+      console.log(dataDep)
+      console.log("yes   الاصلي" +name)
+      for(let j = 0;j<dataDep.length;j++){
+          if(dataDep[j].name === name){
+              console.log("yes   name" +dataDep[j].name)
+              console.log("yes   number" +dataDep[j].number)
+              return dataDep[j].number
+              
+          }
+      }
+      console.log("-1")
+      return -1
 
+  }
+  const handleChangeDep = (event) => {
+    setDep(event.target.value);
+    console.log("hi")
+    //  let idd = getIdForName(event.target.value)
+
+
+    // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+    let list1 =[]
+    let x = 0 
+    console.log("event terget value" + event.target.value )
+
+    let url = "https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+event.target.value
+    axios.get(url)
+    
+ 
+        .then(res => {
+          console.log(res)
+            console.log(res.data.response);
+            res.data.response.map(row => (
+                list1[x++] = {name:row.name,number:row.number}
+
+            ))
+            setDataCourse(list1)
+          },
+ 
+            )
+
+
+  };
+  const handleChangeCourse = (event) => {
+    setCourse(event.target.value);
+    for (let c = 0;c<dataCourse.length;c++){
+        if(dataCourse[c].number === event.target.value)
+        setNameCourse(dataCourse[c].name)
+    }
+    
+  };
   const handleCloseYear = () => {
     setOpenYear(false);
   };
@@ -298,7 +359,7 @@ export default function CSSGrid() {
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #045F5F",
       fontSize: 16,
-      height:25,
+      height:30,
       padding: "10px 26px 10px 12px",
       transition: theme.transitions.create(["border-color", "box-shadow"]),
       // Use the system font instead of the default Roboto font.
@@ -322,6 +383,29 @@ export default function CSSGrid() {
     }
   }))(InputBase);
 
+
+  useEffect(()=>{
+    console.log("from use effect")
+    let url = "https://core-graduation.herokuapp.com/getAllDep"
+    // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+    let list1 =[]
+    let x = 0 
+  axios.get(url)
+        .then(res => {
+          console.log(res)
+            console.log(res.data.response);
+            res.data.response.map(row => (
+                list1[x++] = {name:row.name,number:row.idDepartment}
+
+            ))
+            setDataDep(list1)
+          },
+ 
+            )
+   console.log("end use effect")
+      
+ },[])
+
   return (
     <div>
         <Box boxShadow={3}
@@ -335,32 +419,76 @@ export default function CSSGrid() {
         <Grid item xs={12}>
           <Paper className={classes.paper1} >اضافة مساق جديد</Paper>
         </Grid>
-        
 
-        <Grid item xs={10}>
-          
-          <TextField 
-          inputProps={{min: 0, style: { textAlign: 'right' ,
+        <Grid item xs={1}>
+            <div className={classes.papertext}></div>
+            </Grid>
         
-    fontFamily:'Markazi Text',
-    fontSize:'20px',}}}
-          id="name"
-          label=" "
-          variant="outlined"
-          required='true'
-          className={classes.textField}
-          style={{ borderColor: 'red' }}
-          />
+        <Grid item xs={3}>
+          
+          <FormControl  style={{width:230}} className={classes.choose}>
+          <NativeSelect
+            id="course"
+            value={course}
+            onChange={handleChangeCourse}
+            input={<BootstrapInput />}
+          >
+            <option aria-label="None" value="" />
+            {dataCourse.map(row=>(
+          <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+          
+        }} value={row.number}>{row.name}</option>
+           ))}
+            
+  
+            
+          </NativeSelect>
+        </FormControl>
+          </Grid>
+  
+  
+          <Grid item xs={2}>
+            <div className={classes.papertext}>اسم المساق</div>
+            </Grid>
+            <Grid item xs={1}>
+            <div className={classes.papertext}></div>
+            </Grid>
+            
+
+
+        <Grid item xs={3}>
+          
+        <FormControl className={classes.choose}>
+        <NativeSelect
+          id="time2"
+          value={dep}
+          onChange={handleChangeDep}
+          input={<BootstrapInput />}
+        >
+          <option aria-label="None" value="" />
+          {dataDep.map(row=>(
+          <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+          
+        }} value={row.number}>{row.name}</option>
+           ))}
+
+          
+        </NativeSelect>
+      </FormControl>
         </Grid>
 
 
         <Grid item xs={2}>
-          <div className={classes.papertext}>اسم المساق</div>
+          <div className={classes.papertext}>اسم القسم</div>
+          </Grid>
+
+          <Grid item xs={12}>
+          <div className={classes.papertext}></div>
           </Grid>
           <Grid item xs={1}>
           <div className={classes.papertext}></div>
           </Grid>
-
+          
           <Grid item xs={1}>
             <FormControl className={classes.choose}>
         <NativeSelect
@@ -377,6 +505,7 @@ export default function CSSGrid() {
         </NativeSelect>
       </FormControl>
             </Grid>
+            
             <Grid item xs={2}>
           <div className={classes.papertext}>الساعة المعتمدة</div>
           </Grid>
@@ -386,29 +515,18 @@ export default function CSSGrid() {
           <div className={classes.papertext}></div>
           </Grid>
 
-          <Grid item xs={5}>
           
-          <TextField 
-          inputProps={{min: 0, style: { textAlign: 'right',
-          fontFamily:'Markazi Text',
-          fontSize:'20px', }}}
-          id="number"
-          label=" "
-          variant="outlined"
-          required='true'
-          className={classes.textField}
-          style={{ borderColor: 'red' }}
-          />
-        </Grid>
-
-        <Grid item xs={2}>
-          <div className={classes.papertext}>رقم المساق</div>
-          </Grid>
-          
-
           
          
-          <Grid item xs={2}>
+
+         
+
+         
+          <Grid item xs={1}>
+          <div className={classes.papertext}> </div>
+          </Grid>
+      
+            <Grid item xs={2}>
             <FormControl className={classes.choose}>
         <NativeSelect
           id="time"
@@ -436,78 +554,15 @@ export default function CSSGrid() {
             <Grid item xs={4}>
           <div className={classes.papertext}>الموعد حسب الخطة الدراسية  </div>
           </Grid>
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-      
-         
-        
-          
-         
-          
-
-          <Grid item xs={5}>
-            <div style={{display:'flex',flexDirection:'row'}}>
-
-
-          <FormControl component="fieldset">
-      
-      <RadioGroup row aria-label="position" name="position" id="type" value={value} onChange={handleChangeRadio}>
-       
-        <FormControlLabel
-          value="s1"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اجباري</span>}
-          labelPlacement="start"
-          />
-
-<FormControlLabel
-          value="s2"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اختياري</span>}
-          labelPlacement="start"
-          />
-      
-      </RadioGroup>
-    </FormControl>
-            
-          <div className={classes.papertext}>:نوع المساق</div>
-          </div>
-          </Grid>
-
-          <Grid item xs={7}>
-          <div className={classes.papertext}></div>
-          </Grid>
-          <Grid item xs={5}>
-            <div style={{display:'flex',flexDirection:'row'}}>
-
-
-          <FormControl component="fieldset">
-      
-      <RadioGroup row aria-label="position" name="position" id="dep" value={value1} onChange={handleChangeRadio1}>
-       
-        <FormControlLabel
-          value="s1"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسمي</span>}
-          labelPlacement="start"
-          />
-
-<FormControlLabel
-          value="s2"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسم اخر</span>}
-          labelPlacement="start"
-          />
-      
-      </RadioGroup>
-    </FormControl>
-            
-          <div className={classes.papertext}>:القسم</div>
-          </div>
-          </Grid>
         
           <Grid item xs={12}>
+          <div className={classes.papertext}></div>
+          </Grid>
+
+
+
+
+          <Grid item xs={1}>
           <div className={classes.papertext}></div>
           </Grid>
 
@@ -524,8 +579,6 @@ export default function CSSGrid() {
           <Grid item xs={1}>
           <div className={classes.papertext}></div>
           </Grid>
-         
-
 
           <Grid item xs={1}>
           <Button variant="contained" style={{backgroundColor:'#045F5F'}} onClick={handelSave}>

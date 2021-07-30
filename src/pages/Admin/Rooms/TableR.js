@@ -171,9 +171,13 @@ const handelEditInDataBase =(rowUp) =>{
                
              }
              
-               console.log(list1)
-               console.log("#############")
-               setData(list1)
+             setData(list1)
+             console.log("list1")
+             console.log(list1)
+             console.log("data")
+             console.log(data)
+
+               
 
 
           

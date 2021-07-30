@@ -12,11 +12,13 @@ import TimeTeacher from "./pages/Admin/Teachers/TimeTeacher";
 import AddCourse from "./pages/Admin/Course/CreateCourse.js"
 import MyTime from "./pages/Users/MyTime/MyTime.js"
 import {RTL , theme} from "./Themes.js";
-import Login from "./pages/LogIn/LogIn.js"
+import Login from "./pages/LogIn/LogIn.js";
+import Testing from "./Testing.js"
 import AdminHome from "./pages/Admin/Home/Home.js"
 import UsersHome from "./pages/Users/Home/Home.js"
 import AdministratorHome from "./pages/Administrator/Home/Home.js";
-import TableCreate from "./pages/Admin/Schdules/TableCreate.js"
+import TableCreate from "./pages/Admin/Schdules/TableCreate.js";
+import AddCourseToOther from "./pages/Admin/Course/AddCourseToOther.js"
 
 
 
@@ -52,7 +54,9 @@ export default function App() {
         <Route exact path="/UsersHome" render={props => <UsersHome {...props} />} />
         <Route exact path="/AdministratorHome" render={props => <AdministratorHome {...props} />} />
         <Route exact path="/tableCreate" render={props => <TableCreate {...props} />} />
-
+        <Route exact path="/addCourseToOther" render={props => <AddCourseToOther {...props} />} />
+        <Route exact path="/testing" render={props => <Testing {...props} />} />
+       
         <Route exact path="/course" render={props => <Course {...props} />} />
         <Route exact path="/Rooms" render={props => <Rooms {...props} />} />
         <Route exact path="/Teacher" render={props => <Teacher {...props} />} />

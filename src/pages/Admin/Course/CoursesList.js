@@ -15,6 +15,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useEffect, useState } from 'react';
+import DeleteIcon from '@material-ui/icons/Delete';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import axios from 'axios';
 
 
@@ -94,9 +96,15 @@ export default function SimpleAccordion() {
   const [data, setData] = useState([])
   const classes = useStyles();
   const  history  = useHistory();
+  const handelDeleteCourse =(x) =>{
+    console.log("number of delete course is" +x)
+  }
   const HandelAddCourse = ()=>{
          history.push('/AddCourse')
   }
+  const HandelAddCourseToOtherDep = ()=>{
+    history.push('/addCourseToOther')
+}
 
 
   useEffect(()=>{
@@ -125,6 +133,9 @@ export default function SimpleAccordion() {
 
         <Button variant="contained" onClick={HandelAddCourse}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
            اضافة مساق جديد 
+      </Button>
+      <Button variant="contained" onClick={HandelAddCourseToOtherDep}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
+           اضافة مساق جديد من قسم اخر 
       </Button>
       </div>
       <div className={classes.tit}>الخطة الدراسية</div>
@@ -173,6 +184,7 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}> </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -192,7 +204,9 @@ export default function SimpleAccordion() {
                        {cor.number}
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
-                       X
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -232,6 +246,7 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -251,7 +266,9 @@ export default function SimpleAccordion() {
                        {cor.number}
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
-                       X
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -316,6 +333,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -333,6 +352,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -372,6 +396,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -389,6 +415,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -456,6 +487,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -473,6 +506,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -512,6 +550,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -529,6 +569,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -593,6 +638,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -610,6 +657,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -649,6 +701,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -666,6 +720,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -730,6 +789,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -747,6 +808,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -786,6 +852,8 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -803,6 +871,11 @@ export default function SimpleAccordion() {
                      </TableCell>
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
                      </TableCell>
                     </TableRow>
                ))}
@@ -867,6 +940,7 @@ export default function SimpleAccordion() {
             
             <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
             <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -885,6 +959,11 @@ export default function SimpleAccordion() {
                      <TableCell component="th" scope="row" className={classes.cor}>
                        {cor.number}
                      </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
+                     </TableCell>
                     </TableRow>
                ))}
                </TableBody>
@@ -901,6 +980,98 @@ export default function SimpleAccordion() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+
+
+
+
+    
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>
+            <div className={classes.hed} style={{fontSize:'28px'}}>
+             مواد  لاقسام اخرى
+              </div>
+              </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+        {/* #045F5F */}
+          <Typography>
+          <Accordion style={{
+               borderBottom: '2px solid #37474f',
+               borderLeft: '2px solid #37474f',
+               borderTop: '1px solid #37474f',
+               borderRight: '1px solid #37474f',
+               borderTopLeftRadius:10,
+               borderTopRightRadius:10,
+              marginRight:20,
+               
+            }}>
+        <AccordionSummary 
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="pan6el1a-header"
+          
+          
+        >
+          <Typography className={classes.heading1}  style={{fontSize:'25px'}}> جميع الفصول</Typography>
+        </AccordionSummary>
+        <AccordionDetails >
+          <Typography >
+          <div>
+            <div>
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead style={{backgroundColor:'#D4AC0D' }}>
+          <TableRow>
+            
+            <TableCell align="left" className={classes.hed1}>اسم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}>رقم المساق</TableCell>
+            <TableCell align="left" className={classes.hed1}></TableCell>
+
+          </TableRow>
+        </TableHead>
+        <TableBody>
+         
+        
+            {data.filter(course => (course.year === "-2") && (course.semester === "-2")).map(cor => (
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
+
+                     <TableRow className={classes.even}>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.name}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       {cor.number}
+                     </TableCell>
+                     <TableCell component="th" scope="row" className={classes.cor}>
+                       <Button onClick={() => handelDeleteCourse(cor.number)}>
+                       <DeleteIcon/>
+                       </Button>
+                     </TableCell>
+                    </TableRow>
+               ))}
+               </TableBody>
+      </Table>
+    </TableContainer>
+            </div>
+               </div>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+
+     
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
 
 
 

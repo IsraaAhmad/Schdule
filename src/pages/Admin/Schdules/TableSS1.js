@@ -160,16 +160,18 @@ function TableR(props) {
     { title: "اسم المساق",
     field: "course" ,
     lookup: course,
+    
       cellStyle: {
         //  fontFamily: 'Markazi Text',
          fontSize:'25px',
               },
+
               
     },
     { title: "اسم القسم",
     field: "department" ,
     lookup:department,
- 
+    onchange:console.log("doooone"),
       cellStyle: {
         //  fontFamily: 'Markazi Text',
          fontSize:'25px',
