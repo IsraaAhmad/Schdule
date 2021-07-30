@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import TextField from '@material-ui/core/TextField';
 import  { useEffect } from 'react';
+import axios from 'axios';
 
 
 
 
 
 
-function TableR(props) {
-  const {name} = props
+
+function TableR(Props) {
+  let {TableName , savedData} = Props
+  console.log("from top saved ="+ savedData)
+ 
+  const [savDate,setSavDate] = React.useState(savedData)
+  const [nameTable,setNameTable] = React.useState(TableName)
   
   const [data, setData] = useState([])
   const [course,setCourse] = React.useState({})
@@ -17,44 +23,128 @@ function TableR(props) {
   
 
 
-  const mapCourse =[
-    {id:0,name:'سيركت',dep:'كيماوي'},
-    {id:1,name:'الكترونيه',dep:'كهربا'},
-    {id:2,name:'نيوماركل',dep:'كيماوي'},
-    {id:3,name:'سيجنال',dep:'كهربا'}
-  ]
+  const mapCourse =[]
+  const mapDepartment =[]
 
-  const mapDepartment =[
-    {id:0,name:'كيماوي'},
-    {id:1,name:'كهربا'},
-    {id:2,name:'معماري'},
-    {id:3,name:'مدني'}
-  ]
+  
+  const course1 =() =>{
+    return new Promise((Resolve,Reject)=>{
+
+      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+  
+     
+      .then(res => {
+        // console.log(res)
+        //   console.log(res.data.response);
+          let w = res.data.response;
+          let x = 0
+
+          w.filter(course => (course.flagFrom === "true") ).map(row => (
+            mapCourse[x++] = {name:row.name}
+               ))
+
+          Resolve()
+         },
+          )
+          
+    })
+  }
+
+
+  const department1 =() =>{
+    return new Promise((Resolve,Reject)=>{
+      console.log("from use effect")
+      let url = "https://core-graduation.herokuapp.com/getAllDep"
+      let list1 =[]
+      let x = 0 
+    axios.get(url)
+          .then(res => {
+            console.log(res)
+              console.log(res.data.response);
+              res.data.response.map(row => (
+                mapDepartment[x++] = {name:row.name}
+  
+              ))
+              Resolve()
+            },
+   
+              )
+    
+
+       
+         },
+          )
+          
+    
+  }
+  const findInedx1 =(obj,da) =>{
+    for(let i = 0;i<obj.length;i++){
+      if (obj[i].name === da){
+
+        return i
+      }
+     }
+     return -1 
+ }
+
+  const initialData=() =>{
+
+    
+    console.log("form inital data")
+     let listd=[]
+     let x = 0 
+     console.log("saved mat="+savedData)
+     console.log("saveData mat="+savDate)
+     
+     savDate.filter(row => (row.fromOtherDep ==="true")&(row.toOtherDep ==="false") ).map(cor => (
+           listd[x++] = {time:cor.timeSolt,course:cor.courseName}
+
+    ))
+    
+    console.log("listd = ")
+    console.log(listd)
+    let newList = []
+    for (let i = 0;i<listd.length;i++){
+    
+      let  index = findInedx1(mapCourse,listd[i].course)
+      listd[i].course = index
+     let c = listd[i].time
+     console.log(c)
+
+     const x = c.split("/")
+     newList[i] = {course:index,FromTime:x[0],ToTime:x[1]}
+
+    }
+    
+    console.log(" after roooms listd = ")
+    console.log(listd)
+  
+    setData(newList)
+ 
+  }
 
   const FilledData = async() =>{
-   
+    await course1()
+     await department1()
+     initialData()
 
     let list1 ={}
     let list2 ={}
-    let list3 ={}
 
     let x = 0
     let y = 0
-    let z = 0 
   
-    mapCourse.map(row =>list3[z++] = row.name)
+    mapCourse.map(row =>list1[x++] = row.name)
+    mapDepartment.map(row =>list2[y++] = row.name)
 
-
-
-    
-    mapDepartment.map(row =>list2[x++] = row.name)
-
-          setCourse(list3)
+          setCourse(list1)
           setDepartment(list2)
   
  }
  useEffect(()=>{
-  FilledData()
+  console.log("from use effect")
+    FilledData()
+    console.log("end use effect")
 
      
 },[]) 
@@ -147,16 +237,7 @@ function TableR(props) {
     },
    
 
-    { title: "السنة الدراسية",
-    field: "type" ,
-    lookup: {10:'خامسة فصل ثاني',20:'خامسة فصل اول',30:'رابعة فصل ثاني',40:'رابعة فصل اول',50:'ثالثة فصل ثاني',60:'ثالثة فصل اول',70:'ثانية فصل ثاني',80:'ثانية فصل اول',90:'اولى فصل ثاني',100:'اولى فصل اول' },
- 
-      cellStyle: {
-        //  fontFamily: 'Markazi Text',
-         fontSize:'25px',
-              },
-              
-    },
+   
     { title: "اسم المساق",
     field: "course" ,
     lookup: course,
@@ -168,24 +249,51 @@ function TableR(props) {
 
               
     },
-    { title: "اسم القسم",
-    field: "department" ,
-    lookup:department,
-    onchange:console.log("doooone"),
-      cellStyle: {
-        //  fontFamily: 'Markazi Text',
-         fontSize:'25px',
-              },
-              
-    },
+   
     
+ ]
   
+ const handelAddInDataBase = (row) =>{
+  let d1 = department[row.department]
+  let c1 = course[row.course]
+ 
+  let f = row.FromTime
+  let t = row.ToTime
 
-    
+ console.log("Departmqnt = " + d1)
+  console.log("course = " + c1)
+  console.log("from time = " + f)
+  console.log("to time = " + t)
+  let time = f+"/"+t
 
-    
-  ]
-  
+
+let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+ +nameTable+"&courseIns=0&courseName="+c1+"&flag=1&timeSlot="+time+"&roomType=0&date=2020/2019"
+console.log("url="+ url)
+  axios.get(url).then(res => {console.log(res)},)
+
+        
+}
+
+const handelDeleteInDataBase =(row) =>{
+  let d1 = department[row.department]
+  let c1 = course[row.course]
+ 
+  let f = row.FromTime
+  let t = row.ToTime
+
+ console.log("Departmqnt = " + d1)
+  console.log("course = " + c1)
+  console.log("from time = " + f)
+  console.log("to time = " + t)
+  console.log("TableName = " + TableName)
+
+  let time = f+"/"+t
+  let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="+
+  TableName+"&courseIns=0&courseName="+c1+"&flag=1&timeSlot="+time+"&roomType=0&date=2020/2019"
+console.log(url)
+  axios.get(url).then(res => {console.log(res)},)
+}
   
 
 
@@ -195,22 +303,7 @@ function TableR(props) {
         className = "table"
         title=""
         data={data}
-       
-      //   components={{
-      //     Pagination: (props) =>  
-      //     <TablePagination
-      //     rowsPerPageOptions={[5, 10, 25]}
-      //     component="div"
-      //     count={data.length}
-      //     rowsPerPage={rowsPerPage}
-      //     page={page}
-      //     onPageChange={handleChangePage}
-      //     onRowsPerPageChange={handleChangeRowsPerPage}
-      //   />
-      //     }
-      // } 
-        
-
+      
         columns={columns}
         options={{
           searchFieldStyle:{
@@ -271,6 +364,7 @@ function TableR(props) {
 
           onRowAdd: (newRow) => new Promise((resolve, reject) => {
             const updatedRows = [...data, { id: Math.floor(Math.random() * 100), ...newRow }]
+            handelAddInDataBase(newRow)
             setTimeout(() => {
               setData(updatedRows)
               resolve()
@@ -278,6 +372,7 @@ function TableR(props) {
           }),
           onRowDelete: selectedRow => new Promise((resolve, reject) => {
             const index = selectedRow.tableData.id;
+            handelDeleteInDataBase(selectedRow)
             const updatedRows = [...data]
             updatedRows.splice(index, 1)
             setTimeout(() => {
@@ -285,16 +380,7 @@ function TableR(props) {
               resolve()
             }, 2000)
           }),
-          onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
-            const index=oldRow.tableData.id;
-            const updatedRows=[...data]
-            
-            updatedRows[index]=updatedRow
-            setTimeout(() => {
-              setData(updatedRows)
-              resolve()
-            }, 2000)
-          })
+       
 
         }}
        

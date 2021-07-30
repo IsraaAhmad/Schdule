@@ -113,7 +113,7 @@ export default function SimpleAccordion() {
     // axios.get("https://jsonplaceholder.typicode.com/todos/1")
     
         .then(res => {
-          console.log(res)
+          console.log("dataaaaaaaaaa")
             console.log(res.data.response);
   
             setData(res.data.response)

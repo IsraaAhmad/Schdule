@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TablePagination from '@material-ui/core/TablePagination';
 import './main.css'
+import TimerIcon from '@material-ui/icons/Timer';
 import { Grid } from '@material-ui/core';
 import { composeClasses } from '@material-ui/x-grid';
 import { CallMissedSharp, FlareSharp } from '@material-ui/icons';
@@ -14,15 +15,18 @@ import { useHistory ,useLocation } from 'react-router-dom';
 import { Link} from "react-router-dom";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
+import TurnedInIcon from '@material-ui/icons/TurnedIn';
 
 
 
 const empList = [
-  {name : "ف1عام2020", date: '2019/2020'},
-  {name : "ف1عام2021", date: '2019/2020'},
-  {name : "ف1عام2019", date: '2020/2021'},
-  {name : "ف2عام2019", date: '2020/2021'},
-  {name : "ف2عام2020", date: '2021/2022'},
+  {name : "ف1عام2020", date: '2019/2020',flag : '1'},
+  {name : "ف1عام2021", date: '2019/2020',flag : '2'},
+  {name : "ف1عام2019", date: '2020/2021',flag : '3'},
+  {name : "ف2عام2019", date: '2020/2021',flag : '1'},
+  {name : "ف2عام2020", date: '2021/2022',flag : '2'},
 ]
 const useStyles = makeStyles({
   mar:{
@@ -53,7 +57,32 @@ function TableR() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+ const handelIcon =(row) =>{
+   if (row.flag ==="1")
+      return <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
+       <div style={{fontFamily:'Markazi Text',fontSize:'25px',}}> في الانتظار </div>
+        <TimerIcon style={{color:'#F1C40F '}}/>
+      </div>
+
+      if (row.flag ==="2")
+      return <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
+      <div style={{fontFamily:'Markazi Text',fontSize:'25px',}}>جاهز</div>
+       <CheckCircleIcon style={{color:'#045F5F '}}/>
+     </div>
+      
+
+      if (row.flag ==="3")
+      return <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
+      <div style={{fontFamily:'Markazi Text',fontSize:'25px',}}>محفوظ</div>
+       <TurnedInIcon />
+     </div>
+     
+    
+
+ }
   const columns = [
+
+   
     
     { title: "اسم الجدول",
      field: "name",
@@ -74,13 +103,43 @@ function TableR() {
         fontSize:'25px',
         
        },
+      
     },
+
+    {
+      title: "حالة الجدول ",
+      field: "internal_action",
+      editable: false,
+      render: (rowData) =>(rowData&&handelIcon(rowData)),
+
+      cellStyle: {
+       
+        
+       },
+      },
 
     
 
     
   ]
-  
+  const handelOpenPage =(row) =>{
+    if(row.flag === "2"){
+      history.push({
+        pathname: '/view',
+        state: { name: row.name }
+      })
+    }
+    if(row.flag === "3"){
+      history.push({
+        pathname: '/tableCreate',
+        state: { name: row.name ,
+          index:3
+        }
+      })
+    }
+
+
+  }
   
 
 
@@ -108,24 +167,23 @@ function TableR() {
               <div style={{marginLeft:20}}>
 
             <EditIcon {...props} style={{color:'#045F5F'}} />
-              </div>
+              </div>,
+            
+
+
            
       }}
         actions={[
 
           {
-           
             icon: 'edit',
           tooltip: ' تعديل الجدول',
           onClick: (event, rowData) =>{
-            console.log(rowData.name)
-            history.push({
-              pathname: '/view',
-              state: { name: rowData.name }
-            })
-           
-          }
-          }
+            handelOpenPage(rowData)
+            }},
+            
+
+            
         ]}
      
 
