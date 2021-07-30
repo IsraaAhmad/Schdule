@@ -119,7 +119,7 @@ function TableR(Props) {
      console.log("saved mat="+savedData)
      console.log("saveData mat="+savDate)
      
-     savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="true") ).map(cor => (
+     savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="true")&(row.tableName===TableName )  ).map(cor => (
            listd[x++] = {time:cor.timeSolt,teacher:cor.courseIns,course:cor.courseName}
 
     ))

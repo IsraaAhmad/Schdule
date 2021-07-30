@@ -14,10 +14,10 @@ function TableR(Props) {
   let {TableName , savedData} = Props
   console.log("from top saved ="+ savedData)
   const [savDate,setSavDate] = React.useState(savedData)
+  const [nameTable,setNameTable] = React.useState(TableName)
   const  history  = useHistory();
 
 
-  const [nameTable,setNameTable] = React.useState(TableName)
   const [data, setData] = useState([])
   const [rooms,setRooms] = React.useState({})
   const [inst,setInst] = React.useState({})
@@ -52,11 +52,8 @@ function TableR(Props) {
 
   const room1 =() =>{
     return new Promise((Resolve,Reject)=>{
-
       axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
-  
-     
-      .then(res => {
+  .then(res => {
         console.log(res)
           console.log(res.data.response);
           let x = 1
@@ -129,7 +126,7 @@ function TableR(Props) {
      console.log("saved mat="+savedData)
      console.log("saveData mat="+savDate)
      
-     savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="false") ).map(cor => (
+     savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="false")&(row.tableName===TableName ) ).map(cor => (
            listd[x++] = {type:cor.roomType,teacher:cor.courseIns,course:cor.courseName}
 
     ))
@@ -187,20 +184,10 @@ function TableR(Props) {
     console.log("course = " + course1)
     console.log("tableName = " + nameTable)
 
-
-
-
   let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
    +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
   console.log("url="+ url)
-    axios.get(url)
-  // axios.get("https://jsonplaceholder.typicode.com/todos/1")
-  
-      .then(res => {
-        console.log(res)
-       
-          },
-          )
+    axios.get(url).then(res => {console.log(res)},)
 
           
   }

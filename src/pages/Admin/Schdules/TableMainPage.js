@@ -22,11 +22,11 @@ import TurnedInIcon from '@material-ui/icons/TurnedIn';
 
 
 const empList = [
-  {name : "ف1عام2020", date: '2019/2020',flag : '1'},
-  {name : "ف1عام2021", date: '2019/2020',flag : '2'},
-  {name : "ف1عام2019", date: '2020/2021',flag : '3'},
-  {name : "ف2عام2019", date: '2020/2021',flag : '1'},
-  {name : "ف2عام2020", date: '2021/2022',flag : '2'},
+  {name : "ف1عام2020",sem: 1,date: '2019/2020',flag : '1'},
+  {name : "ف1عام2021",sem: 2,date: '2019/2020',flag : '2'},
+  {name : "ف1عام2019",sem: 2,date: '2020/2021',flag : '3'},
+  {name : "ف2عام2019",sem: 1,date: '2020/2021',flag : '1'},
+  {name : "ف2عام2020",sem: 1,date: '2021/2022',flag : '2'},
 ]
 const useStyles = makeStyles({
   mar:{
@@ -94,6 +94,17 @@ function TableR() {
    
              }, 
     },
+    { title: "الفصل الدراسي  ",
+    field: "sem",
+    lookup:{1:'الفصل الاول',2:'الفصل الثاني'},
+    initialEditValue: '####/####', validate: rowData => rowData.date? true : 'يجب ادخال تاريخ الجدول ',
+    cellStyle: {
+        fontFamily: 'Markazi Text',
+        fontSize:'25px',
+        
+       },
+      
+    },
    
     { title: "تاريخ الجدول ",
     field: "date",
@@ -105,6 +116,7 @@ function TableR() {
        },
       
     },
+  
 
     {
       title: "حالة الجدول ",

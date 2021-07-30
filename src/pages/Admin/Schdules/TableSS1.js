@@ -21,6 +21,7 @@ function TableR(Props) {
   const [course,setCourse] = React.useState({})
   const [department,setDepartment] = React.useState({})
   
+  
 
 
   const mapCourse =[]
@@ -96,7 +97,7 @@ function TableR(Props) {
      console.log("saved mat="+savedData)
      console.log("saveData mat="+savDate)
      
-     savDate.filter(row => (row.fromOtherDep ==="true")&(row.toOtherDep ==="false") ).map(cor => (
+     savDate.filter(row => (row.fromOtherDep ==="true")&(row.toOtherDep ==="false")&(row.tableName===TableName )  ).map(cor => (
            listd[x++] = {time:cor.timeSolt,course:cor.courseName}
 
     ))

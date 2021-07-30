@@ -3,13 +3,25 @@ import { useHistory ,useLocation } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
-
+import Fade from '@material-ui/core/Fade';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-import Button from '@material-ui/core/Button';
+
+// Can be a string as well. Need to ensure each key-value pair ends with ;
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 
 const useStyles = makeStyles({
     pos:{
@@ -57,7 +69,8 @@ const useStyles = makeStyles({
         margin:10,
         color:'#008089',
         fontStyle:'bold'
-    }
+    },
+  
   
 });
 
@@ -67,15 +80,18 @@ export default function App() {
   const [flag,SetFlag] =React.useState(false);
   const [userName,SetUserName] =React.useState();
   const [password,SetPassword] =React.useState();
+  const [loading, setLoading] = React.useState(false);
 
-
+ 
 const handelUser = () =>{
+ 
  let url = "https://core-graduation.herokuapp.com/loginAuthorization?idUser="+userName+"&password="+password
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+    setLoading(true)
   axios.get(url)
-    
         .then(res => {
           console.log(res)
+          setLoading(false)
           history.push('./AdminHome')
           })
         .catch((error) => {
@@ -95,6 +111,15 @@ const handelOnChangePassword = (event) =>{
 }
   return (
     <div className={classes.pos}>
+    {loading?
+            <div className={classes.lod}>
+      <HashLoader  loading={loading} color='#008089' size={100} />
+    </div>
+
+
+
+    :
+    <div>
         <div className={classes.text}>تسجيل الدخول</div>
         <div className="ent" >
 
@@ -139,9 +164,12 @@ const handelOnChangePassword = (event) =>{
               </div>
       </Button>
       {flag&&<label  style={{ color: 'red',fontWeight: 'bold'}}>**اسم المستخ\م او كلمة المرور غير صحيحة **</label>}
+  
+    
+    </div>
+        </div>}
 
-
-        </div>
+    
        
     </div>
   );

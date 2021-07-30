@@ -5,8 +5,26 @@ import axios from 'axios';
 import { TablePagination } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import RingLoader from "react-spinners/RingLoader";
+import { makeStyles } from "@material-ui/core/styles";
+import { css } from "@emotion/react";
 
-
+const useStyles = makeStyles({
+  mar:{
+    margin:100,
+    width:1000,
+    
+  },
+  lod:{
+    margin:130,
+    width:800,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+  }
+});
 
 
 const empList = [
@@ -25,19 +43,19 @@ function TableR() {
   const [data, setData] = useState([])
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  const [loading, setLoading] = React.useState(false);
+ 
  
 const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.id
 let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep=60ddc9735b4d43f8eaaabf83&number="+id
+
 axios.get(url)
 // axios.get("https://jsonplaceholder.typicode.com/todos/1")
 
     .then(res => {
       console.log(res)
+    
         },
         )
 }
@@ -147,6 +165,7 @@ const handelEditInDataBase =(rowUp) =>{
   ]
   useEffect(()=>{
     let list1 =[];
+    setLoading(true)
      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
     // axios.get("https://jsonplaceholder.typicode.com/todos/1")
     
@@ -168,6 +187,7 @@ const handelEditInDataBase =(rowUp) =>{
                  location:location2,
                }
                list1.push(x)
+               setLoading(false)
                
              }
              
@@ -192,9 +212,22 @@ const handelEditInDataBase =(rowUp) =>{
   },[]) 
   
 
-
+  const classes = useStyles();
   return (
+    
     <div className="App">
+      {loading?
+         <div className={classes.lod}>
+           <div style={{fontFamily: 'Markazi Text',
+            fontSize:'25px',}}> ...تحميل
+             </div>
+         <RingLoader  loading={loading} color='#045F5F' size={100} />
+       </div>
+    
+    :
+    
+    
+    
       <MaterialTable
         className = "table"
         title=""
@@ -320,7 +353,7 @@ const handelEditInDataBase =(rowUp) =>{
         }}
        
         
-      />
+      />}
     </div>
   );
 }
