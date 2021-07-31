@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
     boxShadow:3,
+    width:1000,
+    margin:130
     
    
   },
@@ -157,7 +159,7 @@ export default function CSSGrid() {
   const [room, setRoom] = React.useState('');
   const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
-  const [name,setName] = React.useState('');
+ 
   const [date,setDate] = React.useState('');
   const [currentSem,setCurrentSem] = React.useState('');
 
@@ -167,9 +169,7 @@ export default function CSSGrid() {
   const [openRoom, setOpenRoom] = React.useState(false);
   const [openTime, setOpenTime] = React.useState(false);
  
-  const handelOnChangeName = (event) =>{
-    setName(event.target.value)
-  }
+  
   
   const handelNext =  () =>{ 
     let date1 
@@ -216,19 +216,19 @@ export default function CSSGrid() {
     if (value === "s2"){
       value1 = "1"
     }
-    console.log("name:  "+ name)
     console.log("date:  "+ date1)
     console.log("sem:   "+ value1)
 
 
-    let url = "https://core-graduation.herokuapp.com/addTable?idDep=60ddc9735b4d43f8eaaabf83&name="+
-    name+"&year="+date1+"&semester="+value1+"&status=draft"
-    axios.get(url).then(res => {console.log(res)},)
+    // let url = "https://core-graduation.herokuapp.com/addTable?idDep=60ddc9735b4d43f8eaaabf83&name="+
+    // name+"&year="+date1+"&semester="+value1+"&status=draft"
+    // axios.get(url).then(res => {console.log(res)},)
 
+    
      history.push({
-      pathname: './tableCreate',
-      state: { name: name ,
-        index:3
+      pathname: './tableTime',
+      state: { sem: value1 ,date:date1,flag :"0"
+       
       }
     })
   }
@@ -316,7 +316,7 @@ export default function CSSGrid() {
   }))(InputBase);
 
   return (
-    <div>
+    <div >
       <div className={classes.hed}>
         بيانات الجدول 
       </div>
@@ -334,27 +334,7 @@ export default function CSSGrid() {
           </Grid>
           
 
-        <Grid item xs={10}>
-          
-          <TextField 
-          inputProps={{min: 0, style: { textAlign: 'right' ,
-        
-    fontFamily:'Markazi Text',
-    fontSize:'20px',}}}
-          id="outlined-basic"
-          label=" "
-          onChange={handelOnChangeName}
-          variant="outlined"
-          required='true'
-          className={classes.textField}
-          style={{ borderColor: 'red' }}
-          />
-        </Grid>
-
-
-        <Grid item xs={2}>
-          <div className={classes.papertext}>اسم الجدول </div>
-          </Grid>
+       
           <Grid item xs={12}>
           <div style={{height:10}}></div>
           </Grid>

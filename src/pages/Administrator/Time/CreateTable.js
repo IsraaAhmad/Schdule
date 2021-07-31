@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import TableTime from "./TableCourse.js";
 import Test from "./Test.js"
-import MainPage from "./MainPage";
+import Create from "./Create";
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,7 +23,7 @@ export default function App() {
     <div style={{height:1000}}className="back">
      <DrawerAdminstrator/>
     <div className={classes.tot}>
-       <MainPage/> 
+       <Create/> 
        {/* <Test/> */}
     </div>
     </div>

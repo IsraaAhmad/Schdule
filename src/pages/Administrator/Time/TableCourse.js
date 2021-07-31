@@ -4,6 +4,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import TableTime from "./TableCourse.js";
 import Divider from '@material-ui/core/Divider';
 import T from "./T.js"
+import  { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -40,8 +41,41 @@ const useStyles = makeStyles({
   }
 });
 
-export default function App() {
+export default function App(Props) {
   const classes = useStyles();
+  const {courseList,setCourseList,labList,setLabList} = Props
+  let str = courseList
+  const arr = str.split("*")
+  const [a0, setA0] = React.useState(arr[0]);
+  const [a1, setA1] = React.useState(arr[1]);
+  const [a2, setA2] = React.useState(arr[2]);
+  const [a3, setA3] = React.useState(arr[3]);
+  const [a4, setA4] = React.useState(arr[4]);
+  const [a5, setA5] = React.useState(arr[5]);
+
+
+  
+  console.log("labList")
+  console.log(labList)
+
+  useEffect(()=>{
+
+    setCourseList("put in from course List")
+    console.log("from course")
+    console.log(labList)
+    let list1 = []
+    // axios.get("https://core-graduation.herokuapp.com/getTables?idDep=60ddc9735b4d43f8eaaabf83")
+    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+    
+        // .then(res => {
+        //   console.log(res)
+        //     console.log(res.data.response);
+            
+             
+             
+        //       },)
+            
+  },[])
   return (
     <div>
     {/* <DrawerAdminstrator/> */}
@@ -58,7 +92,7 @@ export default function App() {
 
           
          </div>
-         <div>تفعيل</div>
+         {/* <div>تفعيل</div> */}
          <div style={{marginRight:35}}>
          الدوام من الساعة - 
            الدوام الى الساعة 

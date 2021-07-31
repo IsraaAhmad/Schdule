@@ -20,6 +20,8 @@ function TableR(Props) {
 
   const [data, setData] = useState([])
   const [rooms,setRooms] = React.useState({})
+
+
   const [inst,setInst] = React.useState({})
   const [course,setCourse] = React.useState({})
 
@@ -28,6 +30,7 @@ function TableR(Props) {
   ]
   const mapIns=[]
   const  mapCourse=[]
+ 
   const course1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
@@ -160,18 +163,23 @@ function TableR(Props) {
      let list1 ={}
      let list2 ={}
      let list3 ={}
+   
  
      let x = 0
      let y = 0
      let z = 0 
+     
      mapRoom.map(row =>list1[x++] = row.number)
  
      mapIns.map(row =>list2[y++] = row.name)
    
      mapCourse.map(row =>list3[z++] = row.name)
+     
            setRooms(list1) 
            setInst(list2)
            setCourse(list3)
+          
+
    
   }
   const handelAddInDataBase = (row) =>{

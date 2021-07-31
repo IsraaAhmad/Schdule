@@ -20,10 +20,15 @@ function TableR(Props) {
   const [data, setData] = useState([])
   const [course,setCourse] = React.useState({})
   const [department,setDepartment] = React.useState({})
+  const [days,setDays] = React.useState({})
   
   
 
-
+  const mapDays =[{days:'احد,ثلاثا,خميس'},
+  {days:'اثنين,اربعاء'},
+  {days:'احد'},
+  {days:'اربعاء'},
+  {days:'ثلاثاء'},]
   const mapCourse =[]
   const mapDepartment =[]
 
@@ -88,6 +93,16 @@ function TableR(Props) {
      return -1 
  }
 
+ const findInedxD =(obj,da) =>{
+  for(let i = 0;i<obj.length;i++){
+    if (obj[i].days === da){
+
+      return i
+    }
+   }
+   return -1 
+}
+
   const initialData=() =>{
 
     
@@ -109,11 +124,16 @@ function TableR(Props) {
     
       let  index = findInedx1(mapCourse,listd[i].course)
       listd[i].course = index
+
+      
      let c = listd[i].time
      console.log(c)
 
      const x = c.split("/")
-     newList[i] = {course:index,FromTime:x[0],ToTime:x[1]}
+     let  indexD = findInedxD(mapDays,x[2])
+     
+
+     newList[i] = {course:index,FromTime:x[0],ToTime:x[1],days:indexD}
 
     }
     
@@ -131,15 +151,19 @@ function TableR(Props) {
 
     let list1 ={}
     let list2 ={}
+    let list4 ={}
 
     let x = 0
     let y = 0
+    let w = 0
   
     mapCourse.map(row =>list1[x++] = row.name)
     mapDepartment.map(row =>list2[y++] = row.name)
+    mapDays.map(row =>list4[w++] = row.days)
 
           setCourse(list1)
           setDepartment(list2)
+          setDays(list4)
   
  }
  useEffect(()=>{
@@ -150,6 +174,18 @@ function TableR(Props) {
      
 },[]) 
   const columns = [
+
+    { title: "الايام ",
+    field: "days" ,
+    lookup: days,
+    
+      cellStyle: {
+        //  fontFamily: 'Markazi Text',
+         fontSize:'25px',
+              },
+
+              
+    },
 
     { title: "الى الساعة",
     field: "ToTime" ,
@@ -257,6 +293,7 @@ function TableR(Props) {
  const handelAddInDataBase = (row) =>{
   let d1 = department[row.department]
   let c1 = course[row.course]
+  let day1 = days[row.days]
  
   let f = row.FromTime
   let t = row.ToTime
@@ -265,7 +302,7 @@ function TableR(Props) {
   console.log("course = " + c1)
   console.log("from time = " + f)
   console.log("to time = " + t)
-  let time = f+"/"+t
+  let time = f+"/"+t+"/"+day1
 
 
 let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
@@ -279,6 +316,7 @@ console.log("url="+ url)
 const handelDeleteInDataBase =(row) =>{
   let d1 = department[row.department]
   let c1 = course[row.course]
+  let day1 = days[row.days]
  
   let f = row.FromTime
   let t = row.ToTime
@@ -289,7 +327,7 @@ const handelDeleteInDataBase =(row) =>{
   console.log("to time = " + t)
   console.log("TableName = " + TableName)
 
-  let time = f+"/"+t
+  let time = f+"/"+t+"/"+day1
   let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="+
   TableName+"&courseIns=0&courseName="+c1+"&flag=1&timeSlot="+time+"&roomType=0&date=2020/2019"
 console.log(url)

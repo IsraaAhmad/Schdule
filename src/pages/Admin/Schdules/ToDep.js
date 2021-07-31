@@ -21,7 +21,15 @@ function TableR(Props) {
   const [course,setCourse] = React.useState({})
   const [inst,setInst] = React.useState({})
   const [department,setDepartment] = React.useState({})
+  const [days,setDays] = React.useState({})
   
+  
+
+  const mapDays =[{days:'احد,ثلاثا,خميس'},
+  {days:'اثنين,اربعاء'},
+  {days:'احد'},
+  {days:'اربعاء'},
+  {days:'ثلاثاء'},]
 
 
   const mapCourse =[]
@@ -110,6 +118,16 @@ function TableR(Props) {
      return -1 
  }
 
+ const findInedxD =(obj,da) =>{
+  for(let i = 0;i<obj.length;i++){
+    if (obj[i].days === da){
+
+      return i
+    }
+   }
+   return -1 
+}
+
   const initialData=() =>{
 
     
@@ -139,7 +157,8 @@ function TableR(Props) {
      console.log(c)
 
      const x = c.split("/")
-     newList[i] = {course:index,teacher:index1,FromTime:x[0],ToTime:x[1]}
+     let  indexD = findInedxD(mapDays,x[2])
+     newList[i] = {course:index,teacher:index1,FromTime:x[0],ToTime:x[1],days:indexD}
 
     }
     
@@ -159,17 +178,21 @@ function TableR(Props) {
     let list1 ={}
     let list2 ={}
     let list3 ={}
+    let list4 = {}
 
     let x = 0
     let y = 0
     let z = 0
+    let w = 0
   
     mapCourse.map(row =>list1[x++] = row.name)
     mapDepartment.map(row =>list2[y++] = row.name)
     mapIns.map(row =>list3[z++] = row.name)
+    mapDays.map(row =>list4[w++] = row.days)
           setCourse(list1)
           setDepartment(list2)
           setInst(list3)
+          setDays(list4)
   
  }
  useEffect(()=>{
@@ -180,6 +203,17 @@ function TableR(Props) {
      
 },[]) 
   const columns = [
+    { title: "الايام ",
+    field: "days" ,
+    lookup: days,
+    
+      cellStyle: {
+        //  fontFamily: 'Markazi Text',
+         fontSize:'25px',
+              },
+
+              
+    },
 
     { title: "الى الساعة",
     field: "ToTime" ,

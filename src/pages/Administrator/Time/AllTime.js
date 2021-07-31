@@ -16,10 +16,14 @@ import TableLab from './TableLab';
 import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
 import TableCourse from "./TableCourse.js";
+import  { useEffect } from 'react';
+import axios from 'axios';
 import DrawerAdminstrator from "../DrawerAdminstrator.js"
+import { useHistory ,useLocation } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+  
 
   return (
     <div
@@ -74,14 +78,48 @@ const useStyles = makeStyles((theme) => ({
 export default function ScrollableTabsButtonPrevent() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [courseList,setCourseList]=React.useState(0);
+  const [labList,setLabList]=React.useState(0);
+  const [flag,setFlag] =React.useState(false);
+  const  location  = useLocation();
+  const  history  = useHistory();
+  const {state} = location;
+  // const [listCourse,setListCourse] =React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  useEffect(()=>{
+    let d0 ="08:30/16:30,1,12:00/13:00,1"
+    let d1 ="09:30/16:30,0,02:00/03:00,0"
+    let d2 ="10:30/16:30,1,12:30/13:30,0"
+    let d3 ="11:30/16:30,0,12:00/13:00,1"
+    let d4 ="12:30/16:30,1,12:00/13:00,1"
+    let d5 ="13:30/16:30,1,12:00/13:00,1"
+    let arr= d0+"*"+d1+"*"+d2+"*"+d3+"*"+d4+"*"+d5
+    setLabList(arr)
+    setFlag(true)
+    if(state.flag === "0"){
+    let list1 = []
+    // axios.get("https://core-graduation.herokuapp.com/getTables?idDep=60ddc9735b4d43f8eaaabf83")
+    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+    
+        // .then(res => {
+        //   console.log(res)
+        //     console.log(res.data.response);
+            
+             
+             
+        //       },)
+            }
+ },[value])
+
   return (
     <div>
     <DrawerAdminstrator/>
+    {flag&&<div>
+
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs
@@ -99,22 +137,22 @@ export default function ScrollableTabsButtonPrevent() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-         <TableLab/>
+         <TableLab courseList={courseList} setCourseList={setCourseList} 
+         labList={labList} setLabList={setLabList}
+         />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <TableCourse/>
+      <TableCourse courseList={courseList} setCourseList={setCourseList} 
+         labList={labList} setLabList={setLabList}/>
       </TabPanel>
       <div className={classes.bot}>
 
-      <Button variant="contained"  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>
-           حفظ
-       </Button>
-      <Button variant="contained"  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>
-           حفظ وانشاء
-      </Button>
+      
+    
       </div>
   
-    </div>
+         </div>
+    </div>}
           </div>
   );
 }

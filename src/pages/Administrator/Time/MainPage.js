@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import {MTableToolbar} from 'material-table';
 import  { useEffect } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TablePagination from '@material-ui/core/TablePagination';
-import './main.css'
+
 import TimerIcon from '@material-ui/icons/Timer';
 import { Grid } from '@material-ui/core';
 import { composeClasses } from '@material-ui/x-grid';
@@ -19,7 +20,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
-import axios from 'axios';
 
 
 
@@ -41,11 +41,13 @@ const useStyles = makeStyles({
     marginTop:100,
     marginRight:100,
 
-    width:1000,
+    width:800,
   }
 });
 
 function TableR() {
+  const arr = ['2017/2018','2018/2019','2019/2020','2020/2021','2021/2022','2022/2023',
+  '2023/2024','2024/2025','2025/2026','2026/2027']
   const  history  = useHistory();
   const classes = useStyles();
   const [data, setData] = useState([])
@@ -88,20 +90,10 @@ function TableR() {
 
    
     
-    { title: "اسم الجدول",
-     field: "name",
-     initialEditValue: '####', validate: rowData => rowData.name? true : 'يجب ادخال اسم الجدول ',
-     cellStyle: {
-      // fontFamily: 'Markazi Text',
-      fontSize:'25px',
-     
-   
-             }, 
-    },
-    { title: "الفصل الدراسي  ",
+  
+    { title: "الفصل الدراسي",
     field: "sem",
-    
-    initialEditValue: '####/####', validate: rowData => rowData.date? true : 'يجب ادخال تاريخ الجدول ',
+    lookup:{10:'فصل اول',20:'فصل ثاني'},
     cellStyle: {
         fontFamily: 'Markazi Text',
         fontSize:'25px',
@@ -112,6 +104,8 @@ function TableR() {
    
     { title: "تاريخ الجدول ",
     field: "date",
+    lookup:{0:'2017/2018',1:'2018/2019',2:'2019/2020',3:'2020/2021',4:'2021/2022',5:'2022/2023'
+    ,6:'2023/2024',7:'2024/2025',8:'2025/2026',9:'2026/2027'},
     cellStyle: {
         fontFamily: 'Markazi Text',
         fontSize:'25px',
@@ -121,37 +115,20 @@ function TableR() {
     },
   
 
-    {
-      title: "حالة الجدول ",
-      field: "mode",
-      editable: false,
-      render: (rowData) =>(rowData&&handelIcon(rowData)),
-
-      cellStyle: {
-       
-        
-       },
-      },
+   
 
     
 
     
   ]
   const handelOpenPage =(row) =>{
-    if(row.flag === "2"){
+ 
       history.push({
-        pathname: '/view',
-        state: { name: row.name }
+        pathname: '/tableTime',
+        
       })
-    }
-    if(row.flag === "3"){
-      history.push({
-        pathname: '/tableCreate',
-        state: { name: row.name ,
-          index:3
-        }
-      })
-    }
+    
+  
 
 
   }
@@ -168,57 +145,58 @@ function TableR() {
              
              for (let i = 0;i<w.length ; i++){
                let n1 = w[i].name
-               let sem1 = "فصل اول"
-               if(w[i].semester === "2"){ sem1 = "فصل ثاني"}
+               let sem1 = 10
+               if(w[i].semester === "2"){ sem1 = 20}
                let flag1 =-1
                if(w[i].status ==="new" || w[i].status ==="draft"){flag1 ="3"}
                else if(w[i].status ==="proc"){flag1="1"}
                else if(w[i].status === "done"){flag1="2"}
-
+               let indexYear = -1
                let year1 = w[i].year
+               for(let k=0;k<arr.length;k++){
+                   if(arr[k] === year1) indexYear = k 
+               }
+
              
                let x={
                  name:n1,
                  sem:sem1,
-                 date:year1,
+                 date:indexYear,
                  flag:flag1
                }
                list1.push(x)
                
               
              }
-             
              setData(list1)
              console.log("list1")
              console.log(list1)
              console.log("data")
-             console.log(data)
-
-               
-
-
-          
-            // setData(res.data.response)
-          },
-
-          
-            
-            
-            )
+             console.log(data) },)
       
- },[flagHandel]) 
-  
+ },[]) 
+  const HandelAddSem =() =>{
+      console.log("hi")
+      history.push('./createSemester')
+      
+  }
 
 
   return (
     <div className="App">
+        <div>
+        <Button variant="contained" onClick={HandelAddSem}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
+           اضافة فصل جديد 
+      </Button>
+        </div>
       <MaterialTable
         
         className = "table"
-        title=""
+        title={<span style={{ fontFamily:'Markazi Text',fontSize:'35px',}}>        أوقات الدوام للفصول الدرسية      </span>}
+        
         components={{
           Toolbar: (props) => (
-            <div style={{ height:1 }}>
+            <div >
               <MTableToolbar {...props} />
             </div>
           )
@@ -263,9 +241,9 @@ function TableR() {
             
           },
           
-          search:false,
+          search:true,
           paging:false,
-          exportButton: false,
+          exportButton: true,
           exportDelimiter:"doc",
           actionsColumnIndex:0,
           addRowPosition:'first',
@@ -314,8 +292,7 @@ function TableR() {
       }}
         
         editable={{
-          
-          
+         
 
           
           onRowDelete: selectedRow => new Promise((resolve, reject) => {
