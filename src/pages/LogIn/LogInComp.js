@@ -70,6 +70,18 @@ const useStyles = makeStyles({
         color:'#008089',
         fontStyle:'bold'
     },
+    lod:{
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center',
+      padding:'30px',
+      margin: '30px',
+      position:'absolute',
+      right: 850,
+      top:280,
+      
+
+    }
   
   
 });
@@ -110,7 +122,7 @@ const handelOnChangePassword = (event) =>{
   SetPassword(event.target.value)
 }
   return (
-    <div className={classes.pos}>
+    <div >
     {loading?
             <div className={classes.lod}>
       <HashLoader  loading={loading} color='#008089' size={100} />
@@ -119,7 +131,7 @@ const handelOnChangePassword = (event) =>{
 
 
     :
-    <div>
+    <div className={classes.pos}>
         <div className={classes.text}>تسجيل الدخول</div>
         <div className="ent" >
 

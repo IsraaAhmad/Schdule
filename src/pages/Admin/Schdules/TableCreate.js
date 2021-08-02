@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import  { useEffect } from 'react';
@@ -11,9 +12,9 @@ import TimeForTeacher from './TimeForTeacher.js'
 import TableSS from "./TableSS";
 import TableSS1 from "./TableSS1";
 import DataTable from "./DataTable"
-import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
 import DrawerAdmin from "../DrawerAdmin.js";
+import BeatLoader from "react-spinners/BeatLoader";
 import ToDep from "./ToDep.js"
 import "./b1.css"
 import { useHistory ,useLocation } from 'react-router-dom';
@@ -82,7 +83,17 @@ const useStyles = makeStyles((theme) => ({
   color:'white',
   fontFamily:'Markazi Text',
   fontSize:'30px'
+  },
+  lod:{
+    margin:250,
+    width:800,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
   }
+
 }));
 
 export default function ScrollableTabsButtonPrevent(props) {
@@ -94,6 +105,10 @@ export default function ScrollableTabsButtonPrevent(props) {
   const [flag,setFlag] = React.useState(false);
   const [savedData,setSavedDate] = React.useState(0);
   const [value, setValue] = React.useState(state.index);
+  const [loading, setLoading] = React.useState(false);
+
+
+
   const testing = () =>{
     console.log(savedData)
   }
@@ -103,6 +118,7 @@ export default function ScrollableTabsButtonPrevent(props) {
    
   };
   useEffect(()=>{
+    // setLoading(true)
       
       axios.get("https://core-graduation.herokuapp.com/getFromDraft?idDep=60ddc9735b4d43f8eaaabf83")
       .then(res => {
@@ -111,6 +127,7 @@ export default function ScrollableTabsButtonPrevent(props) {
         console.log("SSSSSSSSSSSSSSs")
           console.log(savedData)
           setFlag(true)
+          setLoading(false)
         }, 
             )
       }
@@ -118,8 +135,15 @@ export default function ScrollableTabsButtonPrevent(props) {
   return (
     <div>
 <DrawerAdmin/>
-<Button onClick={testing}>click here</Button>
-<div>name from state = {state.name}</div>
+{loading?
+         <div className={classes.lod}>
+         
+         <BeatLoader  loading={loading} color='#045F5F' size={30} margin ={3} /> 
+       </div>
+    
+    :
+    <div>
+
     {flag&&<div className={classes.root} className="b1">
       <AppBar position="static" >
         <Tabs
@@ -163,7 +187,8 @@ export default function ScrollableTabsButtonPrevent(props) {
         حفظ وانشاء
       </Button>
       </div>
-  
+    
+    </div>}
     </div>}
           </div>
   );

@@ -19,6 +19,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
+
+import BeatLoader from "react-spinners/BeatLoader";
 import axios from 'axios';
 
 
@@ -42,7 +44,17 @@ const useStyles = makeStyles({
     marginRight:100,
 
     width:1000,
-  }
+  },
+  
+ lod:{
+  margin:100,
+  width:800,
+  display:'flex',
+  flexDirection:'column',
+  justifyContent:'center',
+  alignContent:'center',
+  alignItems:'center'
+}
 });
 
 function TableR() {
@@ -51,6 +63,8 @@ function TableR() {
   const [data, setData] = useState([])
   const [flagHandel,setFlagHandel] =useState(false);
   const [page, setPage] = React.useState(0);
+  
+const [loading, setLoading] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
   const handleChangePage = (event, newPage) => {
@@ -158,6 +172,7 @@ function TableR() {
 
   useEffect(()=>{
     let list1 = []
+    setLoading(true)
     axios.get("https://core-graduation.herokuapp.com/getTables?idDep=60ddc9735b4d43f8eaaabf83")
     // axios.get("https://jsonplaceholder.typicode.com/todos/1")
     
@@ -194,7 +209,7 @@ function TableR() {
              console.log("data")
              console.log(data)
 
-               
+               setLoading(false)
 
 
           
@@ -212,6 +227,13 @@ function TableR() {
 
   return (
     <div className="App">
+       {loading?
+         <div className={classes.lod}>
+         
+         <BeatLoader  loading={loading} color='#045F5F' size={30} margin ={3} /> 
+       </div>
+    
+      :
       <MaterialTable
         
         className = "table"
@@ -333,6 +355,8 @@ function TableR() {
        
         
       />
+      
+   }
     </div>
   );
 }

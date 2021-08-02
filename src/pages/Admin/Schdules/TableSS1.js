@@ -3,9 +3,26 @@ import MaterialTable from 'material-table';
 import TextField from '@material-ui/core/TextField';
 import  { useEffect } from 'react';
 import axios from 'axios';
+import { makeStyles } from "@material-ui/core/styles";
+import BeatLoader from "react-spinners/BeatLoader";
 
 
-
+const useStyles = makeStyles({
+  mar:{
+    margin:100,
+    width:1000,
+    
+  },
+  lod:{
+    margin:100,
+    width:800,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+  }
+});
 
 
 
@@ -16,7 +33,7 @@ function TableR(Props) {
  
   const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
-  
+  const [loading, setLoading] = React.useState(false);
   const [data, setData] = useState([])
   const [course,setCourse] = React.useState({})
   const [department,setDepartment] = React.useState({})
@@ -164,9 +181,11 @@ function TableR(Props) {
           setCourse(list1)
           setDepartment(list2)
           setDays(list4)
+          setLoading(false)
   
  }
  useEffect(()=>{
+   setLoading(true)
   console.log("from use effect")
     FilledData()
     console.log("end use effect")
@@ -335,9 +354,17 @@ console.log(url)
 }
   
 
+const classes = useStyles();
 
   return (
     <div className="App">
+       {loading?
+         <div className={classes.lod}>
+         
+         <BeatLoader  loading={loading} color='#045F5F' size={30} margin ={3} /> 
+       </div>
+    
+    :
       <MaterialTable
         className = "table"
         title=""
@@ -424,7 +451,7 @@ console.log(url)
         }}
        
         
-      />
+      />}
     </div>
   );
 }

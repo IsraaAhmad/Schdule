@@ -99,6 +99,16 @@ export default function ScrollableTabsButtonPrevent() {
     let d5 ="13:30/16:30,1,12:00/13:00,1"
     let arr= d0+"*"+d1+"*"+d2+"*"+d3+"*"+d4+"*"+d5
     setLabList(arr)
+
+    let b0 ="08:30/16:30,1,12:00/13:00,1,1,1"
+    let b1 ="09:30/16:30,0,02:00/03:00,1.5,2,0"
+    let b2 ="10:30/16:30,1,12:30/13:30,3,3,0"
+    let b3 ="11:30/16:30,0,12:00/13:00,1,1,1"
+    let b4 ="12:30/16:30,1,12:00/13:00,3,2,1"
+    let b5 ="13:30/16:30,1,12:00/13:00,2,3,1"
+    let arr1= b0+"*"+b1+"*"+b2+"*"+b3+"*"+b4+"*"+b5
+    setCourseList(arr1)
+
     setFlag(true)
     if(state.flag === "0"){
     let list1 = []

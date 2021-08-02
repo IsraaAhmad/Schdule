@@ -5,6 +5,8 @@ import TableTime from "./TableCourse.js";
 import Divider from '@material-ui/core/Divider';
 import T from "./T.js"
 import  { useEffect } from 'react';
+import { Button } from '@material-ui/core';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -45,7 +47,7 @@ export default function App(Props) {
   const classes = useStyles();
   const {courseList,setCourseList,labList,setLabList} = Props
   let str = courseList
-  const arr = str.split("*")
+   const arr = str.split("*")
   const [a0, setA0] = React.useState(arr[0]);
   const [a1, setA1] = React.useState(arr[1]);
   const [a2, setA2] = React.useState(arr[2]);
@@ -54,15 +56,23 @@ export default function App(Props) {
   const [a5, setA5] = React.useState(arr[5]);
 
 
+
   
   console.log("labList")
   console.log(labList)
 
+  const HandelSave =() =>{
+  
+    
+    setCourseList(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
+    console.log("this is all data after change")
+    console.log(courseList)
+  }
   useEffect(()=>{
 
     setCourseList("put in from course List")
     console.log("from course")
-    console.log(labList)
+    console.log(courseList)
     let list1 = []
     // axios.get("https://core-graduation.herokuapp.com/getTables?idDep=60ddc9735b4d43f8eaaabf83")
     // axios.get("https://jsonplaceholder.typicode.com/todos/1")
@@ -100,18 +110,21 @@ export default function App(Props) {
           </div>
          <div>اليوم</div>
      </div>
-     <div><T backColor="white" day ="السبت"/></div>
+     <div><T backColor="white" day ="السبت"  data ={arr[0]} setData={setA0}/></div>
      <Divider variant="middle"/>
-     <div><T backColor="white" day ="الاحد"/></div>
+     <div><T backColor="white" day ="الاحد" data ={arr[1]} setData={setA1}/></div>
      <Divider variant="middle"/>
-     <div><T backColor="white" day ="الاثنين"/></div>
+     <div><T backColor="white" day ="الاثنين" data ={arr[2]} setData={setA2}/></div>
      <Divider variant="middle"/>
-     <div><T backColor="white" day ="الثلاثاء"/></div>
+     <div><T backColor="white" day ="الثلاثاء" data ={arr[3]} setData={setA3}/></div>
      <Divider variant="middle"/>
-     <div><T backColor="white" day ="الاربعاء"/></div>
+     <div><T backColor="white" day ="الاربعاء" data ={arr[4]} setData={setA4}/></div>
      <Divider variant="middle"/>
-     <div><T backColor="white" day ="الخميس"/></div>
+     <div><T backColor="white" day ="الخميس" data ={arr[5]} setData={setA5}/></div>
      <Divider variant="middle"/>
+     <Button variant="contained" onClick={HandelSave} style={{margin:40,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>
+           حفظ
+       </Button>
     </div>
     </div>
   );

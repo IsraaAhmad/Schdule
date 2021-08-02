@@ -3,8 +3,27 @@ import MaterialTable from 'material-table';
 import TextField from '@material-ui/core/TextField';
 import  { useEffect } from 'react';
 import axios from 'axios';
+import BeatLoader from "react-spinners/BeatLoader";
+import { makeStyles } from "@material-ui/core/styles";
 
 
+
+const useStyles = makeStyles({
+  mar:{
+    margin:100,
+    width:1000,
+    
+  },
+  lod:{
+    margin:100,
+    width:800,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+  }
+});
 
 
 
@@ -13,14 +32,17 @@ import axios from 'axios';
 function TableR(Props) {
   let {TableName , savedData} = Props
   console.log("from top saved ="+ savedData)
- 
+  const [rooms,setRooms] = React.useState({})
   const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
-  
+  const [loading, setLoading] = React.useState(false);
+
+const classes = useStyles();
   const [data, setData] = useState([])
   const [course,setCourse] = React.useState({})
   const [inst,setInst] = React.useState({})
   const [department,setDepartment] = React.useState({})
+ 
   const [days,setDays] = React.useState({})
   
   
@@ -35,8 +57,36 @@ function TableR(Props) {
   const mapCourse =[]
   const mapDepartment =[]
   const mapIns=[]
+  const mapRoom=[
+    {name:"قاعة تدريس"}
+  ]
 
   
+  const room1 =() =>{
+    return new Promise((Resolve,Reject)=>{
+      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
+  .then(res => {
+        console.log(res)
+        console.log("*********")
+          console.log(res.data.response);
+          let x = 1
+          res.data.response.filter(room => (room.type === "مختبر") ).map(cor => (
+            
+            mapRoom[x++] = {name:cor.name}
+               ))
+               setTimeout(() => {
+                setSavDate(savedData)
+               
+              }, 2000)
+         
+          Resolve()
+         },
+          )
+          
+    })
+  }
+
+
   const course1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
@@ -127,6 +177,15 @@ function TableR(Props) {
    }
    return -1 
 }
+const findInedx =(obj,da) =>{
+  for(let i = 0;i<obj.length;i++){
+    if (obj[i].name === da){
+
+      return i
+    }
+   }
+   return -1 
+}
 
   const initialData=() =>{
 
@@ -138,7 +197,7 @@ function TableR(Props) {
      console.log("saveData mat="+savDate)
      
      savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="true")&(row.tableName===TableName )  ).map(cor => (
-           listd[x++] = {time:cor.timeSolt,teacher:cor.courseIns,course:cor.courseName}
+           listd[x++] = {room:cor.roomType,time:cor.timeSolt,teacher:cor.courseIns,course:cor.courseName}
 
     ))
     
@@ -146,7 +205,10 @@ function TableR(Props) {
     console.log(listd)
     let newList = []
     for (let i = 0;i<listd.length;i++){
-    
+      let indexR= findInedx(mapRoom,listd[i].room)
+      listd[i].room = indexR
+
+
       let  index = findInedx1(mapCourse,listd[i].course)
       listd[i].course = index
 
@@ -158,7 +220,7 @@ function TableR(Props) {
 
      const x = c.split("/")
      let  indexD = findInedxD(mapDays,x[2])
-     newList[i] = {course:index,teacher:index1,FromTime:x[0],ToTime:x[1],days:indexD}
+     newList[i] = {room:indexR,course:index,teacher:index1,FromTime:x[0],ToTime:x[1],days:indexD}
 
     }
     
@@ -173,29 +235,36 @@ function TableR(Props) {
     await course1()
      await department1()
      await inst1()
+     await room1()
      initialData()
 
     let list1 ={}
     let list2 ={}
     let list3 ={}
     let list4 = {}
+    let list5 ={}
 
     let x = 0
     let y = 0
     let z = 0
     let w = 0
+    let v =0
   
     mapCourse.map(row =>list1[x++] = row.name)
     mapDepartment.map(row =>list2[y++] = row.name)
     mapIns.map(row =>list3[z++] = row.name)
     mapDays.map(row =>list4[w++] = row.days)
+    mapRoom.map(row =>list5[v++]= row.name)
           setCourse(list1)
           setDepartment(list2)
           setInst(list3)
           setDays(list4)
+          setRooms(list5)
+          setLoading(false)
   
  }
  useEffect(()=>{
+   setLoading(true)
   console.log("from use effect")
     FilledData()
     console.log("end use effect")
@@ -203,6 +272,17 @@ function TableR(Props) {
      
 },[]) 
   const columns = [
+
+    { title: "نوع القاعة",
+    field: "room" ,
+    lookup:rooms,
+ 
+      cellStyle: {
+        //  fontFamily: 'Markazi Text',
+         fontSize:'25px',
+              },
+              
+    },
     { title: "الايام ",
     field: "days" ,
     lookup: days,
@@ -332,6 +412,8 @@ function TableR(Props) {
   let d1 = department[row.department]
   let c1 = course[row.course]
   let inst1 = inst[row.teacher]
+  let roo  = rooms[row.room]
+  let day1 = days[row.days]
  
   let f = row.FromTime
   let t = row.ToTime
@@ -340,11 +422,11 @@ function TableR(Props) {
   console.log("course = " + c1)
   console.log("from time = " + f)
   console.log("to time = " + t)
-  let time = f+"/"+t
+  let time = f+"/"+t+"/"+day1
 
 
 let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
- +nameTable+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType=0&date=2020/2019"
+ +nameTable+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date=2020/2019"
 console.log("url="+ url)
   axios.get(url).then(res => {console.log(res)},)
 
@@ -355,19 +437,23 @@ const handelDeleteInDataBase =(row) =>{
   let d1 = department[row.department]
   let c1 = course[row.course]
   let inst1 = inst[row.teacher]
+  let roo  = rooms[row.room]
+  let day1 = days[row.days]
  
   let f = row.FromTime
   let t = row.ToTime
 
- console.log("Departmqnt = " + d1)
+ 
   console.log("course = " + c1)
   console.log("from time = " + f)
   console.log("to time = " + t)
   console.log("TableName = " + TableName)
+  console.log("day1 = " + day1)
 
-  let time = f+"/"+t
+
+  let time = f+"/"+t+"/"+day1
   let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="+
-  TableName+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType=0&date=2020/2019"
+  TableName+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date=2020/2019"
 console.log(url)
   axios.get(url).then(res => {console.log(res)},)
 }
@@ -376,6 +462,13 @@ console.log(url)
 
   return (
     <div className="App">
+       {loading?
+         <div className={classes.lod}>
+         
+         <BeatLoader  loading={loading} color='#045F5F' size={30} margin ={3} /> 
+       </div>
+    
+    :
       <MaterialTable
         className = "table"
         title=""
@@ -462,7 +555,7 @@ console.log(url)
         }}
        
         
-      />
+      />}
     </div>
   );
 }

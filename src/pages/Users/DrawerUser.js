@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"center",
     width:'100%',
     height:'100%',
+    color:'black'
 
   },
   toText1 :{
@@ -111,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: 300,
   },
   drawerHeader: {
     display: 'flex',
@@ -131,7 +132,6 @@ const useStyles = makeStyles((theme) => ({
   active:{
     padding:'0px',
     margin:'0px',
-    color:'black',
     display:"flex",
     justifyContent:"flex-end",
     flexDirection:"row",
@@ -139,6 +139,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"center",
     width:'100%',
     height:'100%',
+    color:'white'
   },
 }));
 
@@ -162,12 +163,12 @@ export default function PersistentDrawerRight() {
   const menuItems = [
     {
       text:'الرئيسية',
-      icon: <AppstoreFilled style={{ fontSize: '20px', color: 'white' ,marginLeft:'7px' }}/>,
+      icon: <AppstoreFilled style={{ fontSize: '20px' ,marginLeft:'7px' }}/>,
       path:'/UsersHome',
     },
     {
       text:'اوقات دوامي',
-      icon: <AppstoreFilled style={{ fontSize: '20px', color: 'white' ,marginLeft:'7px' }}/>,
+      icon: <AppstoreFilled style={{ fontSize: '20px' ,marginLeft:'7px' }}/>,
       path:'/MyTime',
     },
    
@@ -281,7 +282,7 @@ export default function PersistentDrawerRight() {
           paper: classes.drawerPaper,
         }}
         >
-        <div style={{backgroundColor: 'black', color: 'white',height:'100%',padding:'0px'}}>
+        <div style={{backgroundColor: '#efefef ', color: 'white',height:'100%',padding:'0px'}}>
 
         <div className={classes.drawerHeader} className={classes.heedername} style={{backgroundColor: 'white', color: 'black',padding:'0px',margin:'0px'}}>
           <IconButton onClick={handleDrawerClose}>
@@ -300,7 +301,8 @@ export default function PersistentDrawerRight() {
               history.push(item.path);
               setOpen(false)
             }}
-            style={location.pathname == item.path?{backgroundColor: 'white',width:'100%',height:'100%',marginBottom:'1px'}:{backgroundColor: '#37474f',width:'100%',height:'100%',marginBottom:'1px'}}
+            style={location.pathname == item.path?{backgroundColor: '#045F5F',width:'100%',height:'100%',marginBottom:'1px',color:'#045F5F'}:{backgroundColor: '#efefef',width:'100%',height:'100%',marginBottom:'1px'}}
+
             className={classes.toText}
             >
               <div  className={location.pathname == item.path?classes.active:classes.toText}>
@@ -311,7 +313,7 @@ export default function PersistentDrawerRight() {
                 </div>
                 </ListItemText>  
                 </div>
-              <ListItemIcon>
+                <ListItemIcon  style={location.pathname === item.path?{color: 'white'}:{color: 'black'}}>
               {item.icon}
               </ListItemIcon>
               </div>

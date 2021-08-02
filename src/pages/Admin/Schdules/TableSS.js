@@ -4,9 +4,26 @@ import  { useEffect } from 'react';
 import axios from 'axios';
 import { ConsoleSqlOutlined } from '@ant-design/icons';
 import { useHistory ,useLocation } from 'react-router-dom';
+import BeatLoader from "react-spinners/BeatLoader";
+import { makeStyles } from "@material-ui/core/styles";
 
 
-
+const useStyles = makeStyles({
+  mar:{
+    margin:100,
+    width:1000,
+    
+  },
+  lod:{
+    margin:100,
+    width:800,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+  }
+});
 
 
 
@@ -15,6 +32,7 @@ function TableR(Props) {
   console.log("from top saved ="+ savedData)
   const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
+  const [loading, setLoading] = React.useState(false)
   const  history  = useHistory();
 
 
@@ -26,7 +44,7 @@ function TableR(Props) {
   const [course,setCourse] = React.useState({})
 
   const mapRoom=[
-    {number:"قاعة تدريس"}
+    {name:"قاعة تدريس"}
   ]
   const mapIns=[]
   const  mapCourse=[]
@@ -62,14 +80,12 @@ function TableR(Props) {
           let x = 1
           res.data.response.filter(room => (room.type === "مختبر") ).map(cor => (
             
-            mapRoom[x++] = {number:cor.number}
+            mapRoom[x++] = {name:cor.name}
                ))
                setTimeout(() => {
                 setSavDate(savedData)
                
               }, 2000)
-          
-         
          
           Resolve()
          },
@@ -101,7 +117,7 @@ function TableR(Props) {
   }
   const findInedx =(obj,da) =>{
      for(let i = 0;i<obj.length;i++){
-       if (obj[i].number === da){
+       if (obj[i].name === da){
 
          return i
        }
@@ -169,7 +185,7 @@ function TableR(Props) {
      let y = 0
      let z = 0 
      
-     mapRoom.map(row =>list1[x++] = row.number)
+     mapRoom.map(row =>list1[x++] = row.name)
  
      mapIns.map(row =>list2[y++] = row.name)
    
@@ -178,6 +194,7 @@ function TableR(Props) {
            setRooms(list1) 
            setInst(list2)
            setCourse(list3)
+           setLoading(false)
           
 
    
@@ -221,6 +238,7 @@ function TableR(Props) {
  
 
    useEffect(()=>{
+     setLoading(true)
      console.log("from use effect")
     FilledData()
     console.log("end use effect")
@@ -268,9 +286,16 @@ function TableR(Props) {
   
   
 
-
+  const classes = useStyles();
   return (
     <div className="App">
+       {loading?
+         <div className={classes.lod}>
+         
+         <BeatLoader  loading={loading} color='#045F5F' size={30} margin ={3} /> 
+       </div>
+    
+    :
       <MaterialTable
         className = "table"
         title=""
@@ -375,7 +400,7 @@ function TableR(Props) {
         }}
        
         
-      />
+      />}
     </div>
   );
 }

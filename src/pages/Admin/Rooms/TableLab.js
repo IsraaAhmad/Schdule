@@ -69,7 +69,7 @@ const handelAddInDataBase = (newRow) =>{
   if(newRow.location === 20 || newRow.location === "20")
   location = "الحرم القديم"
   let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="
-  +newRow.id+"&type="+type+"&campous="+location+"&name=قاعة تدريس"
+  +newRow.id+"&type="+type+"&campous="+location+"&name="+newRow.name
 
   axios.get(url)
 // axios.get("https://jsonplaceholder.typicode.com/todos/1")
@@ -95,7 +95,7 @@ const handelEditInDataBase =(rowUp) =>{
   console.log("type="+ type)
   console.log("locaion="+ location)
   let url = "https://core-graduation.herokuapp.com/editRoom?idDep=60ddc9735b4d43f8eaaabf83&number="+id+
-  "&type="+type+"&campous="+location+"&name=قاعة تدريس"
+  "&type="+type+"&campous="+location+"&name="+rowUp.name
   
   axios.get(url)
  // axios.get("https://jsonplaceholder.typicode.com/todos/1")
@@ -126,7 +126,7 @@ const handelEditInDataBase =(rowUp) =>{
 
     { title: "نوع القاعة",
     field: "type" ,
-    initialEditValue: 10, validate: rowData => rowData.type? true : 'يجب ادخال نوع القاعه',
+    initialEditValue: 20, validate: rowData => rowData.type? true : 'يجب ادخال نوع القاعه',
     lookup: {10:'قاعة تدريس', 20:'مختبر' },
     editable:'never',
   //   render:sele =>(
@@ -148,6 +148,16 @@ const handelEditInDataBase =(rowUp) =>{
          fontSize:'25px',
               },
               
+    },
+    { title: "اسم القاعة",
+    field: "name",
+    initialEditValue: '####', validate: rowData => rowData.name? true : 'يجب ادخال اسم القاعه',
+    editable: 'onAdd',
+    cellStyle: {
+        fontFamily: 'Markazi Text',
+        fontSize:'25px',
+        
+       },
     },
     { title: "رقم القاعة",
     field: "id",
@@ -175,7 +185,7 @@ const handelEditInDataBase =(rowUp) =>{
             console.log(res.data.response);
              
              for (let i = 0;i<res.data.response.length ; i++){
-               if(res.data.response[i].type ==="قاعة تدريس"){
+               if(res.data.response[i].type ==="مختبر"){
                let location2 = 20
              
                if(res.data.response[i].campous === "الحرم الجديد")
@@ -184,8 +194,9 @@ const handelEditInDataBase =(rowUp) =>{
 
                let x={
                  id:res.data.response[i].number,
-                 type:10,
+                 type:20,
                  location:location2,
+                 name:res.data.response[i].name
                }
                list1.push(x)}
                setLoading(false)
@@ -217,13 +228,15 @@ const handelEditInDataBase =(rowUp) =>{
   return (
     
     <div className="App">
-      {loading?
+        {loading?
          <div className={classes.lod}>
          
          <BeatLoader  loading={loading} color='#045F5F' size={30} margin ={3} /> 
        </div>
     
     :
+    
+    
     
     
     
