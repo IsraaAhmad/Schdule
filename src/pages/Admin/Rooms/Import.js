@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import TextField from '@material-ui/core/TextField';
 import XLSX from 'xlsx';
@@ -14,9 +14,9 @@ import { render } from '@testing-library/react';
 
 function TableR() {
     const EXTENSIONS = ['xlsx', 'xls', 'csv']
+    const headerName = ["teacher","course","department"]
   const [data, setData] = React.useState([]);
   const [col,setCol] = React.useState([]);
-  const headerName = ["teacher","course","department"]
   const columns = [
     { title: "المدرس",
       field: "teacher" ,
@@ -94,7 +94,6 @@ function TableR() {
         root: {
           '& > *': {
             margin: theme.spacing(1),
-            
           },
         },
         input: {
@@ -102,32 +101,25 @@ function TableR() {
         },
       }));
   
-
+      useEffect(()=>{
+        importExcel()
+        // let list1 =[];
+        
+        //  axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
+        // // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+        
+        //     .then(res => {
+        //       console.log(res)
+        //         console.log(res.data.response);
+            
+        //       }, )
+              
+      },[]) 
+      
       const classes = useStyles();
   return (
     <div className="App">
-        <div>
-        <input
-        className={classes.input}
-        id="contained-button-file"
-        multiple
-        type="file"
-        onChange={importExcel}
-      />
-      <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
-          تحميل ملف من الاكسل
-        </Button>
-      </label>
-        </div>
-      <MaterialTable
-        className = "table"
-        title=""
-        data={data}
-        columns={col}
-       
-        
-      />
+    
     </div>
   );
 }
