@@ -248,6 +248,7 @@ export default function CSSGrid() {
     let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="+
     course+"&type=اجباري"+"&year="+year+"&sem="+semester+"&name="+nameCourse+"&numberOfHour="+hour+
     "&flag=1&toDepartments="+idDepartmant
+    console.log(url)
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
   axios.get(url)
     
@@ -387,7 +388,6 @@ export default function CSSGrid() {
   useEffect(()=>{
     console.log("from use effect")
     let url = "https://core-graduation.herokuapp.com/getAllDep"
-    // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
     let list1 =[]
     let x = 0 
   axios.get(url)

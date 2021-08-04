@@ -1,67 +1,82 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TableMainPage from "./TableMainPage"
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import { useHistory ,useLocation } from 'react-router-dom';
-import DrawerAdmin from "../DrawerAdmin.js"
-import "../back.css"
+import TableMainPage from './TableMainPage.js'
+import Tea from './tea.png'
+
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-const useStyles = makeStyles({
-  mar:{
-    margin:100,
-    width:1000,
-    
+import DrawerAdmin from "../DrawerAdmin.js"
+import "../back.css"
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-prevent-tabpanel-${index}`}
+      aria-labelledby={`scrollable-prevent-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    width: 600,
+    marginRight:200,
+    marginTop:100,
   },
-  tit:{
-    backgroundColor:'#37474f',
-    height:50,
-    borderTopLeftRadius:50,
-    borderTopRightRadius:50,
-    borderBottomLeftRadius:50,
-    borderBottomRightRadius:50,
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    fontFamily:'Markazi Text',
-    fontSize:'30px',
-    color:'white'
-
-
-
-  },
-  create:{
-      backgroundColor:'#045F5F',
-      fontFamily:'Markazi Text',
-      fontSize:'20px',
-      color:'white',
-      margin:5
+  log:{
+    position:'absolute',
+    top:130,
+    right:730
   }
-});
+
+}));
 
 export default function App() {
   const classes = useStyles();
-  const  history  = useHistory();
-  const HandelOnClick = () =>{
-      history.push('/create')
-  }
- 
+  const [value, setValue] = React.useState(1);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+   
+  };
 
 
   return (
-        <div style={{height:1000}} className="back">
-          <DrawerAdmin/>
-    <div className = {classes.mar}>
-        
-        <div className={classes.tit}>الجداول الدراسية</div>
-        <TableMainPage/>
+    <div style={{height:10000}} className="back">
+<DrawerAdmin/>
+
+<div className={classes.root} >
+      <TableMainPage/>
+      <div className={classes.log}><img src={Tea} width="400" height="600" /></div>
+     
+ 
+  
     </div>
-        </div>
+    
+    </div>
   );
 }

@@ -7,16 +7,16 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { useHistory ,useLocation } from 'react-router-dom';
-import DrawerAdminstrator from "../DrawerAdminstrator.js"
-import Chem from '../chem.png'
-import Elec from '../elec.png'
-import Comp from '../comp.png'
-import Build from '../build.png'
-import Civil from '../civil.png'
-import Mec from '../mec.png'
-import Ind from '../ind.png'
-import Arch from '../arch.png'
-import Mecat from '../mecat.png'
+import DrawerAdminstrator from "./DrawerAdminstrator.js"
+import Chem from './chem.png'
+import Elec from './elec.png'
+import Comp from './comp.png'
+import Build from './build.png'
+import Civil from './civil.png'
+import Mec from './mec.png'
+import Ind from './ind.png'
+import Arch from './arch.png'
+import Mecat from './mecat.png'
 
 
 import {

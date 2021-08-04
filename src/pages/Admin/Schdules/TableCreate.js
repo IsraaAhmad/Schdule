@@ -120,7 +120,7 @@ export default function ScrollableTabsButtonPrevent(props) {
   useEffect(()=>{
     // setLoading(true)
       
-      axios.get("https://core-graduation.herokuapp.com/getFromDraft?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getFromDraft?idDep=60ddc9735b4d43f8eaaabf83&tableName="+state.name)
       .then(res => {
         setSavedDate(res.data.response)
         console.log(res.data.response)

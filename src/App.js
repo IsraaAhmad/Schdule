@@ -21,6 +21,7 @@ import AdministratorHome from "./pages/Administrator/Home/Home.js";
 import TableCreate from "./pages/Admin/Schdules/TableCreate.js";
 import AddCourseToOther from "./pages/Admin/Course/AddCourseToOther.js"
 import CreateSemester from "./pages/Administrator/Time/CreateTable.js"
+import Department from "./pages/Administrator/Department.js"
 
 
 
@@ -71,6 +72,8 @@ export default function App() {
         <Route exact path="/time" render={props => <Time {...props} />} />
         <Route exact path="/MyTime" render={props => <MyTime {...props} />} />
         <Route exact path="/AddCourse" render={props => <AddCourse {...props} />} /> 
+        <Route exact path="/Department" render={props => <Department {...props} />} /> 
+
 
 
 
