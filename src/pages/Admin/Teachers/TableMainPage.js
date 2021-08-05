@@ -76,14 +76,14 @@ function TableR() {
  
 const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.name
-// let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep=60ddc9735b4d43f8eaaabf83&number="+id
-// axios.get(url).then(res => {console.log(res)},)
+let url = "https://core-graduation.herokuapp.com/deleteInsFromDep?idDep=60ddc9735b4d43f8eaaabf83&name="+id
+axios.get(url).then(res => {console.log(res)},)
 }
 
 const handelAddInDataBase = (newRow) =>{
-  // let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&name="
-  // +newRow.name
-  // axios.get(url).then(res => {console.log(res)},)
+  let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep=60ddc9735b4d43f8eaaabf83&name="
+  +newRow.name
+  axios.get(url).then(res => {console.log(res)},)
 }
 
   
@@ -296,12 +296,7 @@ const importExcel = (e) => {
           <div style={{marginLeft:20}}>
              <DeleteIcon {...props} style={{color:'#963333'}} />
              </div>,
-          Edit: props =>
-            
-              <div style={{marginLeft:20}}>
-
-            <EditIcon {...props} style={{color:'#045F5F'}} />
-              </div>,
+        
         
       }}
       
@@ -345,10 +340,7 @@ const importExcel = (e) => {
         }}
         localization={{
           header: {
-              actions: <div  style={{display:'flex',flexDirection:'row'}}>
-                <div style={{marginLeft:20}}>تعديل</div>
-                <div style={{marginLeft:20}}>حذف</div>
-                </div>,
+              actions:""
           },
         //   pagination: {
         //     labelRowsSelect:"صفوف"
@@ -401,19 +393,7 @@ const importExcel = (e) => {
               resolve()
             }, 2000)
           }),
-          onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
-            const index=oldRow.tableData.id;
-            const updatedRows=[...data]
-            console.log(updatedRow)
-            updatedRows[index]=updatedRow
-            
-    
-
-            setTimeout(() => {
-              setData(updatedRows)
-              resolve()
-            }, 2000)
-          })
+       
 
         }}
        

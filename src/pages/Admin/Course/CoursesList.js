@@ -102,8 +102,8 @@ export default function SimpleAccordion() {
   const HandelAddCourse = ()=>{
          history.push('/AddCourse')
   }
-  const HandelAddCourseToOtherDep = ()=>{
-    history.push('/addCourseToOther')
+  const HandelAddCourseFromOtherDep = ()=>{
+    history.push('/addCourseFromOtherDep')
 }
 
 
@@ -134,7 +134,7 @@ export default function SimpleAccordion() {
         <Button variant="contained" onClick={HandelAddCourse}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
            اضافة مساق جديد 
       </Button>
-      <Button variant="contained" onClick={HandelAddCourseToOtherDep}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
+      <Button variant="contained" onClick={HandelAddCourseFromOtherDep}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
            اضافة مساق جديد من قسم اخر 
       </Button>
       </div>

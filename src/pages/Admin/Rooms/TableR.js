@@ -8,9 +8,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
 import { css } from "@emotion/react";
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Import from "./Import.js"
 import XLSX from 'xlsx';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from "@material-ui/core/IconButton";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -387,6 +387,8 @@ const importExcel = (e) => {
 
                لتصدير بيانات الى الصفحة يجب ان يتم ادراج ملف 
               execl
+              امتداد
+              'xlsx'او 'xls'او  'csv'
               يحتوي على ثلاث عواميد بعنوان رقم القاعة ,اسم القاعة,الحرم الدراسي بالترتيب
                 </div>
               </DialogContentText>

@@ -44,7 +44,7 @@ TabPanel.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: 600,
+    width: 800,
     marginRight:200,
     marginTop:100,
   },
@@ -71,7 +71,7 @@ export default function App() {
 
 <div className={classes.root} >
       <TableMainPage/>
-      <div className={classes.log}><img src={Tea} width="400" height="600" /></div>
+      
      
  
   

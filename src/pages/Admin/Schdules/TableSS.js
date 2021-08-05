@@ -6,6 +6,16 @@ import { ConsoleSqlOutlined } from '@ant-design/icons';
 import { useHistory ,useLocation } from 'react-router-dom';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
+import XLSX from 'xlsx';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import IconButton from "@material-ui/core/IconButton";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import CommentIcon from '@material-ui/icons/Comment';
 
 
 const useStyles = makeStyles({
@@ -13,6 +23,9 @@ const useStyles = makeStyles({
     margin:100,
     width:1000,
     
+  },
+  input: {
+    display: "none"
   },
   lod:{
     margin:100,
@@ -28,20 +41,40 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData} = Props
+  let {TableName , savedData,setChild,child} = Props
   console.log("from top saved ="+ savedData)
   const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
   const [loading, setLoading] = React.useState(false)
   const  history  = useHistory();
-
-
+  
+  
   const [data, setData] = useState([])
   const [rooms,setRooms] = React.useState({})
-
-
+  
+  
   const [inst,setInst] = React.useState({})
   const [course,setCourse] = React.useState({})
+  
+  const [ren, setRen] = React.useState(false)
+  const [dialog,setDialog] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose1 = () => {
+    setOpen(false);
+    setDialog(true)
+  };
+  const handleClose = () => {
+    setOpen(false);
+    
+  };
+
+  const EXTENSIONS = ['xlsx', 'xls', 'csv']
+    const headerName = ["course","teacher","type"]
 
   const mapRoom=[
     {name:"قاعة تدريس"}
@@ -243,7 +276,7 @@ function TableR(Props) {
     FilledData()
     console.log("end use effect")
        
-  },[]) 
+  },[ren]) 
   const columns = [
   
    
@@ -284,7 +317,85 @@ function TableR(Props) {
     
   ]
   
+  const getExention = (file) => {
+    const parts = file.name.split('.')
+    const extension = parts[parts.length - 1]
+    return EXTENSIONS.includes(extension) // return boolean
+  }
   
+  const convertToJson = (headers, data) => {
+    const rows = []
+    data.forEach(row => {
+      let rowData = {}
+      row.forEach((element, index) => {
+        rowData[headerName[index]] = element
+      })
+      rows.push(rowData)
+  
+    });
+    return rows
+  }
+  
+  const importExcel = (e) => {
+    console.log("from import execl")
+    const file = e.target.files[0]
+  
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      //parse data
+  
+      const bstr = event.target.result
+      const workBook = XLSX.read(bstr, { type: "binary" })
+  
+      //get first sheet
+      const workSheetName = workBook.SheetNames[0]
+      const workSheet = workBook.Sheets[workSheetName]
+      //convert to array
+      const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
+      // console.log(fileData)7
+      const headers = fileData[0]
+      const hed1 = ['teacher','course','department']
+      let x =0
+      const heads = headers.map(head => ({ title: head, field: head }))
+      // setCol(columns)
+      
+  
+      //removing header
+      fileData.splice(0, 1)
+  
+  
+      // setData(convertToJson(headers, fileData))
+      console.log("data")
+      let listt = convertToJson(headers, fileData)
+      console.log(listt)
+      for (let k = 0;k<listt.length;k++){
+
+        // let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+        // +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
+
+
+        let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+        +nameTable+"&courseIns="+listt[k].teacher+"&courseName="+listt[k].course+
+        "&flag=0&timeSlot=0&roomType="+listt[k].type+"&date=2020/2019"
+  
+    axios.get(url).then(res => {console.log(res)},)
+    setChild(!child)
+    setRen(!ren)
+  
+      }
+    }
+  
+    if (file) {
+      if (getExention(file)) {
+        reader.readAsBinaryString(file)
+      }
+      else {
+        alert("Invalid file input, Select Excel, CSV file")
+      }
+    } else {
+      setData([])
+    }
+  }
 
   const classes = useStyles();
   return (
@@ -300,22 +411,90 @@ function TableR(Props) {
         className = "table"
         title=""
         data={data}
-       
-      //   components={{
-      //     Pagination: (props) =>  
-      //     <TablePagination
-      //     rowsPerPageOptions={[5, 10, 25]}
-      //     component="div"
-      //     count={data.length}
-      //     rowsPerPage={rowsPerPage}
-      //     page={page}
-      //     onPageChange={handleChangePage}
-      //     onRowsPerPageChange={handleChangeRowsPerPage}
-      //   />
-      //     }
-      // } 
-        
 
+        actions={[
+          {
+            icon: () => 
+            <div>
+            {dialog?
+              <div >
+           <input
+        className={classes.input}
+        id="icon-button-file"
+        type="file"
+        onChange={importExcel}
+        
+      />
+      <label htmlFor="icon-button-file">
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          
+        >
+          <CloudUploadIcon  style={{color:'#808880'}}/>
+        </IconButton>
+      </label>
+          </div>
+            
+            :
+            <div>
+        
+      <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={handleClickOpen}
+        >
+          <CommentIcon  style={{color:'#808880'}}/>
+        </IconButton>
+          
+
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',}}>
+              طريقة ادراج الملف
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+
+               لتصدير بيانات الى الصفحة يجب ان يتم ادراج ملف 
+              execl
+              امتداد
+              'xlsx'او 'xls'او  'csv'
+              يحتوي على ثلاث عواميد بعنوان رقم القاعة ,اسم القاعة,الحرم الدراسي بالترتيب
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose1} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+                تم
+              </Button>
+              <Button onClick={handleClose} color="primary" style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               إلغاء
+              </Button>
+            </DialogActions>
+          </Dialog>
+          </div>
+          
+          }
+          </div>
+           
+          ,
+            tooltip: "استيراد من ملف",
+            isFreeAction: true,
+          
+          }
+        ]}
+    
         columns={columns}
         options={{
           searchFieldStyle:{

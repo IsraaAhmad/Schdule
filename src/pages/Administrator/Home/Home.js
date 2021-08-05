@@ -72,26 +72,29 @@ export default function App() {
   const HandelOnClick = () =>{
       history.push('/create')
   }
- 
+  
 
 
   return (
         <div style={{height:1000}} className="back">
           <DrawerAdminstrator/>
   <div className = {classes.mar}>
-        <div className={classes.ent}>
+        <div className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "610ac4a6c2196db2fe637823" ,}})}}>
           <div> <img src={Chem} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>هندسة كيميائية</div>
         </div>
 
 
-       <div className={classes.ent}>
+       <div className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc8e95b4d43f8eaaabf7d" ,}})}}>
           <div><img src={Elec} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>هندسة كهربائية وهندسة الاتصالات</div>
        </div>
 
 
-       <div  className={classes.ent}>
+       <div  className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc9735b4d43f8eaaabf83" ,}})}}>
           <div><img src={Comp} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>هندسة الحاسوب</div>
        </div>
@@ -99,20 +102,23 @@ export default function App() {
   </div>
 
 
-  <div className = {classes.mar}>
-        <div  className={classes.ent}>
+  <div className = {classes.mar} >
+        <div  className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc95f5b4d43f8eaaabf82" ,}})}}>
           <div> <img src={Build} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>هندسة البناء</div>
         </div>
 
 
-       <div className={classes.ent}>
+       <div className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc9095b4d43f8eaaabf7e" ,}})}}>
           <div><img src={Civil} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>الهندسة المدنية</div>
        </div>
 
 
-       <div  className={classes.ent}>
+       <div  className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc9235b4d43f8eaaabf80" ,}})}}>
           <div><img src={Mec} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>الهندسة الميكانيكية </div>
        </div>
@@ -121,19 +127,22 @@ export default function App() {
 
 
   <div className = {classes.mar}>
-        <div  className={classes.ent}>
+        <div  className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc7ec5b4d43f8eaaabf7b" ,}})}}>
           <div> <img src={Ind} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}> الهندسة الصناعية</div>
         </div>
 
 
-       <div className={classes.ent}>
+       <div className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc9165b4d43f8eaaabf7f" ,}})}}>
           <div><img src={Arch} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>الهندسة المعمارية</div>
        </div>
 
 
-       <div  className={classes.ent}>
+       <div  className={classes.ent} onClick={() => {
+          history.push({pathname: './Dep',state: { number: "60ddc9c45b4d43f8eaaabf85" ,}})}}>
           <div><img src={Mecat} width="150" height="120" /></div>
           <div style={{fontFamily:'Markazi Text',fontSize:'30px',}}>هندسة الميكاترونكس</div>
        </div>

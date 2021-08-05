@@ -104,6 +104,7 @@ export default function ScrollableTabsButtonPrevent(props) {
   const classes = useStyles();
   const [flag,setFlag] = React.useState(false);
   const [savedData,setSavedDate] = React.useState(0);
+  const [child,setChild] = React.useState(false);
   const [value, setValue] = React.useState(state.index);
   const [loading, setLoading] = React.useState(false);
 
@@ -131,7 +132,7 @@ export default function ScrollableTabsButtonPrevent(props) {
         }, 
             )
       }
-  ,[value]) 
+  ,[value,child]) 
   return (
     <div>
 <DrawerAdmin/>
@@ -158,24 +159,24 @@ export default function ScrollableTabsButtonPrevent(props) {
             indicator: classes.indicator
           }}
           >
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
           
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <TimeForTeacher TableName = {state.name} savedData={savedData}/>
+        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <ToDep TableName = {state.name} savedData={savedData}/>
+     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS1 TableName = {state.name} savedData={savedData}/>
+      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <TableSS TableName = {state.name} savedData={savedData}/>
+      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
       </TabPanel>
       
       <div className={classes.bot}>

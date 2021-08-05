@@ -8,12 +8,26 @@ import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
 import { css } from "@emotion/react";
+import XLSX from 'xlsx';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import IconButton from "@material-ui/core/IconButton";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import CommentIcon from '@material-ui/icons/Comment';
 
 const useStyles = makeStyles({
   mar:{
     margin:100,
     width:1000,
     
+  },
+
+  input: {
+    display: "none"
   },
   lod:{
     margin:100,
@@ -41,11 +55,25 @@ const empList = [
 function TableR() {
   
   const [data, setData] = useState([])
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [loading, setLoading] = React.useState(false);
+  const EXTENSIONS = ['xlsx', 'xls', 'csv']
+  const headerName = ["id","type","location","name"]
+  const [dialog,setDialog] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
  
- 
+  const handleClickOpen = () => {
+    setOpen(true);
+  }; 
+  
+    const handleClose1 = () => {
+      setOpen(false);
+      setDialog(true)
+    };
+    const handleClose = () => {
+      setOpen(false);
+      
+    }; 
+
 const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.id
 let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep=60ddc9735b4d43f8eaaabf83&number="+id
@@ -105,10 +133,8 @@ const handelEditInDataBase =(rowUp) =>{
          },
          )
 }
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+ 
+
   
   const columns = [
     
@@ -129,24 +155,7 @@ const handelEditInDataBase =(rowUp) =>{
     initialEditValue: 20, validate: rowData => rowData.type? true : 'يجب ادخال نوع القاعه',
     lookup: {10:'قاعة تدريس', 20:'مختبر' },
     editable:'never',
-  //   render:sele =>(
-  //   <Select
-  //   labelId="demo-simple-select-label"
-  //   id="demo-simple-select"
-  //   style = {{fontSize:'25px',}}
-    
-  // >
-  //   <MenuItem style = {{fontSize:'20px',}} value={10}>قاعة</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={20}>مختبر متحكمات دقيقة</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={30}>متبر تصميم دوائر رقمية 1</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={40}>مختبر شبكات</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={50}>مختبر تصميم الكمبيوتر</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={60}>مختبر تصميم دوائر رقمية 2</MenuItem>
-  // </Select>),
-      cellStyle: {
-        //  fontFamily: 'Markazi Text',
-         fontSize:'25px',
-              },
+    cellStyle: {fontSize:'25px',},
               
     },
     { title: "اسم القاعة",
@@ -170,10 +179,83 @@ const handelEditInDataBase =(rowUp) =>{
        },
     },
 
-    
+
 
     
   ]
+
+  const getExention = (file) => {
+    const parts = file.name.split('.')
+    const extension = parts[parts.length - 1]
+    return EXTENSIONS.includes(extension) // return boolean
+  }
+  
+  const convertToJson = (headers, data) => {
+    const rows = []
+    data.forEach(row => {
+      let rowData = {}
+      row.forEach((element, index) => {
+        rowData[headerName[index]] = element
+      })
+      rows.push(rowData)
+  
+    });
+    return rows
+  }
+  
+  const importExcel = (e) => {
+    console.log("from import execl")
+    const file = e.target.files[0]
+  
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      //parse data
+  
+      const bstr = event.target.result
+      const workBook = XLSX.read(bstr, { type: "binary" })
+  
+      //get first sheet
+      const workSheetName = workBook.SheetNames[0]
+      const workSheet = workBook.Sheets[workSheetName]
+      //convert to array
+      const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
+      // console.log(fileData)7
+      const headers = fileData[0]
+      const hed1 = ['teacher','course','department']
+      let x =0
+      const heads = headers.map(head => ({ title: head, field: head }))
+      // setCol(columns)
+      
+  
+      //removing header
+      fileData.splice(0, 1)
+  
+      // let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="
+      // +newRow.id+"&type="+type+"&campous="+location+"&name="+newRow.name
+      // setData(convertToJson(headers, fileData))
+      console.log("data")
+      let listt = convertToJson(headers, fileData)
+      console.log(listt)
+      for (let k = 0;k<listt.length;k++){
+        let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="
+    +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name="+listt[k].name
+  
+    axios.get(url).then(res => {console.log(res)},)
+  
+      }
+    }
+  
+    if (file) {
+      if (getExention(file)) {
+        reader.readAsBinaryString(file)
+      }
+      else {
+        alert("Invalid file input, Select Excel, CSV file")
+      }
+    } else {
+      setData([])
+    }
+  }
   useEffect(()=>{
     let list1 =[];
     setLoading(true)
@@ -261,6 +343,89 @@ const handelEditInDataBase =(rowUp) =>{
         
 
         columns={columns}
+
+        actions={[
+          {
+            icon: () => 
+            <div>
+            {dialog?
+              <div >
+           <input
+        className={classes.input}
+        id="icon-button-file"
+        type="file"
+        onChange={importExcel}
+        
+      />
+      <label htmlFor="icon-button-file">
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          
+        >
+          <CloudUploadIcon  style={{color:'#808880'}}/>
+        </IconButton>
+      </label>
+          </div>
+            
+            :
+            <div>
+        
+      <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={handleClickOpen}
+        >
+          <CommentIcon  style={{color:'#808880'}}/>
+        </IconButton>
+          
+
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',}}>
+              طريقة ادراج الملف
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+
+               لتصدير بيانات الى الصفحة يجب ان يتم ادراج ملف 
+              execl
+              امتداد
+              'xlsx'او 'xls'او  'csv'
+              يحتوي على اربع عواميد بعنوان رقم القاعة ,نوع القاعة,الحرم الدراسي واسم القاعة بالترتيب
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose1} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+                تم
+              </Button>
+              <Button onClick={handleClose} color="primary" style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               إلغاء
+              </Button>
+            </DialogActions>
+          </Dialog>
+          </div>
+          
+          }
+          </div>
+           
+          ,
+            tooltip: "استيراد من ملف",
+            isFreeAction: true,
+          
+          }
+        ]}
        
         options={{
         
@@ -301,10 +466,6 @@ const handelEditInDataBase =(rowUp) =>{
                 <div style={{marginLeft:20}}>حذف</div>
                 </div>,
           },
-        //   pagination: {
-        //     labelRowsSelect:"صفوف"
-        // },
-        
         body: {
           emptyDataSourceMessage:"لا يوجد قاعات  ",
           deleteTooltip:"حذف",

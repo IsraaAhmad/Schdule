@@ -10,6 +10,7 @@ import schdule from "./schdule.png"
 import course from "./course.png"
 import teacher from "./teacher.png"
 import "../back.css"
+import { useHistory ,useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles({
   tot:{
@@ -24,12 +25,16 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
+  const  location  = useLocation();
+  const {state} = location;
+  console.log(state.name)
 
   const classes = useStyles();
   return (
    <div  style={{height:1000}}className="back">
       <DrawerAdminstrator/>
        <div className={classes.tot}>
+         
          <Comp UrlImage={room} name="القاعات" pathTo="/Department" />
          <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule"/>
          <Comp UrlImage={course} name="المساقات" pathTo="/Course"/>
