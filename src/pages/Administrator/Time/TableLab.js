@@ -49,6 +49,8 @@ export default function App(Props) {
   const classes = useStyles();
   const {courseList,setCourseList,labList,setLabList} = Props
   let str = labList
+  console.log("labList from ent")
+  console.log(labList)
   const arr = str.split("*")
   const [a0, setA0] = React.useState(arr[0]);
   const [a1, setA1] = React.useState(arr[1]);
@@ -95,12 +97,7 @@ export default function App(Props) {
      <div className={classes.title}>
          <div>تفعيل/تعطيل</div>
          
-         <div style={{display:'flex',flexDirection:'row'}}>
-         بدء فراغ الجامعة 
-         - انتهاء فراغ الجامعة
-
-          
-         </div>
+         
          <div style={{marginRight:35}}>
          الدوام من الساعة - 
            الدوام الى الساعة 

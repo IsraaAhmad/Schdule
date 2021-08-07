@@ -153,8 +153,8 @@ export default function App(Props) {
     setGroup(30)
     else if( gro === "4")
     setGroup(40)
-    setBreak1(w[0])
-    setBreak2(w[1])
+    setBreak1(w[1])
+    setBreak2(w[0])
     console.log("v[1] = " + v1[1])
     if(v1[5] ==="1"){
       setDisabledTotal(false)
@@ -164,7 +164,7 @@ export default function App(Props) {
       setDisabledTotal(true)
       setState({ ...state, checkedA: true });
     }
-    if(v1[1] === "1"){
+    if(v1[1] === "0"){
       
       // setColor(false)
       setColor({ ...color, checkedB: false });
@@ -177,8 +177,8 @@ export default function App(Props) {
       setDisabled1(true)
     }
     
-    setTime1(d[0])
-    setTime2(d[1])
+    setTime1(d[1])
+    setTime2(d[0])
   
 
     setFlag(true)
@@ -188,39 +188,40 @@ export default function App(Props) {
  const HandelOnChangeData =(t1,t2,d1,b1,b2,duration,group,d2) =>{
    console.log("test bla dddbla")
    let x="0"
-   if(d1 === false)
+   if(d1 === true)
    x = "1"
    let r = "0"
    if(d2 === false)
    r="0"
   console.log("new data ")
 
-  console.log(t1+"/"+t2+","+x+","+b1+"/"+b2+","+duration+","+group +","+r)
-   setData(t1+"/"+t2+","+x+","+b1+"/"+b2+","+duration+","+group +","+r)
+  console.log(t2+"/"+t1+","+x+","+b2+"/"+b1+","+duration+","+group +","+r)
+   setData(t2+"/"+t1+","+x+","+b2+"/"+b1+","+duration+","+group +","+r)
 
  }
  const HandelOnChangeBreak1 =(e) =>{
      setBreak1(e.target.value)
+     console.log("from break1")
     HandelOnChangeData(time1,time2,disabled1,e.target.value,break2,duration,group, disabledTotal)
-   console.log("heloooo" + e.target.value+ "break1 = "+break1)
+   
   
  }
  const HandelOnChangeBreak2 =(e) =>{
   setBreak2(e.target.value)
  HandelOnChangeData(time1,time2,disabled1,break1,e.target.value,duration,group,disabledTotal)
-console.log("heloooo" + e.target.value+ "break1 = "+break1)
+
 
 }
 const HandelOnChangeTime1 =(e) =>{
   setTime1(e.target.value)
  HandelOnChangeData(e.target.value,time2,disabled1,break1,break2,duration,group,disabledTotal)
-console.log("heloooo" + e.target.value+ "break1 = "+break1)
+
 
 }
 const HandelOnChangeTime2 =(e) =>{
   setTime2(e.target.value)
  HandelOnChangeData(time1,e.target.value,disabled1,break1,break2,duration,group,disabledTotal)
-console.log("heloooo" + e.target.value+ "break1 = "+break1)
+
 
 }
 
@@ -289,7 +290,7 @@ console.log("heloooo" + e.target.value+ "break1 = "+break1)
        onChange ={HandelOnChangeBreak1}
        disabled={!disabled1 || !disabledTotal}
        id="time3"
-       label="بلا بلا"
+       label="الى"
        type="time"
        defaultValue = {break1}
        InputLabelProps={{
@@ -308,7 +309,7 @@ console.log("heloooo" + e.target.value+ "break1 = "+break1)
     onChange={HandelOnChangeBreak2}
     disabled={!disabled1 || !disabledTotal}
     id="time4"
-    label="الى"
+    label="من"
     type="time"
     defaultValue = {break2}
     InputLabelProps={{
@@ -335,7 +336,7 @@ console.log("heloooo" + e.target.value+ "break1 = "+break1)
      onChange={HandelOnChangeTime1}
      disabled={!disabledTotal}
      id="time1"
-     label="من"
+     label="الى"
      type="time"
      defaultValue = {time1}
      InputLabelProps={{
@@ -351,7 +352,7 @@ console.log("heloooo" + e.target.value+ "break1 = "+break1)
     onChange={HandelOnChangeTime2}
     disabled={!disabledTotal}
     id="time2"
-    label="الى"
+    label="من"
     type="time"
     defaultValue = {time2}
     InputLabelProps={{

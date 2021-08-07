@@ -13,7 +13,7 @@ import DrawerAdminstrator from "../DrawerAdminstrator.js"
 const useStyles = makeStyles({
   tot:{
     margin:120,
-    width:1150
+    width:1000
   }
 });
 

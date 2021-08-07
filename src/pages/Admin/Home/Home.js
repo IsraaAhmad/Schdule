@@ -9,6 +9,8 @@ import schdule from "./schdule.png"
 import course from "./course.png"
 import teacher from "./teacher.png"
 import "../back.css"
+import { useHistory ,useLocation } from 'react-router-dom';
+
 
 const useStyles = makeStyles({
   tot:{
@@ -23,16 +25,20 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
+  const  location  = useLocation();
+  const {state} = location;
+  console.log("state=")
+  console.log(state.DepId)
 
   const classes = useStyles();
   return (
    <div  style={{height:1000}}className="back">
-      <DrawerAdmin/>
+      <DrawerAdmin name={state.name} DepId={state.DepId} />
        <div className={classes.tot}>
-         <Comp UrlImage={S1} name="القاعات" pathTo="/Rooms" />
-         <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule"/>
-         <Comp UrlImage={course} name="المساقات" pathTo="/Course"/>
-         <Comp UrlImage={teacher} name="المدرسين" pathTo="/Teacher"/>
+         <Comp UrlImage={S1} name="القاعات" pathTo="/Rooms" DepId={state.DepId} />
+         <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule" DepId={state.DepId}/>
+         <Comp UrlImage={course} name="المساقات" pathTo="/Course" DepId={state.DepId}/>
+         <Comp UrlImage={teacher} name="المدرسين" pathTo="/Teacher" DepId={state.DepId}/>
 
 
 

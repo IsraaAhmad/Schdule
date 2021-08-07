@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
 import { css } from "@emotion/react";
-import Import from "./Import.js"
+
 import XLSX from 'xlsx';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from "@material-ui/core/IconButton";
@@ -59,7 +59,8 @@ const empList = [
   { id: "457424", type: 10, location: 10},
 ]
 
-function TableR() {
+function TableR(Props) {
+  const {DepId} = Props
   
   const [data, setData] = useState([])
   const [page, setPage] = React.useState(0);
@@ -87,7 +88,7 @@ function TableR() {
  
 const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.id
-let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep=60ddc9735b4d43f8eaaabf83&number="+id
+let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep="+DepId+"&number="+id
 
 axios.get(url)
 // axios.get("https://jsonplaceholder.typicode.com/todos/1")
@@ -107,7 +108,7 @@ const handelAddInDataBase = (newRow) =>{
   let location = "الحرم الجديد"
   if(newRow.location === 20 || newRow.location === "20")
   location = "الحرم القديم"
-  let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="
+  let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
   +newRow.id+"&type="+type+"&campous="+location+"&name=قاعة تدريس"
 
   axios.get(url).then(res => {console.log(res)},)
@@ -127,7 +128,7 @@ const handelEditInDataBase =(rowUp) =>{
   console.log("id="+ id)
   console.log("type="+ type)
   console.log("locaion="+ location)
-  let url = "https://core-graduation.herokuapp.com/editRoom?idDep=60ddc9735b4d43f8eaaabf83&number="+id+
+  let url = "https://core-graduation.herokuapp.com/editRoom?idDep="+DepId+"&number="+id+
   "&type="+type+"&campous="+location+"&name=قاعة تدريس"
   
   axios.get(url)
@@ -245,7 +246,7 @@ const importExcel = (e) => {
     let listt = convertToJson(headers, fileData)
     console.log(listt)
     for (let k = 0;k<listt.length;k++){
-      let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="
+      let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
   +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name=قاعة تدريس"
 
   axios.get(url).then(res => {console.log(res)},)
@@ -267,7 +268,8 @@ const importExcel = (e) => {
   useEffect(()=>{
     let list1 =[];
     setLoading(true)
-     axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
+    console.log(DepId)
+     axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+DepId)
     // axios.get("https://jsonplaceholder.typicode.com/todos/1")
     
         .then(res => {

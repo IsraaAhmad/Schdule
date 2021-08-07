@@ -58,8 +58,6 @@ export default function App(Props) {
 
 
   
-  console.log("labList")
-  console.log(labList)
 
   const HandelSave =() =>{
   
@@ -67,6 +65,7 @@ export default function App(Props) {
     setCourseList(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
     console.log("this is all data after change")
     console.log(courseList)
+    console.log(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
   }
   useEffect(()=>{
 

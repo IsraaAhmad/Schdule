@@ -12,7 +12,10 @@
     font-family: Markazi Text;
     display: flex;
 }
-
+.wie{
+    display: flex;
+    flex-direction: row;
+}
 .tit{
     display: flex;
     flex-direction: row;

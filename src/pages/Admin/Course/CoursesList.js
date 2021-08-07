@@ -92,37 +92,53 @@ width:600,
  
 }));
 
-export default function SimpleAccordion() {
+export default function SimpleAccordion(Props) {
+  const {DepId} = Props
+  console.log("from course list ")
+  console.log(DepId)
+
   const [data, setData] = useState([])
   const classes = useStyles();
   const  history  = useHistory();
   const handelDeleteCourse =(x) =>{
     console.log("number of delete course is" +x)
+    axios.get("https://core-graduation.herokuapp.com/deleteCourseFromDep?toDepartments="+DepId+"&number="+
+    x)
+    
+    
+    .then(res => {console.log(res.data.response);},)
+
   }
   const HandelAddCourse = ()=>{
-         history.push('/AddCourse')
+         console.log("from funcion")
+         console.log(DepId)
+         history.push({
+          pathname:'/AddCourse',
+          state:{DepId:DepId}
+        })
+         
   }
   const HandelAddCourseFromOtherDep = ()=>{
-    history.push('/addCourseFromOtherDep')
+  
+    
+    history.push({
+      pathname:'/addCourseFromOtherDep',
+      state:{DepId:DepId}
+    })
 }
 
 
   useEffect(()=>{
     let list1 =[];
-     axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+     axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+DepId)
+    
     
         .then(res => {
           console.log("dataaaaaaaaaa")
             console.log(res.data.response);
   
             setData(res.data.response)
-          },
-
-          
-            
-            
-            )
+          },)
           
   },[]) 
   

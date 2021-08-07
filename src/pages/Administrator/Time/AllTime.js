@@ -83,6 +83,7 @@ export default function ScrollableTabsButtonPrevent() {
   const [flag,setFlag] =React.useState(false);
   const  location  = useLocation();
   const  history  = useHistory();
+  const [hande,setHande] = React.useState(false);
   const {state} = location;
   // const [listCourse,setListCourse] =React.useState(0);
 
@@ -91,14 +92,29 @@ export default function ScrollableTabsButtonPrevent() {
   };
 
   useEffect(()=>{
-    let d0 ="08:30/16:30,1,12:00/13:00,1"
-    let d1 ="09:30/16:30,0,02:00/03:00,0"
-    let d2 ="10:30/16:30,1,12:30/13:30,0"
-    let d3 ="11:30/16:30,0,12:00/13:00,1"
-    let d4 ="12:30/16:30,1,12:00/13:00,1"
-    let d5 ="13:30/16:30,1,12:00/13:00,1"
+    let d0 ="08:30/16:30,1"
+    let d1 ="09:30/16:30,0"
+    let d2 ="10:30/16:30,0"
+    let d3 ="11:30/16:30,1"
+    let d4 ="12:30/16:30,1"
+    let d5 ="13:30/16:30,1"
     let arr= d0+"*"+d1+"*"+d2+"*"+d3+"*"+d4+"*"+d5
-    setLabList(arr)
+    // setLabList(arr)
+     axios.get("https://core-graduation.herokuapp.com/getTimes?semester=1&date=2020/2021")
+     .then(res => {
+      console.log(res)
+            
+       console.log("&&&&&&&&&&&")
+            
+            let w = res.data.response
+            console.log("yyyyyyyyyyyyyyyyyyyyyy")
+            console.log(w[0].labsTimes);
+            setLabList(w[0].labsTimes)
+            setCourseList(w[0].courseTimes)
+            setHande(true)
+
+             },)
+    
 
     let b0 ="08:30/16:30,1,12:00/13:00,1,1,1"
     let b1 ="09:30/16:30,0,02:00/03:00,1.5,2,0"
@@ -107,8 +123,7 @@ export default function ScrollableTabsButtonPrevent() {
     let b4 ="12:30/16:30,1,12:00/13:00,3,2,1"
     let b5 ="13:30/16:30,1,12:00/13:00,2,3,1"
     let arr1= b0+"*"+b1+"*"+b2+"*"+b3+"*"+b4+"*"+b5
-    setCourseList(arr1)
-
+    // setCourseList(arr1)
     setFlag(true)
     if(state.flag === "0"){
     let list1 = []
@@ -118,17 +133,14 @@ export default function ScrollableTabsButtonPrevent() {
         // .then(res => {
         //   console.log(res)
         //     console.log(res.data.response);
-            
-             
-             
-        //       },)
+            //  },)
             }
  },[value])
 
   return (
     <div>
     <DrawerAdminstrator/>
-    {flag&&<div>
+    {hande&&<div>
 
     <div className={classes.root}>
       <AppBar position="static">

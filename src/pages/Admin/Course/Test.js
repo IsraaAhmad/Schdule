@@ -121,7 +121,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CSSGrid() {
+export default function CSSGrid(Props) {
+  const {DepId}=Props
+  console.log("from tset")
+  console.log(DepId)
   const classes = useStyles();
   const [year, setYear] = React.useState('');
   const [room, setRoom] = React.useState('');
@@ -236,7 +239,7 @@ export default function CSSGrid() {
     console.log("year" + year)
     console.log("semester" + semester)
     console.log("type" + type)
-    let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="+
+    let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep="+DepId+"&number="+
     number+"&type="+type+"&year="+year+"&sem="+semester+"&name="+name+"&numberOfHour="+hour
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
   axios.get(url)

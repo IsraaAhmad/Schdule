@@ -9,6 +9,8 @@ import {
   Route,
 } from "react-router-dom";
 import DrawerAdmin from "../DrawerAdmin.js"
+import { useHistory ,useLocation } from 'react-router-dom';
+
 
 const useStyles = makeStyles({
   mar:{
@@ -21,12 +23,14 @@ const useStyles = makeStyles({
 
 export default function App() {
   const classes = useStyles();
+  const  location  = useLocation();
+  const {state} = location;
   return (
     <div style={{height:1000}} className="back">
-<DrawerAdmin/>
+<DrawerAdmin  DepId={state.DepId}/>
    <diV className={classes.mar}>
 
-       <CourseList/>
+       <CourseList DepId={state.DepId}/>
    </diV>
     </div>
   );

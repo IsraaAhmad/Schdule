@@ -4,11 +4,8 @@ import TableR from "./TableR.js";
 
 
 import PropTypes from 'prop-types';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { useHistory ,useLocation } from 'react-router-dom';
+
 import DrawerAdmin from "../DrawerAdmin.js"
 import "../back.css"
 import AppBar from '@material-ui/core/AppBar';
@@ -78,6 +75,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
+  const  location  = useLocation();
+  const {state} = location;
+  console.log(location)
+  console.log("from tot")
+  console.log(state)
   const [value, setValue] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -87,7 +89,7 @@ export default function App() {
 
   return (
     <div style={{height:10000}} className="back">
-<DrawerAdmin/>
+<DrawerAdmin   DepId={state.DepId}/>
 
 <div className={classes.root} className="b1">
       <AppBar position="static" >
@@ -103,16 +105,16 @@ export default function App() {
             indicator: classes.indicator
           }}
           >
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  اضافة قاعة تدريس "  />
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" اضافة مختبر"/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  اضافة قاعة تدريس " DepId = {state.DepId}  />
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" اضافة مختبر" DepId = {state.DepId}/>
           
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-      <TableR/>
+      <TabPanel value={value} index={0} >
+      <TableR DepId = {state.DepId}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <TableLab />
+     <TableLab DepId = {state.DepId}/>
       </TabPanel>
      
  

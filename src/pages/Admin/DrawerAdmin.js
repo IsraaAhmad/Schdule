@@ -186,7 +186,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PersistentDrawerRight() {
+export default function PersistentDrawerRight(Props) {
+  const {DepId} = Props
   const  history  = useHistory();
   const classes = useStyles();
   const theme = useTheme();
@@ -237,6 +238,7 @@ export default function PersistentDrawerRight() {
       text:'الرئيسية',
       icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
       path:'/AdminHome',
+      
     },
     {
       text:'المساقات',
@@ -259,11 +261,7 @@ export default function PersistentDrawerRight() {
       path:'/Rooms',
     },
 
-    {
-      text:'test',
-      icon: <AppstoreFilled style={{ fontSize: '20px',marginLeft:'7px' }}/>,
-      path:'/testing',
-    },
+  
     
    
   ]
@@ -418,7 +416,11 @@ export default function PersistentDrawerRight() {
             <ListItem button key={item.text}
             
             onClick={() => {
-              history.push(item.path);
+              history.push({
+                pathname:item.path,
+                state:{DepId:DepId}
+              })
+              
               
             }}
             style={location.pathname == item.path?{backgroundColor: '#045F5F',width:'100%',height:'100%',marginBottom:'1px',color:'#045F5F'}:{backgroundColor: '#efefef',width:'100%',height:'100%',marginBottom:'1px'}}

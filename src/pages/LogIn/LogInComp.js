@@ -90,6 +90,9 @@ export default function App() {
   const classes = useStyles();
   const  history  = useHistory();
   const [flag,SetFlag] =React.useState(false);
+  const [department,setDepartment] =React.useState(false);
+  const [name,setName] =React.useState(false);
+  const [type,setType] =React.useState(false);
   const [userName,SetUserName] =React.useState();
   const [password,SetPassword] =React.useState();
   const [loading, setLoading] = React.useState(false);
@@ -104,7 +107,32 @@ const handelUser = () =>{
         .then(res => {
           console.log(res)
           setLoading(false)
-          history.push('./AdminHome')
+          let dep = res.data.response[0]
+          if(dep.idDep === "None"){
+            SetFlag(true);
+            console.log("not correct");
+          }
+          else{
+            console.log(" correct");
+            setDepartment(dep.idDep)
+            setName(dep.name)
+            setType(dep.type)
+            console.log(type)
+            if(dep.type === "head of department"){
+              history.push({
+                pathname: './AdminHome',
+                state: { name: dep.name ,
+                  DepId:dep.idDep
+                }
+              })
+             
+            }
+
+
+          }
+
+
+          // history.push('./AdminHome')
           })
         .catch((error) => {
             SetFlag(true);
