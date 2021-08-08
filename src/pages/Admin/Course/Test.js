@@ -21,6 +21,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useHistory ,useLocation } from 'react-router-dom';
 import axios from 'axios';
+import  { useEffect } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -131,13 +132,50 @@ export default function CSSGrid(Props) {
   const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
   const [value1, setValue1] = React.useState();
+  const [sections , setSections] = React.useState();
+  const [done , setDone] = React.useState(false);
+  const [sec,SetSec] = React.useState();
+
+
 
   const  history  = useHistory();
   const [openYear, setOpenYear] = React.useState(false);
   const [openRoom, setOpenRoom] = React.useState(false);
   const [openTime, setOpenTime] = React.useState(false);
   
-  
+  useEffect(()=>{
+    console.log("from use effect")
+    let url = "https://core-graduation.herokuapp.com/getAllDep"
+    let list1 =[]
+    let x = 0 
+  axios.get(url)
+        .then(res => {
+          console.log(res)
+            let da =res.data.response 
+            for (let i =0 ;i<da.length;i++){
+              if( da[i].idDepartment === DepId){
+                const sep = da[i].sections
+                let sep2 = sep.split('/')
+                let listt = []
+                 
+                for(let j =0 ;j<sep2.length;j++){
+                  listt[j]={sec:sep2[j]}
+
+                  
+                }
+                setSections(listt)
+                console.log("listt seccc")
+                console.log(listt)
+
+
+              }}
+              setDone(true)
+          },
+ 
+            )
+   console.log("end use effect")
+      
+ },[]) 
   const handleChangeTime = (event) => {
     setTime(event.target.value);
   };
@@ -153,6 +191,8 @@ export default function CSSGrid(Props) {
     let number = document.getElementById('number').value
     let name = document.getElementById('name').value
     let hour = document.getElementById('hour').value
+    let depa = document.getElementById('dep').value
+
     let type1 = value
     let dep = value1
     let flag = 0
@@ -235,21 +275,31 @@ export default function CSSGrid(Props) {
       year = -1
       semester = -1
     }
+    let flag1
+    if(value1 ==="s1"){
+      flag1 = "0"
+    }
+    else{
+      flag1 ="1"
+    }
     console.log(time)
+    console.log("DepId" + DepId)
+    console.log("number" + number)
+    console.log("name" + name)
+    console.log("hour" + hour)
     console.log("year" + year)
     console.log("semester" + semester)
     console.log("type" + type)
-    let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep="+DepId+"&number="+
-    number+"&type="+type+"&year="+year+"&sem="+semester+"&name="+name+"&numberOfHour="+hour
-    // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
-  axios.get(url)
+    console.log("sec="+sec)
+    console.log("dapa="+value1)
     
-        .then(res => {
-          console.log(res)
-            console.log(res.data.response);
-          },
- 
-            )
+
+
+    let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep="+DepId+"&number="+
+    number+"&type="+type+"&year="+year+"&sem="+semester+"&name="+name+"&numberOfHour="+hour+"&specialty="+sec
+    +"&toDepartments="+DepId+"&flag="+flag1
+    // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+  axios.get(url).then(res => {console.log(res.data.response);},)
 
 
 
@@ -259,36 +309,17 @@ export default function CSSGrid(Props) {
     history.goBack()
 
   }
-  const handleCloseTime = () => {
-    setOpenTime(false);
-  };
 
-  const handleOpenTime = () => {
-    setOpenTime(true);
-  };
 
   const handleChangeYear = (event) => {
     setYear(event.target.value);
   };
 
-  const handleCloseYear = () => {
-    setOpenYear(false);
-  };
-
-  const handleOpenYear = () => {
-    setOpenYear(true);
-  };
-  const handleChangeRoom = (event) => {
-    setRoom(event.target.value);
-  };
-
-  const handleCloseRoom = () => {
-    setOpenRoom(false);
-  };
-
-  const handleOpenRoom = () => {
-    setOpenRoom(true);
-  };
+ 
+  const handleChangeSection =(event) =>{
+    SetSec(event.target.value)
+  }
+ 
   const BootstrapInput = withStyles((theme) => ({
     root: {
       "label + &": {
@@ -327,6 +358,8 @@ export default function CSSGrid(Props) {
 
   return (
     <div>
+      {done&&<div>
+
         <Box boxShadow={3}
         bgcolor="background.paper"
         m={1}
@@ -344,9 +377,9 @@ export default function CSSGrid(Props) {
           
           <TextField 
           inputProps={{min: 0, style: { textAlign: 'right' ,
-        
-    fontFamily:'Markazi Text',
-    fontSize:'20px',}}}
+          
+          fontFamily:'Markazi Text',
+          fontSize:'20px',}}}
           id="name"
           label=" "
           variant="outlined"
@@ -371,7 +404,7 @@ export default function CSSGrid(Props) {
           value={time}
           onChange={handleChangeTime}
           input={<BootstrapInput />}
-        >
+          >
           <option aria-label="None" value="" />
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={0}>0</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={1}>1</option>
@@ -418,7 +451,7 @@ export default function CSSGrid(Props) {
           value={year}
           onChange={handleChangeYear}
           input={<BootstrapInput />}
-        >
+          >
           <option aria-label="None" value="" />
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>سنة اولى فصل اول</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>سنة اولى فصل ثاني</option>
@@ -510,6 +543,38 @@ export default function CSSGrid(Props) {
           </div>
           </Grid>
         
+           <Grid item xs={8}>
+               <div className={classes.papertext}></div>
+            </Grid>   
+
+          <Grid item xs={2}>
+          
+          <FormControl className={classes.choose}>
+          <NativeSelect
+            id="time2"
+            onChange={handleChangeSection}
+            input={<BootstrapInput />}
+            >
+            <option aria-label="None" value="" />
+            {console.log(sections),
+            console.log("sections")}
+            {sections.map(row=>(
+              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+              
+            }} value={row.sec}>{row.sec}</option>
+            ))}
+  
+            
+          </NativeSelect>
+        </FormControl>
+          </Grid>
+  
+  
+          <Grid item xs={2}>
+            <div className={classes.papertext}>اسم القسم</div>
+            </Grid>   
+
+
           <Grid item xs={12}>
           <div className={classes.papertext}></div>
           </Grid>
@@ -553,6 +618,7 @@ export default function CSSGrid(Props) {
       
      
        </Box>
+            </div>}
     </div>
   );
 }

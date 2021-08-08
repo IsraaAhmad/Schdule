@@ -19,7 +19,7 @@ const empList = [
 
 
 function TableR(props) {
-  const {name} = props;
+  const {name , DepId} = props;
   
   const [data, setData] = useState(empList)
   const columns = [

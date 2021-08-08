@@ -52,16 +52,24 @@ const useStyles = makeStyles({
 
 export default function App() {
   const classes = useStyles();
+  const  location  = useLocation();
+  const {state} = location;
+  console.log(location)
+  console.log("from tot")
+  console.log(state)
   const  history  = useHistory();
   const HandelOnClick = () =>{
-      history.push('/create')
+      history.push({
+        pathname:'/create',
+        state:{DepId:state.DepId}
+      })
   }
  
 
 
   return (
     <div style={{height:1000}} className="back">
-<DrawerAdmin/>
+<DrawerAdmin DepId={state.DepId}/>
     <div className = {classes.mar}>
         <div>
         <Button  variant="contained" className = {classes.create} onClick={HandelOnClick} size='large'>
@@ -70,7 +78,7 @@ export default function App() {
 
         </div>
         {/* <div className={classes.tit}>الجداول الدراسية</div> */}
-        <TableMainPage/>
+        <TableMainPage  DepId={state.DepId}/>
     </div>
     </div>
   );

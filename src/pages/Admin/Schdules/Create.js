@@ -10,6 +10,8 @@ import {
 import DataTable from "./DataTable.js"
 import TableCreate from "./TableCreate.js"
 import DrawerAdmin from "../DrawerAdmin.js"
+import { useHistory ,useLocation } from 'react-router-dom';
+
 const useStyles = makeStyles({
     mar:{
         margin:100,
@@ -19,12 +21,14 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
+  const  location  = useLocation();
+  const {state} = location;
   const classes = useStyles();
   return (
     <div style={{height:1000}} className="back">
-<DrawerAdmin/>
+<DrawerAdmin DepId={state.DepId}/>
     <div className={classes.mar}>
-     <DataTable/>
+     <DataTable DepId={state.DepId}/>
     </div>
     </div>
   );

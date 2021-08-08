@@ -57,7 +57,8 @@ const useStyles = makeStyles({
 }
 });
 
-function TableR() {
+function TableR(Props) {
+  const  {DepId} = Props;
   const  history  = useHistory();
   const classes = useStyles();
   const [data, setData] = useState([])
@@ -155,13 +156,13 @@ const [loading, setLoading] = React.useState(false);
     if(row.flag === "2"){
       history.push({
         pathname: '/view',
-        state: { name: row.name }
+        state: { name: row.name, DepId:DepId }
       })
     }
     if(row.flag === "3"){
       history.push({
         pathname: '/tableCreate',
-        state: { name: row.name ,
+        state: { name: row.name,DepId:DepId ,
           index:3
         }
       })
@@ -169,11 +170,24 @@ const [loading, setLoading] = React.useState(false);
 
 
   }
+  const handelDeleteInDataBase =(selectedRow) =>{
+    const n = selectedRow.name
+    let url = "https://core-graduation.herokuapp.com/deleteTable?idDep="+DepId+"&name="+n
+    
+    axios.get(url)
+    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+    
+        .then(res => {
+          console.log(res)
+        
+            },
+            )
+    }
 
   useEffect(()=>{
     let list1 = []
     setLoading(true)
-    axios.get("https://core-graduation.herokuapp.com/getTables?idDep=60ddc9735b4d43f8eaaabf83")
+    axios.get("https://core-graduation.herokuapp.com/getTables?idDep="+DepId)
     // axios.get("https://jsonplaceholder.typicode.com/todos/1")
     
         .then(res => {
@@ -343,6 +357,7 @@ const [loading, setLoading] = React.useState(false);
           onRowDelete: selectedRow => new Promise((resolve, reject) => {
             const index = selectedRow.tableData.id;
             const updatedRows = [...data]
+            handelDeleteInDataBase(selectedRow)
             updatedRows.splice(index, 1)
             setTimeout(() => {
               setData(updatedRows)

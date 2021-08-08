@@ -78,7 +78,7 @@ const useStyles =  makeStyles((theme) => ({
   },
   
   cas:{
-      margin: 6,
+      marginTop: 25,
   },
   time:{
       display: 'flex',
@@ -159,7 +159,7 @@ export default function App(props) {
     let day = ['سبت','احد','اثنين','ثلاثاء','اربعاء','خميس',]
     let x1 =  document.getElementById('causes').value
     let x2 =  document.getElementById('start').value
-    y[6] =  document.getElementById('end').value
+   let x3 =  document.getElementById('end').value
     y[5] =  document.getElementById('thu').checked
     y[4] =  document.getElementById('wed').checked
     y[3] =  document.getElementById('tus').checked
@@ -178,7 +178,7 @@ export default function App(props) {
 
     let x11 =  document.getElementById('r1').value
     let ss =""
-    for(let i =0 ; i<7;i++){
+    for(let i =0 ; i<6;i++){
       if (ss == ""){
         if(y[i])
            ss+=day[i]}
@@ -195,6 +195,9 @@ export default function App(props) {
     
     console.log("causes="+x1)
     console.log("start="+x2)
+    console.log("end="+x3)
+
+
    console.log("days="+ss)
     console.log("x10="+x10)
     console.log("need="+value1)
@@ -227,6 +230,8 @@ const handelSubmit=(e)=>{
         justifyContent:'center',
         fontSize: 35,
       fontFamily: 'Markazi Text',
+      backgroundColor:'#37474f',
+      color :'white'
       }}>اوقات الدوام</div>
 <div style={{backgroundColor:'white',boxShadow: "3px 3px 3px #9E9E9E"}}>
                 <div className={classes.tit}>
@@ -352,6 +357,18 @@ const handelSubmit=(e)=>{
     </div>
     <div style={{fontSize: 25,fontFamily: 'Markazi Text',marginRight:10,marginLeft:15}}>:الوزن</div>
         </div>
+        <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',marginRight:10,marginLeft:15}}>
+
+        <FormControlLabel
+           value="top"
+           control={<Checkbox id="sun" onChange={handelchange1} style={{color:"#045F5F"}} value="احد"/>}
+           label={<spane style={{fontFamily:'Markazi Text',fontSize:'20px'}}>نعم</spane>}
+           style={{fontSize:'30px'}}
+           labelPlacement="start"
+           />
+           <div style={{fontSize: 25,fontFamily: 'Markazi Text',marginRight:10,marginLeft:15}}>: فراغ بين المحاضرات</div>
+           </div>
+
 
         <div style={{display:'flex',justifyContent:'flex-end',marginRight:10,marginLeft:15}}>
         <FormControl component="fieldset">
@@ -370,25 +387,8 @@ const handelSubmit=(e)=>{
       </RadioGroup>
     </FormControl>
         </div>
-
-
-        <div style={{display:'flex',justifyContent:'flex-end',marginRight:10,marginLeft:15}}>
-        <FormControl component="fieldset">
-      <RadioGroup row aria-label="position" name="position" defaultValue="top" value={value2} onChange={handleChangeRadio2}>
        
-        <FormControlLabel 
-        value="true" 
-        labelPlacement="start"
-        control={<Radio style={{color:'#045F5F'}} />} 
-        label={<span style={{fontSize: 25,fontFamily: 'Markazi Text',}}>اريد فراغات بين محاضراتي</span>} />
-         <FormControlLabel 
-        value="false" 
-        labelPlacement="start"
-        control={<Radio style={{color:'#045F5F'}} />} 
-        label={<span style={{fontSize: 25,fontFamily: 'Markazi Text',}}>لا اريد فراغ بين محاضراتي</span>} />
-      </RadioGroup>
-    </FormControl>
-        </div>
+        
           <Button  onClick={HandelAdd} variant="contained"type ="submit" size="small" style={{marginLeft:20,marginBottom:30,  backgroundColor:'#045F5F',color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} >
           اضافة 
         </Button>

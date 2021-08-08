@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData ,setChild,child} = Props
+  let {TableName , savedData ,setChild,child , DepId} = Props
   console.log("from top saved ="+ savedData)
   const [rooms,setRooms] = React.useState({})
   const [savDate,setSavDate] = React.useState(savedData)
@@ -95,7 +95,7 @@ const classes = useStyles();
   
   const room1 =() =>{
     return new Promise((Resolve,Reject)=>{
-      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+ DepId)
   .then(res => {
         console.log(res)
         console.log("*********")
@@ -121,7 +121,7 @@ const classes = useStyles();
   const course1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
-      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+DepId)
   
      
       .then(res => {
@@ -144,7 +144,7 @@ const classes = useStyles();
   const inst1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
-      axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
   
      
       .then(res => {
@@ -501,7 +501,7 @@ const importExcel = (e) => {
       let time = f+"/"+t+"/"+day1
 
 
-      let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+      let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
       +nameTable+"&courseIns="+listt[k].teacher+"&courseName="+listt[k].course+
       "&flag=2&timeSlot="+time+"&roomType="+listt[k].room+"&date=2020/2019"
 
@@ -541,7 +541,7 @@ setRen(!ren)
   let time = f+"/"+t+"/"+day1
 
 
-let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
  +nameTable+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date=2020/2019"
 console.log("url="+ url)
   axios.get(url).then(res => {console.log(res)},)
@@ -568,7 +568,7 @@ const handelDeleteInDataBase =(row) =>{
 
 
   let time = f+"/"+t+"/"+day1
-  let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="+
+  let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId="+DepId+"&tableName="+
   TableName+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date=2020/2019"
 console.log(url)
   axios.get(url).then(res => {console.log(res)},)

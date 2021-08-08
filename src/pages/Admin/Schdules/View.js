@@ -34,14 +34,14 @@ export default function App(props) {
   const classes = useStyles();
   return (
     <div style={{height:1000}} className="back">
-      <DrawerAdmin/>
+      <DrawerAdmin DepId={state.DepId}/>
 
       <div className = {classes.root}>
    
         <div className ={classes.mar}>
           {/* <div>{state.name}</div> */}
 
-        <Table1 name = {state.name}/>
+        <Table1 name = {state.name} DepId={state.DepId}/>
         </div>
 
 

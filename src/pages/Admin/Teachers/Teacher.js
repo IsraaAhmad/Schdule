@@ -14,6 +14,8 @@ import DrawerAdmin from "../DrawerAdmin.js"
 import "../back.css"
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import { useHistory ,useLocation } from 'react-router-dom';
+
 
 
 function TabPanel(props) {
@@ -58,6 +60,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
+  const  location  = useLocation();
+  const {state} = location;
+  console.log(location)
+  console.log("from tot")
+  console.log(state.DepId)
   const [value, setValue] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -67,10 +74,10 @@ export default function App() {
 
   return (
     <div style={{height:10000}} className="back">
-<DrawerAdmin/>
+<DrawerAdmin DepId={state.DepId} />
 
 <div className={classes.root} >
-      <TableMainPage/>
+      <TableMainPage DepId={state.DepId}/>
       
      
  

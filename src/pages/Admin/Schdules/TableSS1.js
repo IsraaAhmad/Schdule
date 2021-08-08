@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData ,setChild,child} = Props
+  let {TableName , savedData ,setChild,child ,DepId} = Props
   console.log("from top saved ="+ savedData)
  
   const [savDate,setSavDate] = React.useState(savedData)
@@ -84,7 +84,7 @@ function TableR(Props) {
   const course1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
-      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+DepId)
   
      
       .then(res => {
@@ -400,7 +400,7 @@ const importExcel = (e) => {
       let day1 = listt[k].days
       let time = f+"/"+t+"/"+day1
 
-      let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+      let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
       +nameTable+"&courseIns=0&courseName="+listt[k].course+
       "&flag=1&timeSlot="+time+"&roomType=0&date=2020/2019"
 
@@ -438,7 +438,7 @@ setRen(!ren)
   let time = f+"/"+t+"/"+day1
 
 
-let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
  +nameTable+"&courseIns=0&courseName="+c1+"&flag=1&timeSlot="+time+"&roomType=0&date=2020/2019"
 console.log("url="+ url)
   axios.get(url).then(res => {console.log(res)},)
@@ -461,7 +461,7 @@ const handelDeleteInDataBase =(row) =>{
   console.log("TableName = " + TableName)
 
   let time = f+"/"+t+"/"+day1
-  let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="+
+  let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId="+DepId+"&tableName="+
   TableName+"&courseIns=0&courseName="+c1+"&flag=1&timeSlot="+time+"&roomType=0&date=2020/2019"
 console.log(url)
   axios.get(url).then(res => {console.log(res)},)

@@ -101,7 +101,8 @@ export default function SimpleAccordion(Props) {
   const classes = useStyles();
   const  history  = useHistory();
   const handelDeleteCourse =(x) =>{
-    console.log("number of delete course is" +x)
+    console.log("https://core-graduation.herokuapp.com/deleteCourseFromDep?toDepartments="+DepId+"&number="+
+    x)
     axios.get("https://core-graduation.herokuapp.com/deleteCourseFromDep?toDepartments="+DepId+"&number="+
     x)
     

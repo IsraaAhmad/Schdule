@@ -50,8 +50,8 @@ const useStyles = makeStyles({
 
 
 
-function TableR() {
-  
+function TableR(Props) {
+  const {DepId} = Props
   const [data, setData] = useState([])
   const [loading, setLoading] = React.useState(false);
   const [dialog,setDialog] = React.useState(false);
@@ -76,12 +76,12 @@ function TableR() {
  
 const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.name
-let url = "https://core-graduation.herokuapp.com/deleteInsFromDep?idDep=60ddc9735b4d43f8eaaabf83&name="+id
+let url = "https://core-graduation.herokuapp.com/deleteInsFromDep?idDep="+DepId+"&name="+id
 axios.get(url).then(res => {console.log(res)},)
 }
 
 const handelAddInDataBase = (newRow) =>{
-  let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep=60ddc9735b4d43f8eaaabf83&name="
+  let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep="+DepId+"&name="
   +newRow.name
   axios.get(url).then(res => {console.log(res)},)
 }
@@ -171,7 +171,7 @@ const importExcel = (e) => {
   useEffect(()=>{
     let listt = []
     setLoading(true)
-    axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep=60ddc9735b4d43f8eaaabf83")
+    axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
   
      
     .then(res => {

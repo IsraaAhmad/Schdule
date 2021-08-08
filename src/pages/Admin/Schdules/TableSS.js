@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData,setChild,child} = Props
+  let {TableName , savedData,setChild,child ,DepId} = Props
   console.log("from top saved ="+ savedData)
   const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
@@ -85,7 +85,7 @@ function TableR(Props) {
   const course1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
-      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+DepId)
   
      
       .then(res => {
@@ -106,7 +106,7 @@ function TableR(Props) {
 
   const room1 =() =>{
     return new Promise((Resolve,Reject)=>{
-      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+DepId)
   .then(res => {
         console.log(res)
           console.log(res.data.response);
@@ -131,7 +131,7 @@ function TableR(Props) {
   const inst1 =() =>{
     return new Promise((Resolve,Reject)=>{
 
-      axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep=60ddc9735b4d43f8eaaabf83")
+      axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
   
      
       .then(res => {
@@ -242,7 +242,7 @@ function TableR(Props) {
     console.log("course = " + course1)
     console.log("tableName = " + nameTable)
 
-  let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+  let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
    +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
   console.log("url="+ url)
     axios.get(url).then(res => {console.log(res)},)
@@ -255,7 +255,7 @@ function TableR(Props) {
     let inst1 = inst[row.teacher]
     let course1 = course[row.course]
     let tableN = nameTable
-    let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="+
+    let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId="+DepId+"&tableName="+
     tableN+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
   console.log(url)
     axios.get(url)
@@ -374,7 +374,7 @@ function TableR(Props) {
         // +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
 
 
-        let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
+        let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
         +nameTable+"&courseIns="+listt[k].teacher+"&courseName="+listt[k].course+
         "&flag=0&timeSlot=0&roomType="+listt[k].type+"&date=2020/2019"
   

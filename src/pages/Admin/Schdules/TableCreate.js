@@ -97,10 +97,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ScrollableTabsButtonPrevent(props) {
-  const  location  = useLocation();
   const  history  = useHistory();
-
+  
+  const  location  = useLocation();
   const {state} = location;
+  const DepId = state.DepId
   const classes = useStyles();
   const [flag,setFlag] = React.useState(false);
   const [savedData,setSavedDate] = React.useState(0);
@@ -121,7 +122,7 @@ export default function ScrollableTabsButtonPrevent(props) {
   useEffect(()=>{
     // setLoading(true)
       
-      axios.get("https://core-graduation.herokuapp.com/getFromDraft?idDep=60ddc9735b4d43f8eaaabf83&tableName="+state.name)
+      axios.get("https://core-graduation.herokuapp.com/getFromDraft?idDep="+DepId+"&tableName="+state.name)
       .then(res => {
         setSavedDate(res.data.response)
         console.log(res.data.response)
@@ -135,7 +136,7 @@ export default function ScrollableTabsButtonPrevent(props) {
   ,[value,child]) 
   return (
     <div>
-<DrawerAdmin/>
+<DrawerAdmin DepId={DepId}/>
 {loading?
          <div className={classes.lod}>
          
@@ -159,24 +160,24 @@ export default function ScrollableTabsButtonPrevent(props) {
             indicator: classes.indicator
           }}
           >
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
           
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child}/>
+      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
       </TabPanel>
       
       <div className={classes.bot}>

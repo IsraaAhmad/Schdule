@@ -151,7 +151,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CSSGrid() {
+export default function CSSGrid(Props) {
+  const {DepId} = Props;
   const classes = useStyles();
   const [year, setYear] = React.useState('');
   const [room, setRoom] = React.useState('');
@@ -221,13 +222,13 @@ export default function CSSGrid() {
     console.log("sem:   "+ value1)
 
 
-    let url = "https://core-graduation.herokuapp.com/addTable?idDep=60ddc9735b4d43f8eaaabf83&name="+
+    let url = "https://core-graduation.herokuapp.com/addTable?idDep="+DepId+"&name="+
     name+"&year="+date1+"&semester="+value1+"&status=draft"
     axios.get(url).then(res => {console.log(res)},)
 
      history.push({
       pathname: './tableCreate',
-      state: { name: name ,
+      state: { name: name ,DepId:DepId,
         index:3
       }
     })
