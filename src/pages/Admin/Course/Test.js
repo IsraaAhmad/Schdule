@@ -10,9 +10,17 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Box from '@material-ui/core/Box';
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import IconButton from "@material-ui/core/IconButton";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -66,8 +74,9 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
+    
     fontFamily:'Markazi Text',
     fontSize:'25px',
   },
@@ -77,9 +86,30 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     textAlign:'right',
     backgroundColor:'white',
-    width:'100%',
+    width:'780px',
     display:'flex',
     align:'left',
+    marginLeft:15,
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        border: "2px solid #045F5F",
+
+      },
+      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        border: "2px solid #045F5F"
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        border: "2px solid red",
+    // borderRadius: 4,
+    // border: "2px solid #045F5F",
+      }
+  },
+  textField1: {
+    textAlign:'right',
+    backgroundColor:'white',
+    width:'340px',
+    display:'flex',
+    align:'left',
+    marginLeft:17,
     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         border: "2px solid #045F5F",
 
@@ -94,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
       }
   },
   choose:{
-      height:5
+      height:15
 
   },
   papertext: {
@@ -113,11 +143,13 @@ const useStyles = makeStyles((theme) => ({
       flexDirection:'row'
   },
   cont:{
-    
+    boxShadow: "7px 7px 7px white",
+    padding:30,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
+   
   
   }
 }));
@@ -132,10 +164,19 @@ export default function CSSGrid(Props) {
   const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
   const [value1, setValue1] = React.useState();
-  const [sections , setSections] = React.useState();
   const [done , setDone] = React.useState(false);
+  const [sections , setSections] = React.useState();
   const [sec,SetSec] = React.useState();
+  const [dia,setDia] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  
 
+  
+  const handleClose = () => {
+    setOpen(false);
+    history.goBack()
+    
+  };
 
 
   const  history  = useHistory();
@@ -166,9 +207,7 @@ export default function CSSGrid(Props) {
                 setSections(listt)
                 console.log("listt seccc")
                 console.log(listt)
-
-
-              }}
+ }}
               setDone(true)
           },
  
@@ -280,7 +319,7 @@ export default function CSSGrid(Props) {
       flag1 = "0"
     }
     else{
-      flag1 ="1"
+      flag1 ="2"
     }
     console.log(time)
     console.log("DepId" + DepId)
@@ -300,7 +339,8 @@ export default function CSSGrid(Props) {
     +"&toDepartments="+DepId+"&flag="+flag1
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
   axios.get(url).then(res => {console.log(res.data.response);},)
-
+  setOpen(true);
+  setDia(true)
 
 
   }
@@ -358,244 +398,184 @@ export default function CSSGrid(Props) {
 
   return (
     <div>
-      {done&&<div>
+      {done&&<div container className={classes.cont}>
 
-        <Box boxShadow={3}
-        bgcolor="background.paper"
-        m={1}
-        p={1}
-        className={classes.cont}>
-
-      <Grid container className={classes.cont} spacing={1} >
-          
-        <Grid item xs={12}>
-          <Paper className={classes.paper1} >اضافة مساق جديد</Paper>
-        </Grid>
         
 
-        <Grid item xs={10}>
           
-          <TextField 
-          inputProps={{min: 0, style: { textAlign: 'right' ,
-          
-          fontFamily:'Markazi Text',
-          fontSize:'20px',}}}
-          id="name"
-          label=" "
-          variant="outlined"
-          required='true'
-          className={classes.textField}
-          style={{ borderColor: 'red' }}
-          />
-        </Grid>
+            <div className={classes.paper1}>اضافة مساق جديد</div>
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
+            <div><TextField 
+                inputProps={{min: 0, style: { textAlign: 'right' ,
+                fontFamily:'Markazi Text',
+                fontSize:'20px',}}}
+                id="name"
+                label=" "
+                variant="outlined"
+                required='true'
+                className={classes.textField}
+                style={{ borderColor: 'red' }}
+                />
+             </div>
+             <div className={classes.papertext}>اسم المساق</div>
+      </div>
+     
+       <div  style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
 
 
-        <Grid item xs={2}>
-          <div className={classes.papertext}>اسم المساق</div>
-          </Grid>
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-
-          <Grid item xs={1}>
-            <FormControl className={classes.choose}>
-        <NativeSelect
-          id="hour"
-          value={time}
-          onChange={handleChangeTime}
-          input={<BootstrapInput />}
-          >
-          <option aria-label="None" value="" />
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={0}>0</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={1}>1</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={2}>2</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={3}>3</option>
-        </NativeSelect>
-      </FormControl>
-            </Grid>
-            <Grid item xs={2}>
-          <div className={classes.papertext}>الساعة المعتمدة</div>
-          </Grid>
-       
-
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-
-          <Grid item xs={5}>
-          
-          <TextField 
-          inputProps={{min: 0, style: { textAlign: 'right',
-          fontFamily:'Markazi Text',
-          fontSize:'20px', }}}
-          id="number"
-          label=" "
-          variant="outlined"
-          required='true'
-          className={classes.textField}
-          style={{ borderColor: 'red' }}
-          />
-        </Grid>
-
-        <Grid item xs={2}>
-          <div className={classes.papertext}>رقم المساق</div>
-          </Grid>
-          
-
-          
-         
-          <Grid item xs={2}>
-            <FormControl className={classes.choose}>
-        <NativeSelect
-          id="time"
-          value={year}
-          onChange={handleChangeYear}
-          input={<BootstrapInput />}
-          >
-          <option aria-label="None" value="" />
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>سنة اولى فصل اول</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>سنة اولى فصل ثاني</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={30}>سنة ثانية فصل اول</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={40}>سنة ثانية فصل ثاني</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={50}>سنة ثالثة فصل اول</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={60}>سنة ثالثة فصل ثاني</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={70}>سنة رابعة فصل اول</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={80}>سنة رابعة فصل ثاني</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={90}>سنة خامسة فصل اول</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={100}>سنة خامسة فصل ثاني</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={110}>غير ذلك</option>
-
-          
-        </NativeSelect>
-      </FormControl>
-            </Grid>
-            <Grid item xs={4}>
-          <div className={classes.papertext}>الموعد حسب الخطة الدراسية  </div>
-          </Grid>
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-      
-         
-        
-          
-         
-          
-
-          <Grid item xs={5}>
-            <div style={{display:'flex',flexDirection:'row'}}>
+       <div style={{height:'30px',marginRight:30}}> <FormControl >
+                <NativeSelect
+                  size='large'
+                  id="hour"
+                  value={time}
+                  onChange={handleChangeTime}
+                  input={<BootstrapInput />}
+                   >
+                       <option aria-label="None" value="" />
+                       <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={0}>0</option>
+                       <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={1}>1</option>
+                       <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={2}>2</option>
+                       <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={3}>3</option>
+                </NativeSelect>
+              </FormControl>
+        </div>
+        <div className={classes.papertext} style={{marginRight:100}}>الساعة المعتمدة</div>
 
 
-          <FormControl component="fieldset">
-      
-      <RadioGroup row aria-label="position" name="position" id="type" value={value} onChange={handleChangeRadio}>
-       
-        <FormControlLabel
-          value="s1"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اجباري</span>}
-          labelPlacement="start"
-          />
+          <div><TextField 
+                   inputProps={{min: 0, style: { textAlign: 'right',
+                   fontFamily:'Markazi Text',
+                   fontSize:'20px', }}}
+                   id="number"
+                   label=" "
+                   variant="outlined"
+                   required='true'
+                   className={classes.textField1}
+                   style={{ borderColor: 'red' }}
+                   />
+           </div>
+           <div className={classes.papertext}>رقم المساق</div>
 
-<FormControlLabel
-          value="s2"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اختياري</span>}
-          labelPlacement="start"
-          />
-      
-      </RadioGroup>
-    </FormControl>
-            
-          <div className={classes.papertext}>:نوع المساق</div>
-          </div>
-          </Grid>
+      </div>
 
-          <Grid item xs={7}>
-          <div className={classes.papertext}></div>
-          </Grid>
-          <Grid item xs={5}>
-            <div style={{display:'flex',flexDirection:'row'}}>
+     
 
 
-          <FormControl component="fieldset">
-      
-      <RadioGroup row aria-label="position" name="position" id="dep" value={value1} onChange={handleChangeRadio1}>
-       
-        <FormControlLabel
-          value="s1"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسمي</span>}
-          labelPlacement="start"
-          />
-
-<FormControlLabel
-          value="s2"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسم اخر</span>}
-          labelPlacement="start"
-          />
-      
-      </RadioGroup>
-    </FormControl>
-            
-          <div className={classes.papertext}>:القسم</div>
-          </div>
-          </Grid>
-        
-           <Grid item xs={8}>
-               <div className={classes.papertext}></div>
-            </Grid>   
-
-          <Grid item xs={2}>
-          
-          <FormControl className={classes.choose}>
-          <NativeSelect
-            id="time2"
-            onChange={handleChangeSection}
-            input={<BootstrapInput />}
-            >
-            <option aria-label="None" value="" />
-            {console.log(sections),
-            console.log("sections")}
-            {sections.map(row=>(
-              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+      <div  style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
+      <div>
+              <FormControl className={classes.choose}>
+                  <NativeSelect
+                       id="time2"
+                       onChange={handleChangeSection}
+                       input={<BootstrapInput />}
+                       >
+                        <option aria-label="None" value="" />
+           
+                         {sections.map(row=>(
+                         <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
               
-            }} value={row.sec}>{row.sec}</option>
-            ))}
-  
-            
-          </NativeSelect>
-        </FormControl>
-          </Grid>
-  
-  
-          <Grid item xs={2}>
-            <div className={classes.papertext}>اسم القسم</div>
-            </Grid>   
-
-
-          <Grid item xs={12}>
-          <div className={classes.papertext}></div>
-          </Grid>
-
-          <Grid item xs={1}>
-          <Button variant="contained" style={{backgroundColor:'#37474f'}} onClick={handelCancel}>
-          <CancelIcon style={{color:'white'}}/>
-              <div style = {{textAlign: 'right',
-          fontFamily:'Markazi Text',
-          fontSize:'20px', marginLeft:4,color:'white'}}>
-                 الغاء
+                         }} value={row.sec}>{row.sec}</option>
+                         ))}
+                   </NativeSelect>
+               </FormControl>
               </div>
-      </Button>
-          </Grid>
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-         
+            <div className={classes.papertext} style={{marginRight:115,marginLeft:10}}> التخصص</div>
+
+          <div >
+               <FormControl className={classes.choose}>
+                   <NativeSelect
+                     id="time"
+                     value={year}
+                     onChange={handleChangeYear}
+                     input={<BootstrapInput />}
+                     >
+                        <option aria-label="None" value="" />
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>سنة اولى فصل اول</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>سنة اولى فصل ثاني</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={30}>سنة ثانية فصل اول</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={40}>سنة ثانية فصل ثاني</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={50}>سنة ثالثة فصل اول</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={60}>سنة ثالثة فصل ثاني</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={70}>سنة رابعة فصل اول</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={80}>سنة رابعة فصل ثاني</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={90}>سنة خامسة فصل اول</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={100}>سنة خامسة فصل ثاني</option>
+                        <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={110}>غير ذلك</option>
+
+          
+                    </NativeSelect>
+                 </FormControl>
+            </div>
+          <div className={classes.papertext}  style={{marginLeft:7}}>الموعد حسب الخطة الدراسية  </div>
+
+          
 
 
-          <Grid item xs={1}>
+      </div>
+
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
+          <div style={{display:'flex',flexDirection:'row'}}>
+            <FormControl component="fieldset">
+             <RadioGroup row aria-label="position" name="position" id="type" value={value} onChange={handleChangeRadio}>
+              <FormControlLabel
+                  value="s1"
+                  control={<Radio style={{color:"#045F5F"}} />}
+                  label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اجباري</span>}
+                  labelPlacement="start"
+                  />
+
+              <FormControlLabel
+                   value="s2"
+                   control={<Radio style={{color:"#045F5F"}} />}
+                   label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>اختياري</span>}
+                   labelPlacement="start"
+                   />
+      
+             </RadioGroup>
+           </FormControl>
+           </div>
+           <div className={classes.papertext}>:نوع المساق</div>
+    </div>
+            
+    <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
+          
+            <div style={{display:'flex',flexDirection:'row'}}>
+              <FormControl component="fieldset">
+                <RadioGroup row aria-label="position" name="position" id="dep" value={value1} onChange={handleChangeRadio1}>
+                   <FormControlLabel
+                         value="s1"
+                         control={<Radio style={{color:"#045F5F"}} />}
+                         label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسمي</span>}
+                         labelPlacement="start"
+                         />
+
+                    <FormControlLabel
+                         value="s2"
+                         control={<Radio style={{color:"#045F5F"}} />}
+                         label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسم اخر</span>}
+                         labelPlacement="start"
+                         />
+      
+                </RadioGroup>
+              </FormControl>
+              </div>
+          
+               <div className={classes.papertext}  style={{marginLeft:37}}>:القسم</div>
+             </div>
+
+   
+  
+    <div style={{display:'flex',flexDirection:'row',margin:15}}>
+            <div style={{marginLeft:150,marginRight:20}} >
+                <Button variant="contained" style={{backgroundColor:'#37474f'}} onClick={handelCancel}>
+                <CancelIcon style={{color:'white'}}/>
+                   <div style = {{textAlign: 'right',fontFamily:'Markazi Text',fontSize:'20px', marginLeft:4,color:'white'}}>
+                       الغاء
+                   </div>
+                 </Button>
+            </div>
+
+            <div >
           <Button variant="contained" style={{backgroundColor:'#045F5F'}} onClick={handelSave}>
           <SaveAltIcon style={{color:'white'}}/>
               <div style = {{textAlign: 'right',
@@ -604,20 +584,53 @@ export default function CSSGrid(Props) {
                  حفظ
               </div>
       </Button>
-          </Grid>
-          <Grid item xs={12}>
-          <div className={classes.papertext}></div>
-          </Grid>
+          </div>
+    </div>
+         
+         
+
+
+        
+         
           
          
       
-      </Grid>
+     
      
       
       
       
      
-       </Box>
+      
+            </div>}
+
+           {dia&&<div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 تم اضافة المساق بنجاح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
             </div>}
     </div>
   );

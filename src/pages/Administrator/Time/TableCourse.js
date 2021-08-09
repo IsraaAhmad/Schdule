@@ -6,6 +6,8 @@ import Divider from '@material-ui/core/Divider';
 import T from "./T.js"
 import  { useEffect } from 'react';
 import { Button } from '@material-ui/core';
+import axios from 'axios';
+
 
 import {
   BrowserRouter as Router,
@@ -45,7 +47,7 @@ const useStyles = makeStyles({
 
 export default function App(Props) {
   const classes = useStyles();
-  const {courseList,setCourseList,labList,setLabList} = Props
+  const {courseList,setCourseList,labList,setLabList, sem , date} = Props
   let str = courseList
    const arr = str.split("*")
   const [a0, setA0] = React.useState(arr[0]);
@@ -60,9 +62,13 @@ export default function App(Props) {
   
 
   const HandelSave =() =>{
-  
+  let ww = a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5
     
     setCourseList(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
+    axios.get("https://core-graduation.herokuapp.com/editTimes?semester="+sem+"&date="+date+
+    "&courseTimes="+ww+"&labsTimes="+labList+"&startandend=yet")
+
+     .then(res => {console.log(res.data.response) },)
     console.log("this is all data after change")
     console.log(courseList)
     console.log(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)

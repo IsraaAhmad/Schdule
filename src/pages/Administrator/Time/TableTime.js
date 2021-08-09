@@ -9,6 +9,8 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import { useHistory ,useLocation } from 'react-router-dom';
+
 import DrawerAdminstrator from "../DrawerAdminstrator.js"
 const useStyles = makeStyles({
   tot:{
@@ -19,11 +21,13 @@ const useStyles = makeStyles({
 
 export default function App() {
   const classes = useStyles();
+  const  location  = useLocation();
+  const {state} = location;
   return (
     <div style={{height:1000}}className="back">
      <DrawerAdminstrator/>
     <div className={classes.tot}>
-       <AllTime/> 
+       <AllTime date={state.date} sem = {state.sem}/> 
        {/* <Test/> */}
     </div>
     </div>

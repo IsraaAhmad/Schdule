@@ -47,7 +47,7 @@ const useStyles = makeStyles({
 
 export default function App(Props) {
   const classes = useStyles();
-  const {courseList,setCourseList,labList,setLabList} = Props
+  const {courseList,setCourseList,labList,setLabList , sem , date} = Props
   let str = labList
   console.log("labList from ent")
   console.log(labList)
@@ -67,11 +67,17 @@ export default function App(Props) {
  
   console.log("test")
   const HandelSave =() =>{
+    let ww = a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5
+    axios.get("https://core-graduation.herokuapp.com/editTimes?semester="+sem+"&date="+date+
+    "&courseTimes="+courseList+"&labsTimes="+ww+"&startandend=yet")
+
+     .then(res => {console.log(res.data.response) },)
   
     
     setLabList(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
     console.log("this is all data after change")
     console.log(labList)
+
   }
 
   useEffect(()=>{

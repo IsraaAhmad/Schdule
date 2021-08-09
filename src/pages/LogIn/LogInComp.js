@@ -57,7 +57,14 @@ const useStyles = makeStyles({
       // border: "2px solid #045F5F",
         }
     },
-    
+    forget:{
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center',
+      fontSize:'20px',
+        fontFamily:'Markazi Text',
+        margin:0,
+    },
     text:{
         display:'flex',
         justifyContent:'center',
@@ -75,7 +82,9 @@ const useStyles = makeStyles({
       justifyContent:'center',
       alignItems:'center',
       padding:'30px',
-      margin: '30px',
+      marginLeft: '30px',
+      marginRight:'30px',
+      marginTop:'80px',
       position:'absolute',
       right: 850,
       top:280,
@@ -126,6 +135,16 @@ const handelUser = () =>{
                 }
               })
              
+            }
+            else if(dep.type === "normal"){
+              history.push({
+                pathname: './UsersHome',
+                state: { DepName: dep.depName ,
+                  DepId:dep.idDep,
+                  InstName:dep.name
+                }
+              })
+
             }
 
 
@@ -179,6 +198,8 @@ const handelOnChangePassword = (event) =>{
           />
 
 
+
+
 <TextField 
          inputProps={{min: 0, style: { textAlign: 'right' ,
         
@@ -186,6 +207,7 @@ const handelOnChangePassword = (event) =>{
     fontSize:'20px',}}}
           id="password"
           label=" "
+          type="password"
           variant="outlined"
           required='true'
           placeholder="ادخل كلمة المرور"
@@ -204,7 +226,9 @@ const handelOnChangePassword = (event) =>{
               </div>
       </Button>
       {flag&&<label  style={{ color: 'red',fontWeight: 'bold'}}>**اسم المستخ\م او كلمة المرور غير صحيحة **</label>}
-  
+             <Button> 
+             <div className={classes.forget}>?هل نسيت كلمة المرور</div>
+             </Button>
     
     </div>
         </div>}

@@ -2,32 +2,13 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
-import { TablePagination } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
-import { css } from "@emotion/react";
 
-import XLSX from 'xlsx';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import IconButton from "@material-ui/core/IconButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
-import CommentIcon from '@material-ui/icons/Comment';
 
-const empList = [
-    { space: "نعم", need: "نعم", weight:2, days: "احد ثلاثا", ToTime:"08:30", FromTime: "09:30", note:"ملاحظ"},
-    { space: "نعم", need: "نعم", weight:1, days: "احد ثلاثا", ToTime:"08:30", FromTime: "09:30", note:"ملاحظ"},
-    { space: "نعم", need: "نعم", weight:2, days: "احد ثلاثا", ToTime:"08:30", FromTime: "09:30", note:"ملاحظ"},
-    
-  ]
 
 const useStyles = makeStyles({
   root: {
@@ -44,7 +25,7 @@ const useStyles = makeStyles({
     
   },
   lod:{
-    margin:100,
+    marginTop:20,
     width:800,
     display:'flex',
     flexDirection:'column',
@@ -57,42 +38,61 @@ const useStyles = makeStyles({
 
 
 
-function TableR() {
-  
-  const [data, setData] = useState(empList)
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [loading, setLoading] = React.useState(false);
+function TableR(Props) {
+  const {DepId,DepName,InstName,ren} = Props
+  const [data, setData] = useState()
+  const [loading, setLoading] = React.useState(true);
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose1 = () => {
-    setOpen(false);
-    setDialog(true)
-  };
-  const handleClose = () => {
-    setOpen(false);
-    
-  };
+  useEffect(()=>{
+    setLoading(true)
+    let url = "https://core-graduation.herokuapp.com/getSoftConst?idDep="+DepId
+    console.log("loooooooooooool")
+    axios.get(url).then(res => {
+      console.log(res.data.response)
+      let w= res.data.response
+      let listt = []
+      let count = 0
+      console.log("len" + w.length)
+
+      for(let k = 0;k<w.length;k++){
+        if (w[k].insName ===InstName ){
+          let we = 1
+          if (w[k].wieght === "0.3") we=2
+          if (w[k].wieght === "0.6") we=3
+          if (w[k].wieght === "0.9") we=4
+          let timeAnd = w[k].time.split("/")
+          let r1 = 'نعم'
+          if(w[k].need === "false") r1 = "لا"
+
+          let r2 = 'نعم'
+          if(w[k].space === "false") r2 = "لا"
+
+          // { space: "نعم", need: "نعم", weight:2, days: "احد ثلاثا", ToTime:"08:30", FromTime: "09:30", note:"ملاحظ"},
+          listt[count] = {need:r1,note:w[k].note,space:r2,weight:we,
+            FromTime:timeAnd[0],ToTime:timeAnd[1],days:timeAnd[2]}
+            count = count+1
+            setLoading(false)
+        }
+      }
+      setData(listt)
+
+    },)
+      
+ },[ren])
+
+
 
  
  
 const handelDeleteInDataBase =(selectedRow) =>{
-const id = selectedRow.id
-let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep=60ddc9735b4d43f8eaaabf83&number="+id
 
-axios.get(url)
-// axios.get("https://jsonplaceholder.typicode.com/todos/1")
+let url = "https://core-graduation.herokuapp.com/deleteSoftConst?idDep="+DepId+"&note="+selectedRow.note
++"&instName="+InstName
 
-    .then(res => {
-      console.log(res)
-    
-        },
-        )
+axios.get(url).then(res => {console.log(res)},)
 }
 
 
@@ -162,53 +162,7 @@ axios.get(url)
     cellStyle: { fontFamily: 'Markazi Text',fontSize:'25px',},},
 ]
 
-  useEffect(()=>{
-    // let list1 =[];
-    // setLoading(true)
-    //  axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep=60ddc9735b4d43f8eaaabf83")
-    // // axios.get("https://jsonplaceholder.typicode.com/todos/1")
-    
-    //     .then(res => {
-    //       console.log(res)
-    //         console.log(res.data.response);
-             
-    //          for (let i = 0;i<res.data.response.length ; i++){
-    //            if(res.data.response[i].type ==="قاعة تدريس"){
-    //            let location2 = 20
-             
-    //            if(res.data.response[i].campous === "الحرم الجديد")
-    //               location2 = 10
-              
-
-    //            let x={
-    //              id:res.data.response[i].number,
-    //              type:10,
-    //              location:location2,
-    //            }
-    //            list1.push(x)}
-    //            setLoading(false)
-               
-    //          }
-             
-    //          setData(list1)
-    //          console.log("list1")
-    //          console.log(list1)
-    //          console.log("data")
-    //          console.log(data)
-
-               
-
-
-          
-    //         // setData(res.data.response)
-    //       },
-
-          
-            
-            
-    //         )
-          
-  },[]) 
+  
   
 
   const classes = useStyles();

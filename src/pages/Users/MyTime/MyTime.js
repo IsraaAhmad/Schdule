@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Checkbox } from '@material-ui/core';
 import PropTypes from "prop-types";
@@ -19,6 +20,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TableConst from "./TableConst.js"
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import axios from 'axios';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +34,7 @@ import {
 } from "react-router-dom";
 import {useLocation} from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { renderAvatar } from "@material-ui/x-grid-data-generator";
 
 const useStyles =  makeStyles((theme) => ({
   root: {
@@ -96,6 +105,7 @@ const useStyles =  makeStyles((theme) => ({
 }));
 function ValueLabelComponent(props) {
   const { children, open, value } = props;
+  
 
   return (
     <Tooltip open={open} enterTouchDelay={0} placement="top" title={value}>
@@ -148,10 +158,21 @@ function valuetext(value) {
 export default function App(props) {
   let location = useLocation();
   const {state} = location;
+  console.log("stateeeeee444eeeee")
+  console.log(state)
+  const [ren,setRen] =  useState(false)
   const [value1,setValue1] = useState()
   const [value2,setValue2] = useState()
   const [weight,setWeight] = useState(0)
+  const [dia,setDia] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const  history  = useHistory();
 
+  
+  const handleClose = () => {
+    setOpen(false);
+  
+  };
 
   const classes = useStyles();
   const HandelAdd=() =>{
@@ -188,41 +209,41 @@ export default function App(props) {
 
       }
     }
-
-
-
-
-    
     console.log("causes="+x1)
-    console.log("start="+x2)
-    console.log("end="+x3)
-
-
-   console.log("days="+ss)
+    console.log("start="+x3)
+    console.log("end="+x2)
+    console.log("days="+ss)
     console.log("x10="+x10)
-    console.log("need="+value1)
-    console.log("space="+value2)
+    console.log("need="+value2)
+    console.log("space="+value1)
+
+    let url = "https://core-graduation.herokuapp.com/addSoftConst?idDep="+state.DepId+"&note="
+        +x1+"&start="+x3+"&end="+x2+"&days="+ss+"&weight="+x10+"&need="+value2+"&space="+value1+
+        "&instName="+state.InstName
+  
+    axios.get(url).then(res => {console.log(res)},)
+    setOpen(true);
+    setDia(true)
+    setRen(!ren)
 
   }
   const handelW=(event , value) =>{
     setWeight(value)
 }
 const handleChangeRadio1 = (event) => {
-  setValue1(event.target.value);
+  
 };
 const handleChangeRadio2 = (event) => {
   setValue2(event.target.value);
 };
 
-const handelchange1=(e) =>{
+const handelchange1=(event) =>{
+  setValue1(event.target.checked);
+}
 
-}
-const handelSubmit=(e)=>{
-  
-}
   return (
     <div style={{height:3000 }}  className="back">
-      <DrawerUser/>
+      <DrawerUser DepName={state.DepName} DepId ={state.DepId} InstName = {state.InstName}/>
 
       <div className = {classes.tot}>
       <div style={{
@@ -372,7 +393,7 @@ const handelSubmit=(e)=>{
 
         <div style={{display:'flex',justifyContent:'flex-end',marginRight:10,marginLeft:15}}>
         <FormControl component="fieldset">
-      <RadioGroup id ="r1" row aria-label="position" value={value1} onChange={handleChangeRadio1}>
+      <RadioGroup id ="r1" row aria-label="position" value={value1} onChange={handleChangeRadio2}>
        
         <FormControlLabel 
         value="true" 
@@ -392,6 +413,34 @@ const handelSubmit=(e)=>{
           <Button  onClick={HandelAdd} variant="contained"type ="submit" size="small" style={{marginLeft:20,marginBottom:30,  backgroundColor:'#045F5F',color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} >
           اضافة 
         </Button>
+        {dia&&<div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 تم اضافة المساق بنجاح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
                  
                   
 
@@ -399,7 +448,7 @@ const handelSubmit=(e)=>{
       </div>
       <div className = {classes.tot}>
 
-    <TableConst/>
+    <TableConst DepId = {state.DepId} DepName={state.DepName} InstName={state.InstName} ren={ren}/>
       </div>
     </div>
 

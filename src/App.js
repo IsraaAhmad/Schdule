@@ -26,6 +26,7 @@ import Dep from './pages/Administrator/Home/Dep.js'
 
 
 
+
 import { makeStyles } from "@material-ui/core/styles";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import {
@@ -75,6 +76,8 @@ export default function App() {
         <Route exact path="/AddCourse" render={props => <AddCourse {...props} />} /> 
         <Route exact path="/Department" render={props => <Department {...props} />} /> 
         <Route exact path="/Dep" render={props => <Dep {...props} />} /> 
+        
+
 
 
 

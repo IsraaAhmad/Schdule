@@ -207,7 +207,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "1") && (course.semester === "1")).map(cor => (
+            {data.filter(course => (course.year === "1") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -269,7 +269,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "1") && (course.semester === "2")).map(cor => (
+            {data.filter(course => (course.year === "1") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -357,7 +357,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "2") && (course.semester === "1")).map(cor => (
+            {data.filter(course => (course.year === "2") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -420,7 +420,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "2") && (course.semester === "2")).map(cor => (
+            {data.filter(course => (course.year === "2") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -511,7 +511,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "3") && (course.semester === "1")).map(cor => (
+            {data.filter(course => (course.year === "3") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -574,7 +574,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "3") && (course.semester === "2")).map(cor => (
+            {data.filter(course => (course.year === "3") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -662,7 +662,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "4") && (course.semester === "1")).map(cor => (
+            {data.filter(course => (course.year === "4") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -725,7 +725,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "4") && (course.semester === "2")).map(cor => (
+            {data.filter(course => (course.year === "4") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -813,7 +813,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "5") && (course.semester === "1")).map(cor => (
+            {data.filter(course => (course.year === "5") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -876,7 +876,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "5") && (course.semester === "2")).map(cor => (
+            {data.filter(course => (course.year === "5") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     
@@ -1054,7 +1054,7 @@ export default function SimpleAccordion(Props) {
         <TableBody>
          
         
-            {data.filter(course => (course.year === "-2") && (course.semester === "-2")).map(cor => (
+            {data.filter(course => (course.flagTo === "true")).map(cor => (
             //    <div className={classes.t1}>
             //    <div>{cor.name}</div> 
             //    <div>{cor.number}</div>     

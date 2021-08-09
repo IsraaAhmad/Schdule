@@ -1,12 +1,24 @@
 import React from 'react';
 import { makeStyles ,withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import { createTheme } from '@material-ui/core'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import FormControl from '@material-ui/core/FormControl';
+import moment from "moment";
+import { useState } from "react";
+import {
+  TimePicker,
+  DateTimePicker,
+  DatePicker,
+  
+} from "@material-ui/pickers";
+import "moment/locale/ar-sa";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
@@ -18,13 +30,26 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { useHistory ,useLocation } from 'react-router-dom';
 
+
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from 'axios';
+import "./styl.css"
+
+
 
 
 const useStyles = makeStyles((theme) => ({
+  datePicker: {
+    color: '#045F5F',
+    textColor: '#045F5F',
+    calendarTextColor: '#045F5F',
+    selectColor: '#045F5F',
+    selectTextColor: '#045F5F',
+    calendarYearBackgroundColor:'#045F5F',
+    headerColor: '#045F5F',
+  },
   container: {
     display: 'grid',
     boxShadow:3,
@@ -152,22 +177,54 @@ const useStyles = makeStyles((theme) => ({
 
   }
 }));
-
+const { RangePicker } = DatePicker;
+const dateFormat = "YYYY/MM/DD";
 export default function CSSGrid() {
+   const customTheme = createTheme({
+    overrides: {
+      MuiPickersToolbar: {
+          toolbar: {
+              backgroundColor: '#045F5F',
+          },
+      },
+      MuiPickersDay: {
+          day: {
+              color: 'black',
+
+          },
+          daySelected: {
+              backgroundColor: '#D4AC0D',
+          },
+          dayDisabled: {
+              color: '#D4AC0D',
+          },
+          current: {
+              color: '#37474f',
+          },
+      },
+      MuiPickersModal: {
+          dialogAction: {
+              color: '#D4AC0D', 
+              backgroundColor: '#37474f',
+          },
+      },
+  },
+  })
+  
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   const classes = useStyles();
-  const [year, setYear] = React.useState('');
-  const [room, setRoom] = React.useState('');
-  const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
- 
+
   const [date,setDate] = React.useState('');
   const [currentSem,setCurrentSem] = React.useState('');
 
 
   const  history  = useHistory();
-  const [openYear, setOpenYear] = React.useState(false);
-  const [openRoom, setOpenRoom] = React.useState(false);
-  const [openTime, setOpenTime] = React.useState(false);
  
   
   
@@ -218,16 +275,31 @@ export default function CSSGrid() {
     }
     console.log("date:  "+ date1)
     console.log("sem:   "+ value1)
+    let d0 ="08:00/17:00,1"
+              let d1 ="08:00/17:00,1"
+              let d2 ="08:00/17:00,1"
+              let d3 ="08:00/17:00,1"
+              let d4 ="08:00/17:00,1"
+              let d5 ="08:00/17:00,1"
+              let arr= d0+"*"+d1+"*"+d2+"*"+d3+"*"+d4+"*"+d5
 
+              let b0 ="08:00/17:00,1,12:00/13:00,1,1,1"
+              let b1 ="08:00/17:00,1,12:00/13:00,1,1,1"
+              let b2 ="08:00/17:00,1,12:00/13:00,1,1,1"
+              let b3 ="08:00/17:00,1,12:00/13:00,1,1,1"
+              let b4 ="08:00/17:00,1,12:00/13:00,1,1,1"
+              let b5 ="08:00/17:00,1,12:00/13:00,1,1,1"
+              let arr1= b0+"*"+b1+"*"+b2+"*"+b3+"*"+b4+"*"+b5
 
-    // let url = "https://core-graduation.herokuapp.com/addTable?idDep=60ddc9735b4d43f8eaaabf83&name="+
-    // name+"&year="+date1+"&semester="+value1+"&status=draft"
-    // axios.get(url).then(res => {console.log(res)},)
+              
+    axios.get("https://core-graduation.herokuapp.com/addTimes?semester="+value1+"&date="+date1+
+    "&courseTimes="+arr1+"&labsTimes="+arr+"&startandend=yet")
+    .then(res => {console.log(res) },)
 
     
      history.push({
       pathname: './tableTime',
-      state: { sem: value1 ,date:date1,flag :"0"
+      state: { sem: value1 ,date:date1,flagT :"New",duration:"test"
        
       }
     })
@@ -236,49 +308,13 @@ export default function CSSGrid() {
   const handleChangeRadio = (event) => {
     setValue(event.target.value);
   };
-   const handelSem = (event) =>{
-     setCurrentSem(event.target.Select)
 
-   }
-
-
-  const handleChangeTime = (event) => {
-    setTime(event.target.value);
-  };
   const handelDate =(event)=>{
    setDate(event.target.value)
    
   }
-  const handleCloseTime = () => {
-    setOpenTime(false);
-  };
 
-  const handleOpenTime = () => {
-    setOpenTime(true);
-  };
 
-  const handleChangeYear = (event) => {
-    setYear(event.target.value);
-  };
-
-  const handleCloseYear = () => {
-    setOpenYear(false);
-  };
-
-  const handleOpenYear = () => {
-    setOpenYear(true);
-  };
-  const handleChangeRoom = (event) => {
-    setRoom(event.target.value);
-  };
-
-  const handleCloseRoom = () => {
-    setOpenRoom(false);
-  };
-
-  const handleOpenRoom = () => {
-    setOpenRoom(true);
-  };
   const BootstrapInput = withStyles((theme) => ({
     root: {
       "label + &": {
@@ -286,9 +322,9 @@ export default function CSSGrid() {
       }
     },
     input: {
-      borderRadius: 4,
       position: "relative",
       backgroundColor: theme.palette.background.paper,
+      borderRadius: 4,
       border: "2px solid #045F5F",
       fontSize: 16,
       height:25,
@@ -320,72 +356,52 @@ export default function CSSGrid() {
       <div className={classes.hed}>
         بيانات الجدول 
       </div>
-        <Box boxShadow={3}
-        bgcolor="background.paper"
-        m={1}
-        p={1}
-        className={classes.cont}>
+     
 
-      <Grid container className={classes.cont} spacing={1} >
-          
-        
-      <Grid item xs={12}>
-          <div style={{height:30}}></div>
-          </Grid>
-          
+      <div container className={classes.cont} spacing={1} >
 
-       
-          <Grid item xs={12}>
-          <div style={{height:10}}></div>
-          </Grid>
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
 
 
-          <Grid item xs={6} >
+
+
 
             <div style={{display:'flex',flexDirection:'row'}}>
-          <FormControl component="fieldset"  >
+                  <FormControl component="fieldset"  >
       
-      <RadioGroup  row aria-label="position" name="position" id="sem" value={value} onChange={handleChangeRadio}>
+                    <RadioGroup  row aria-label="position" name="position" id="sem" value={value} onChange={handleChangeRadio}>
        
-        <FormControlLabel
-          value="s1"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>فصل ثاني</span>}
-          labelPlacement="start"
-          />
+                         <FormControlLabel
+                               value="s1"
+                               control={<Radio style={{color:"#045F5F"}} />}
+                               label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>فصل ثاني</span>}
+                               labelPlacement="start"
+                               />
 
-<FormControlLabel
-          value="s2"
-          control={<Radio style={{color:"#045F5F"}} />}
-          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>فصل اول</span>}
-          labelPlacement="start"
-          />
+                          <FormControlLabel
+                               value="s2"
+                               control={<Radio style={{color:"#045F5F"}} />}
+                               label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>فصل اول</span>}
+                               labelPlacement="start"
+                               />
       
-      </RadioGroup>
-    </FormControl>
-    <div className={classes.papertext}>:الفصل الدراسي الحالي  </div>
+                       </RadioGroup>
+                           </FormControl>
           </div>
-            </Grid>
+          <div className={classes.papertext} style={{marginRight:40}}>:الفصل الدراسي الحالي  </div>
 
 
-        
-
-
-
-          <Grid item xs={2}>
-            <FormControl className={classes.choose}>
-        <NativeSelect
-          id="date"
-          value={date}
-          onChange={handelDate}
-          input={<BootstrapInput />}
-          style={{width:160}}
-          width='150px'
-        >
-          <option aria-label="None"   />
+          <div >
+  <FormControl className={classes.choose}>
+<NativeSelect
+id="date"
+value={date}
+onChange={handelDate}
+input={<BootstrapInput />}
+style={{width:160}}
+width='150px'
+>
+<option aria-label="None"   />
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>2018/2019</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>2019/2020</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={30}>2020/2021</option>
@@ -394,25 +410,114 @@ export default function CSSGrid() {
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={60}>2023/2024</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={70}>2024/2025</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={80}>2025/2026</option>
-        </NativeSelect>
-      </FormControl>
-            </Grid>
+</NativeSelect>
+</FormControl>
+  </div>
 
 
-        <Grid item xs={3}>
-          <span className={classes.papertext}> السنة الدراسية للجدول</span>
-          </Grid>
-          <Grid item xs={12}>
-          <div className={classes.papertext}></div>
-          </Grid>
+<div >
+<span className={classes.papertext} style={{marginLeft:20}}> السنة الدراسية للجدول</span>
+</div>
+      </div>
+
+      <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
+
+      <div>
+          <MuiThemeProvider theme={customTheme}>
       
-      </Grid>
+    
+          <MuiPickersUtilsProvider utils={DateFnsUtils} theme={customTheme}>
+     
+     <KeyboardDatePicker theme={customTheme}
+     style={{backgroundColor:'white',borderRadius: 4,
+     border: "2px solid #045F5F",}}
+
+     className={classes.datePicker}
+     clearable
+     inputVariant="outlined"
+     okLabel={<span style={{fontFamily:'Markazi Text',fontSize:'25px',color:'#045F5F'}}>موافق</span>}
+     cancelLabel={<span style={{fontFamily:'Markazi Text',fontSize:'25px',color:'#045F5F'}}>الغاء</span>}
+     clearLabel={<span style={{fontFamily:'Markazi Text',fontSize:'25px',color:'#045F5F'}}>مسح</span>}
+     margin="normal"
+     id="date-picker-dialog"
+     label=""
+     format="MM/dd/yyyy"
+     value={selectedDate}
+     onChange={handleDateChange}
+     locale="ar-SA"
+     KeyboardButtonProps={{
+       'aria-label': 'change date',
+      }}
+      />
+     
+ 
+ </MuiPickersUtilsProvider>
+ </MuiThemeProvider>
+            </div>
+
+<div style = {{fontFamily:'Markazi Text',fontSize:'25px',display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center',marginLeft:10,marginRight:40}}>:تاريخ نهاية الفصل</div>
+
+
+          <div>
+          <MuiThemeProvider theme={customTheme}>
+      
+    
+          <MuiPickersUtilsProvider utils={DateFnsUtils} theme={customTheme}>
+     
+     <KeyboardDatePicker theme={customTheme}
+     style={{backgroundColor:'white',borderRadius: 4,
+     border: "2px solid #045F5F",}}
+
+     className={classes.datePicker}
+     clearable
+     inputVariant="outlined"
+     okLabel={<span style={{fontFamily:'Markazi Text',fontSize:'25px',color:'#045F5F'}}>موافق</span>}
+     cancelLabel={<span style={{fontFamily:'Markazi Text',fontSize:'25px',color:'#045F5F'}}>الغاء</span>}
+     clearLabel={<span style={{fontFamily:'Markazi Text',fontSize:'25px',color:'#045F5F'}}>مسح</span>}
+     margin="normal"
+     id="date-picker-dialog"
+     label=""
+     format="MM/dd/yyyy"
+     value={selectedDate}
+     onChange={handleDateChange}
+     locale="ar-SA"
+     KeyboardButtonProps={{
+       'aria-label': 'change date',
+      }}
+      />
+     
+ 
+ </MuiPickersUtilsProvider>
+ </MuiThemeProvider>
+            </div>
+          
+            <div style = {{fontFamily:'Markazi Text',fontSize:'25px',display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center',marginLeft:10}}>:تاريخ بداية الفصل</div>
+
+      </div>
+
+
+
+
+
+
+
+        
+     
+          
+      </div>
+
+
+      
+
+
+
+
+  
+      
+      
+      
      
       
-      
-      
-     
-       </Box>
        <Button variant="contained" className={classes.bto}  onClick={handelNext} size='medium'>
        التالي
       </Button>

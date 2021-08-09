@@ -255,10 +255,10 @@ const HandelOnChangeTime2 =(e) =>{
           onChange={handleChangeGroup}
         >
           
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>مجموعة1</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>مجموعة2</option>   
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={30}>مجموعة3</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={40}>مجموعة4</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={1}>مجموعة1</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={2}>مجموعة2</option>   
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={3}>مجموعة3</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={4}>مجموعة4</option>
 
         </NativeSelect>
       </FormControl>

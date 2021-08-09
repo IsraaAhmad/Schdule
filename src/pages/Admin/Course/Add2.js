@@ -125,7 +125,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CSSGrid() {
+export default function CSSGrid(Props) {
+  const {DepId} = Props
   const [dataDep,setDataDep] = React.useState([]);
   const [dataCourse,setDataCourse] = React.useState([]);
   const classes = useStyles();
@@ -136,6 +137,9 @@ export default function CSSGrid() {
   const [value, setValue] = React.useState();
   const [dep, setDep] = React.useState();
   const [course, setCourse] = React.useState();
+  const [done , setDone] = React.useState(false);
+  const [sections , setSections] = React.useState();
+  const [sec,SetSec] = React.useState();
 
 
   const  history  = useHistory();
@@ -143,6 +147,42 @@ export default function CSSGrid() {
   const [openRoom, setOpenRoom] = React.useState(false);
   const [openTime, setOpenTime] = React.useState(false);
   
+
+  useEffect(()=>{
+    console.log("from use effect")
+    let url = "https://core-graduation.herokuapp.com/getAllDep"
+    let list1 =[]
+    let x = 0 
+  axios.get(url)
+        .then(res => {
+          console.log(res)
+            let da =res.data.response 
+            for (let i =0 ;i<da.length;i++){
+              if( da[i].idDepartment === DepId){
+                const sep = da[i].sections
+                let sep2 = sep.split('/')
+                let listt = []
+                 
+                for(let j =0 ;j<sep2.length;j++){
+                  listt[j]={sec:sep2[j]}
+
+                  
+                }
+                setSections(listt)
+                console.log("listt seccc")
+                console.log(listt)
+ }}
+              setDone(true)
+          },
+ 
+            )
+   console.log("end use effect")
+      
+ },[]) 
+
+ const handleChangeSection =(event) =>{
+  SetSec(event.target.value)
+}
   
   const handleChangeTime = (event) => {
     setTime(event.target.value);
@@ -232,32 +272,27 @@ export default function CSSGrid() {
 
    
     
-    console.log("course = " + course )
-    // console.log("name" + name)
+    console.log(time)
+    console.log("DepId" + DepId)
+    console.log("number" + course)
+    console.log("name" + nameCourse)
     console.log("hour" + hour)
     console.log("year" + year)
-    console.log("sem" + semester)
-    console.log("coursename = "+nameCourse)
-    console.log("id dep" + idDepartmant)
-    console.log("id course" + idCourse)
-    console.log("flag" + flag)
+    console.log("semester" + semester)
+    console.log("type" + type)
+    console.log("sec="+sec)
+    console.log("toDepartment" + idDepartmant)
 
 
 
 
-    let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="+
+
+    let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep="+DepId+"&number="+
     course+"&type=اجباري"+"&year="+year+"&sem="+semester+"&name="+nameCourse+"&numberOfHour="+hour+
-    "&flag=1&toDepartments="+idDepartmant
+    "&flag=1&toDepartments="+idDepartmant+"&specialty="+sec
     console.log(url)
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
-  axios.get(url)
-    
-        .then(res => {
-          console.log(res)
-            console.log(res.data.response);
-          },
- 
-            )
+  axios.get(url).then(res => {console.log(res.data.response);},)
 
 
 
@@ -408,6 +443,8 @@ export default function CSSGrid() {
 
   return (
     <div>
+     {done&&<div>
+
         <Box boxShadow={3}
         bgcolor="background.paper"
         m={1}
@@ -432,13 +469,13 @@ export default function CSSGrid() {
             value={course}
             onChange={handleChangeCourse}
             input={<BootstrapInput />}
-          >
+            >
             <option aria-label="None" value="" />
             {dataCourse.map(row=>(
-          <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
-          
-        }} value={row.number}>{row.name}</option>
-           ))}
+              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+              
+            }} value={row.number}>{row.name}</option>
+            ))}
             
   
             
@@ -464,13 +501,13 @@ export default function CSSGrid() {
           value={dep}
           onChange={handleChangeDep}
           input={<BootstrapInput />}
-        >
+          >
           <option aria-label="None" value="" />
           {dataDep.map(row=>(
-          <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
-          
+            <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+            
         }} value={row.number}>{row.name}</option>
-           ))}
+        ))}
 
           
         </NativeSelect>
@@ -488,27 +525,35 @@ export default function CSSGrid() {
           <Grid item xs={1}>
           <div className={classes.papertext}></div>
           </Grid>
+
+          <Grid item xs={2}>
           
-          <Grid item xs={1}>
-            <FormControl className={classes.choose}>
-        <NativeSelect
-          id="hour"
-          value={time}
-          onChange={handleChangeTime}
-          input={<BootstrapInput />}
-        >
-          <option aria-label="None" value="" />
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={0}>0</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={1}>1</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={2}>2</option>
-<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={3}>3</option>
-        </NativeSelect>
-      </FormControl>
-            </Grid>
+          <FormControl className={classes.choose}>
+          <NativeSelect
+            id="time2"
+            onChange={handleChangeSection}
+            input={<BootstrapInput />}
+            >
+            <option aria-label="None" value="" />
+            {console.log(sections),
+            console.log("sections")}
+            {sections.map(row=>(
+              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+              
+            }} value={row.sec}>{row.sec}</option>
+            ))}
+  
             
-            <Grid item xs={2}>
-          <div className={classes.papertext}>الساعة المعتمدة</div>
+          </NativeSelect>
+        </FormControl>
           </Grid>
+  
+  
+          <Grid item xs={2}>
+            <div className={classes.papertext}>اسم التخصص</div>
+            </Grid> 
+          
+        
        
 
           <Grid item xs={1}>
@@ -522,9 +567,7 @@ export default function CSSGrid() {
          
 
          
-          <Grid item xs={1}>
-          <div className={classes.papertext}> </div>
-          </Grid>
+         
       
             <Grid item xs={2}>
             <FormControl className={classes.choose}>
@@ -533,7 +576,7 @@ export default function CSSGrid() {
           value={year}
           onChange={handleChangeYear}
           input={<BootstrapInput />}
-        >
+          >
           <option aria-label="None" value="" />
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={10}>سنة اولى فصل اول</option>
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={20}>سنة اولى فصل ثاني</option>
@@ -553,6 +596,31 @@ export default function CSSGrid() {
             </Grid>
             <Grid item xs={4}>
           <div className={classes.papertext}>الموعد حسب الخطة الدراسية  </div>
+          </Grid>
+          <Grid item xs={9}>
+          <div className={classes.papertext}></div>
+          </Grid>
+            
+
+          <Grid item xs={1}>
+            <FormControl className={classes.choose}>
+        <NativeSelect
+          id="hour"
+          value={time}
+          onChange={handleChangeTime}
+          input={<BootstrapInput />}
+          >
+          <option aria-label="None" value="" />
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={0}>0</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={1}>1</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={2}>2</option>
+<option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={3}>3</option>
+        </NativeSelect>
+      </FormControl>
+            </Grid>
+           
+            <Grid item xs={2}>
+          <div className={classes.papertext}>الساعة المعتمدة</div>
           </Grid>
         
           <Grid item xs={12}>
@@ -603,6 +671,7 @@ export default function CSSGrid() {
       
      
        </Box>
+            </div>}
     </div>
   );
 }

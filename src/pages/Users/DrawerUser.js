@@ -143,7 +143,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PersistentDrawerRight() {
+export default function PersistentDrawerRight(Props) {
+  const {DepId ,DepName , InstName} = Props
   const  history  = useHistory();
   const classes = useStyles();
   const theme = useTheme();
@@ -268,7 +269,7 @@ export default function PersistentDrawerRight() {
           [classes.contentShift]: open,
         })}
         >
-          <div>hi soso</div>
+          
         <div className={classes.drawerHeader} />
        
       </main>
@@ -298,8 +299,13 @@ export default function PersistentDrawerRight() {
             <ListItem button key={item.text}
             
             onClick={() => {
-              history.push(item.path);
-              setOpen(false)
+             
+                history.push({
+                  pathname:item.path,
+                  state:{DepId:DepId,DepName:DepName,InstName:InstName}
+                })
+                setOpen(false)
+            
             }}
             style={location.pathname == item.path?{backgroundColor: '#045F5F',width:'100%',height:'100%',marginBottom:'1px',color:'#045F5F'}:{backgroundColor: '#efefef',width:'100%',height:'100%',marginBottom:'1px'}}
 
