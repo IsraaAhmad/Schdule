@@ -102,6 +102,10 @@ export default function ScrollableTabsButtonPrevent(props) {
   const  location  = useLocation();
   const {state} = location;
   const DepId = state.DepId
+  const year = state.year
+  console.log("state.year")
+
+  console.log(state.year)
   const classes = useStyles();
   const [flag,setFlag] = React.useState(false);
   const [savedData,setSavedDate] = React.useState(0);
@@ -109,7 +113,15 @@ export default function ScrollableTabsButtonPrevent(props) {
   const [value, setValue] = React.useState(state.index);
   const [loading, setLoading] = React.useState(false);
 
-
+  const handelSaveAndCreate =()=>{
+    axios.get("https://core-graduation.herokuapp.com/runCore?idDep=60ddc9735b4d43f8eaaabf83&tableName=الفصل الاول&date=2020/2021&semester=1&softFlag=true")
+    .then(res => {
+      
+      console.log(res.data.response)
+      
+      }, 
+          )
+  }
 
   const testing = () =>{
     console.log(savedData)
@@ -160,24 +172,24 @@ export default function ScrollableTabsButtonPrevent(props) {
             indicator: classes.indicator
           }}
           >
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
           
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId}/>
+      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
       </TabPanel>
       
       <div className={classes.bot}>
@@ -185,7 +197,7 @@ export default function ScrollableTabsButtonPrevent(props) {
       <Button variant="contained" className={classes.b1}  size='medium'>
            حفظ
        </Button>
-      <Button variant="contained" className={classes.b1}  size='medium'>
+      <Button  onClick={handelSaveAndCreate} variant="contained" className={classes.b1}  size='medium'>
         حفظ وانشاء
       </Button>
       </div>

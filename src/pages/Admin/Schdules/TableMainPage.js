@@ -96,8 +96,6 @@ const [loading, setLoading] = React.useState(false);
        <TurnedInIcon />
      </div>
      
-    
-
  }
   const columns = [
 
@@ -153,17 +151,21 @@ const [loading, setLoading] = React.useState(false);
     
   ]
   const handelOpenPage =(row) =>{
+    console.log(row)
+    console.log("row")
+
+
     if(row.flag === "2"){
       history.push({
         pathname: '/view',
-        state: { name: row.name, DepId:DepId }
+        state: { name: row.name, DepId:DepId ,year:row.date }
       })
     }
     if(row.flag === "3"){
       history.push({
         pathname: '/tableCreate',
         state: { name: row.name,DepId:DepId ,
-          index:3
+          index:3 ,year:row.date
         }
       })
     }
@@ -345,7 +347,9 @@ const [loading, setLoading] = React.useState(false);
       toolbar:{
         searchTooltip:"بحث",
         searchPlaceholder:"بحث",
-        exportTitle:"تصدير"
+        exportTitle:'تصدير',
+        exportCSVName: " Excelتصدير ملف ",
+        exportPDFName:  " PDF ملف ",
       }
       }}
         

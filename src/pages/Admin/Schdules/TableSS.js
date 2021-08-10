@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData,setChild,child ,DepId} = Props
+  let {TableName , savedData,setChild,child ,DepId , year} = Props
   console.log("from top saved ="+ savedData)
   const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
@@ -243,7 +243,7 @@ function TableR(Props) {
     console.log("tableName = " + nameTable)
 
   let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
-   +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
+   +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date="+year
   console.log("url="+ url)
     axios.get(url).then(res => {console.log(res)},)
 
@@ -256,7 +256,7 @@ function TableR(Props) {
     let course1 = course[row.course]
     let tableN = nameTable
     let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId="+DepId+"&tableName="+
-    tableN+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
+    tableN+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date="+year
   console.log(url)
     axios.get(url)
   // // axios.get("https://jsonplaceholder.typicode.com/todos/1")
@@ -376,7 +376,7 @@ function TableR(Props) {
 
         let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
         +nameTable+"&courseIns="+listt[k].teacher+"&courseName="+listt[k].course+
-        "&flag=0&timeSlot=0&roomType="+listt[k].type+"&date=2020/2019"
+        "&flag=0&timeSlot=0&roomType="+listt[k].type+"&date="+year
   
     axios.get(url).then(res => {console.log(res)},)
     setChild(!child)
@@ -545,7 +545,9 @@ function TableR(Props) {
       toolbar:{
         searchTooltip:"بحث",
         searchPlaceholder:"بحث",
-        exportTitle:"تصدير"
+        exportTitle:'تصدير',
+        exportCSVName: " Excelتصدير ملف ",
+        exportPDFName:  " PDF ملف ",
       }
       }}
         

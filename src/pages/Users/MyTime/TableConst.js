@@ -74,9 +74,10 @@ function TableR(Props) {
           listt[count] = {need:r1,note:w[k].note,space:r2,weight:we,
             FromTime:timeAnd[0],ToTime:timeAnd[1],days:timeAnd[2]}
             count = count+1
-            setLoading(false)
+            
         }
       }
+      setLoading(false)
       setData(listt)
 
     },)
@@ -260,7 +261,8 @@ axios.get(url).then(res => {console.log(res)},)
         }}
        
         
-      />}
+      />
+       } 
     </div>
   );
 }

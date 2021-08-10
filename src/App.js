@@ -23,6 +23,8 @@ import AddCourseFromOtherDep from "./pages/Admin/Course/AddCourseFromOther.js"
 import CreateSemester from "./pages/Administrator/Time/CreateTable.js"
 import Department from "./pages/Administrator/Department.js"
 import Dep from './pages/Administrator/Home/Dep.js'
+import AdministratorRooms from './pages/Administrator/Rooms/Rooms.js'
+import AdministratorTeachers from './pages/Administrator/Teachers/Teacher.js'
 
 
 
@@ -76,6 +78,9 @@ export default function App() {
         <Route exact path="/AddCourse" render={props => <AddCourse {...props} />} /> 
         <Route exact path="/Department" render={props => <Department {...props} />} /> 
         <Route exact path="/Dep" render={props => <Dep {...props} />} /> 
+        <Route exact path="/AdministratorRooms" render={props => <AdministratorRooms {...props} />} /> 
+        <Route exact path="/AdministratorTeachers" render={props => <AdministratorTeachers {...props} />} /> 
+
         
 
 

@@ -93,8 +93,8 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
     fontFamily:'Markazi Text',
     fontSize:'25px',
   },
@@ -125,6 +125,9 @@ const useStyles = makeStyles((theme) => ({
       height:5
 
   },
+  ttot:{
+backgroundColor:'white'
+  },
   bto:{
     margin:20,
     backgroundColor:'#045F5F',
@@ -152,15 +155,16 @@ const useStyles = makeStyles((theme) => ({
       flexDirection:'row'
   },
   cont:{
-    marginTop:0,
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
+    // marginTop:0,
+    // borderBottomLeftRadius: 40,
+    // borderBottomRightRadius: 40,
+    
 
   
   },
   hed:{
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
     width:'98.5%',
     marginRight:8,
     height:60,
@@ -211,12 +215,16 @@ export default function CSSGrid() {
   },
   })
   
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate1, setSelectedDate1] = React.useState(new Date('2014-08-18T21:11:54'));
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
   };
+  const [selectedDate2, setSelectedDate2] = React.useState(new Date('2014-08-18T21:11:54'));
 
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
   const classes = useStyles();
   const [value, setValue] = React.useState();
 
@@ -275,6 +283,9 @@ export default function CSSGrid() {
     }
     console.log("date:  "+ date1)
     console.log("sem:   "+ value1)
+    console.log("start : " + selectedDate1)
+    console.log("end : " + selectedDate2)
+    let TotalDate = selectedDate1 +"/"+selectedDate2
     let d0 ="08:00/17:00,1"
               let d1 ="08:00/17:00,1"
               let d2 ="08:00/17:00,1"
@@ -293,7 +304,7 @@ export default function CSSGrid() {
 
               
     axios.get("https://core-graduation.herokuapp.com/addTimes?semester="+value1+"&date="+date1+
-    "&courseTimes="+arr1+"&labsTimes="+arr+"&startandend=yet")
+    "&courseTimes="+arr1+"&labsTimes="+arr+"&startandend="+TotalDate)
     .then(res => {console.log(res) },)
 
     
@@ -352,7 +363,7 @@ export default function CSSGrid() {
   }))(InputBase);
 
   return (
-    <div >
+    <div className={classes.ttot}>
       <div className={classes.hed}>
         بيانات الجدول 
       </div>
@@ -442,8 +453,8 @@ width='150px'
      id="date-picker-dialog"
      label=""
      format="MM/dd/yyyy"
-     value={selectedDate}
-     onChange={handleDateChange}
+     value={selectedDate2}
+     onChange={handleDateChange2}
      locale="ar-SA"
      KeyboardButtonProps={{
        'aria-label': 'change date',
@@ -478,8 +489,8 @@ width='150px'
      id="date-picker-dialog"
      label=""
      format="MM/dd/yyyy"
-     value={selectedDate}
-     onChange={handleDateChange}
+     value={selectedDate1}
+     onChange={handleDateChange1}
      locale="ar-SA"
      KeyboardButtonProps={{
        'aria-label': 'change date',

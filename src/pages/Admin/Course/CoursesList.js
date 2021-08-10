@@ -6,6 +6,12 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { useHistory ,useLocation } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -99,7 +105,15 @@ export default function SimpleAccordion(Props) {
 
   const [data, setData] = useState([])
   const classes = useStyles();
+  const [dia,setDia] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [ren,setRen] = React.useState(false);
   const  history  = useHistory();
+  const handleClose = () => {
+    setOpen(false);
+    setRen(!ren)
+    
+  };
   const handelDeleteCourse =(x) =>{
     console.log("https://core-graduation.herokuapp.com/deleteCourseFromDep?toDepartments="+DepId+"&number="+
     x)
@@ -108,6 +122,8 @@ export default function SimpleAccordion(Props) {
     
     
     .then(res => {console.log(res.data.response);},)
+    setOpen(true);
+    setDia(true)
 
   }
   const HandelAddCourse = ()=>{
@@ -141,7 +157,7 @@ export default function SimpleAccordion(Props) {
             setData(res.data.response)
           },)
           
-  },[]) 
+  },[ren]) 
   
 
   return (
@@ -1089,7 +1105,34 @@ export default function SimpleAccordion(Props) {
         </AccordionDetails>
       </Accordion>
 
-
+      {dia&&<div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 تم حذف المساق بنجاح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
 
 
 

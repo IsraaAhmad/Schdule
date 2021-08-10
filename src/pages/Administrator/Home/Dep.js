@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 export default function App() {
   const  location  = useLocation();
   const {state} = location;
-  console.log(state.name)
+  console.log(state.number)
 
   const classes = useStyles();
   return (
@@ -35,10 +35,10 @@ export default function App() {
       <DrawerAdminstrator/>
        <div className={classes.tot}>
          
-         <Comp UrlImage={room} name="القاعات" pathTo="/Department" />
+         <Comp UrlImage={room} name="القاعات" pathTo="/AdministratorRooms" DepId={state.number} />
          <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule"/>
          <Comp UrlImage={course} name="المساقات" pathTo="/Course"/>
-         <Comp UrlImage={teacher} name="ألمدرسين" pathTo="/Teacher"/>
+         <Comp UrlImage={teacher} name="المدرسين" pathTo="/AdministratorTeachers" DepId={state.number}/>
          <Comp UrlImage={time} name="أوقات الدوام" pathTo="/Teacher"/>
 
 

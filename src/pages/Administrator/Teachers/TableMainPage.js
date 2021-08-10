@@ -184,8 +184,8 @@ const importExcel = (e) => {
           
 
         }
+        setLoading(false)
        setData(listt)
-       setLoading(false)
        },
         )
           

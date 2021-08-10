@@ -44,12 +44,13 @@ name:{
 });
 
 export default function App(props) {
-  const {UrlImage , name , pathTo} = props
+  const {UrlImage , name , pathTo , DepId} = props
   const  history  = useHistory();
 
   const classes = useStyles();
   const handelOnClick=() =>{
     history.push(pathTo)
+    history.push({pathname:pathTo,state: { DepId: DepId }})
   }
 
   return (

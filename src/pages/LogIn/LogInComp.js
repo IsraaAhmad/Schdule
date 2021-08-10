@@ -200,7 +200,7 @@ const handelOnChangePassword = (event) =>{
 
 
 
-<TextField 
+<TextField dir="rtl"
          inputProps={{min: 0, style: { textAlign: 'right' ,
         
     fontFamily:'Markazi Text',

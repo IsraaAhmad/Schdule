@@ -143,8 +143,9 @@ const useStyles = makeStyles((theme) => ({
       flexDirection:'row'
   },
   cont:{
-    boxShadow: "7px 7px 7px white",
+    // boxShadow: "7px 7px 7px white",
     padding:30,
+    backgroundColor:'white',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     // borderTopLeftRadius: 40,
@@ -479,7 +480,7 @@ export default function CSSGrid(Props) {
                    </NativeSelect>
                </FormControl>
               </div>
-            <div className={classes.papertext} style={{marginRight:115,marginLeft:10}}> التخصص</div>
+            <div className={classes.papertext} style={{marginRight:95,marginLeft:10}}> التخصص</div>
 
           <div >
                <FormControl className={classes.choose}>
@@ -506,7 +507,7 @@ export default function CSSGrid(Props) {
                     </NativeSelect>
                  </FormControl>
             </div>
-          <div className={classes.papertext}  style={{marginLeft:7}}>الموعد حسب الخطة الدراسية  </div>
+          <div className={classes.papertext}  style={{marginLeft:22}}>الموعد حسب الخطة الدراسية  </div>
 
           
 
@@ -542,17 +543,17 @@ export default function CSSGrid(Props) {
             <div style={{display:'flex',flexDirection:'row'}}>
               <FormControl component="fieldset">
                 <RadioGroup row aria-label="position" name="position" id="dep" value={value1} onChange={handleChangeRadio1}>
-                   <FormControlLabel
-                         value="s1"
-                         control={<Radio style={{color:"#045F5F"}} />}
-                         label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسمي</span>}
-                         labelPlacement="start"
-                         />
 
                     <FormControlLabel
                          value="s2"
                          control={<Radio style={{color:"#045F5F"}} />}
                          label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسم اخر</span>}
+                         labelPlacement="start"
+                         />
+                   <FormControlLabel
+                         value="s1"
+                         control={<Radio style={{color:"#045F5F"}} />}
+                         label={<span style={{fontFamily:'Markazi Text',fontSize:'25px'}}>قسمي</span>}
                          labelPlacement="start"
                          />
       

@@ -290,10 +290,10 @@ const importExcel = (e) => {
                  location:location2,
                }
                list1.push(x)}
-               setLoading(false)
+               
                
              }
-             
+             setLoading(false)
              setData(list1)
              console.log("list1")
              console.log(list1)

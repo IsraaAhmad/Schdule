@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData ,setChild,child , DepId} = Props
+  let {TableName , savedData ,setChild,child , DepId ,year} = Props
   console.log("from top saved ="+ savedData)
   const [rooms,setRooms] = React.useState({})
   const [savDate,setSavDate] = React.useState(savedData)
@@ -503,7 +503,7 @@ const importExcel = (e) => {
 
       let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
       +nameTable+"&courseIns="+listt[k].teacher+"&courseName="+listt[k].course+
-      "&flag=2&timeSlot="+time+"&roomType="+listt[k].room+"&date=2020/2019"
+      "&flag=2&timeSlot="+time+"&roomType="+listt[k].room+"&date="+year
 
   axios.get(url).then(res => {console.log(res)},)
   
@@ -542,7 +542,7 @@ setRen(!ren)
 
 
 let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
- +nameTable+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date=2020/2019"
+ +nameTable+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date="+year
 console.log("url="+ url)
   axios.get(url).then(res => {console.log(res)},)
 
@@ -569,7 +569,7 @@ const handelDeleteInDataBase =(row) =>{
 
   let time = f+"/"+t+"/"+day1
   let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId="+DepId+"&tableName="+
-  TableName+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date=2020/2019"
+  TableName+"&courseIns="+inst1+"&courseName="+c1+"&flag=2&timeSlot="+time+"&roomType="+roo+"&date="+year
 console.log(url)
   axios.get(url).then(res => {console.log(res)},)
 }
@@ -724,7 +724,9 @@ console.log(url)
       toolbar:{
         searchTooltip:"بحث",
         searchPlaceholder:"بحث",
-        exportTitle:"تصدير"
+        exportTitle:'تصدير',
+        exportCSVName: " Excelتصدير ملف ",
+        exportPDFName:  " PDF ملف ",
       }
       }}
         

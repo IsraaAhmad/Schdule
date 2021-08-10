@@ -229,7 +229,7 @@ export default function CSSGrid(Props) {
      history.push({
       pathname: './tableCreate',
       state: { name: name ,DepId:DepId,
-        index:3
+        index:3,year:date1
       }
     })
   }

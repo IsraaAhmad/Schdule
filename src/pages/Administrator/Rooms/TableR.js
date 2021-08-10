@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
-
+import './tabler.css';
 import axios from 'axios';
 import { TablePagination } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,9 +8,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
 import { css } from "@emotion/react";
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import XLSX from 'xlsx';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from "@material-ui/core/IconButton";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -37,10 +37,10 @@ const useStyles = makeStyles({
     
   },
   lod:{
-    
-    width:600,
+    margin:100,
+    width:800,
     display:'flex',
-   
+    flexDirection:'column',
     justifyContent:'center',
     alignContent:'center',
     alignItems:'center'
@@ -48,11 +48,23 @@ const useStyles = makeStyles({
 });
 
 
-
+const empList = [
+  { id: "117859", type: 10, location:10},
+  { id: "5955695", type: 20, location:10},
+  { id: "5595646", type: 10, location:10},
+  { id: "57424", type: 20, location:20},
+  { id: "1178459", type: 10, location:10},
+  { id: "59554695", type: 20, location:10},
+  { id: "55954646", type: 20, location:20},
+  { id: "457424", type: 10, location: 10},
+]
 
 function TableR(Props) {
   const {DepId} = Props
+  
   const [data, setData] = useState([])
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [loading, setLoading] = React.useState(false);
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -71,33 +83,116 @@ function TableR(Props) {
   };
 
   const EXTENSIONS = ['xlsx', 'xls', 'csv']
-    const headerName = ["name"]
+    const headerName = ["id","type","location"]
  
  
 const handelDeleteInDataBase =(selectedRow) =>{
-const id = selectedRow.name
-let url = "https://core-graduation.herokuapp.com/deleteInsFromDep?idDep="+DepId+"&name="+id
-axios.get(url).then(res => {console.log(res)},)
+const id = selectedRow.id
+let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep="+DepId+"&number="+id
+
+axios.get(url)
+// axios.get("https://jsonplaceholder.typicode.com/todos/1")
+
+    .then(res => {
+      console.log(res)
+    
+        },
+        )
 }
 
 const handelAddInDataBase = (newRow) =>{
-  let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep="+DepId+"&name="
-  +newRow.name
+  let type = "قاعة تدريس"
+  if(newRow.type === 20 || newRow.type === "20")
+  type = "مختبر"
+
+  let location = "الحرم الجديد"
+  if(newRow.location === 20 || newRow.location === "20")
+  location = "الحرم القديم"
+  let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
+  +newRow.id+"&type="+type+"&campous="+location+"&name=قاعة تدريس"
+
   axios.get(url).then(res => {console.log(res)},)
 }
 
+const handelEditInDataBase =(rowUp) =>{
+  const id = rowUp.id;
+  let location = "الحرم الجديد";
+  if(rowUp.location === "20" || rowUp.location === 20 ){
+    location="الحرم القديم";
+  }
+  let type = "مختبر";
+  if(rowUp.type === "10" || rowUp.type === 10 ){
+    type="قاعة تدريس";
+  }
+ 
+  console.log("id="+ id)
+  console.log("type="+ type)
+  console.log("locaion="+ location)
+  let url = "https://core-graduation.herokuapp.com/editRoom?idDep="+DepId+"&number="+id+
+  "&type="+type+"&campous="+location+"&name=قاعة تدريس"
   
-
+  axios.get(url)
+ // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+ 
+     .then(res => {
+       console.log(res)
+         },
+         )
+}
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  
   const columns = [
     
-    { title: "اسم المدرس",
-     field: "name",
-     initialEditValue: '###', validate: rowData => rowData.name? true : 'يجب ادخال اسم المدرس',
-     cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+    { title: "الحرم",
+     field: "location",
+     lookup:{10:'الحرم الجديد',20:'الحرم القديم'},
+     initialEditValue: 10, validate: rowData => rowData.location? true : 'يجب ادخال مكان القاعة',
+     cellStyle: {
+      fontFamily: 'Markazi Text',
+      fontSize:'25px',
+   
+             }, 
     },
    
 
+    { title: "نوع القاعة",
+    field: "type" ,
+    initialEditValue: 10, validate: rowData => rowData.type? true : 'يجب ادخال نوع القاعه',
+    lookup: {10:'قاعة تدريس', 20:'مختبر' },
+    editable:'never',
+  //   render:sele =>(
+  //   <Select
+  //   labelId="demo-simple-select-label"
+  //   id="demo-simple-select"
+  //   style = {{fontSize:'25px',}}
     
+  // >
+  //   <MenuItem style = {{fontSize:'20px',}} value={10}>قاعة</MenuItem>
+  //   <MenuItem style = {{fontSize:'20px',}} value={20}>مختبر متحكمات دقيقة</MenuItem>
+  //   <MenuItem style = {{fontSize:'20px',}} value={30}>متبر تصميم دوائر رقمية 1</MenuItem>
+  //   <MenuItem style = {{fontSize:'20px',}} value={40}>مختبر شبكات</MenuItem>
+  //   <MenuItem style = {{fontSize:'20px',}} value={50}>مختبر تصميم الكمبيوتر</MenuItem>
+  //   <MenuItem style = {{fontSize:'20px',}} value={60}>مختبر تصميم دوائر رقمية 2</MenuItem>
+  // </Select>),
+      cellStyle: {
+        //  fontFamily: 'Markazi Text',
+         fontSize:'25px',
+              },
+              
+    },
+    { title: "رقم القاعة",
+    field: "id",
+    initialEditValue: '####', validate: rowData => rowData.id? true : 'يجب ادخال رقم القاعه',
+    editable: 'onAdd',
+    cellStyle: {
+        fontFamily: 'Markazi Text',
+        fontSize:'25px',
+        
+       },
+    },
 ]
 const getExention = (file) => {
   const parts = file.name.split('.')
@@ -136,8 +231,9 @@ const importExcel = (e) => {
     const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
     // console.log(fileData)7
     const headers = fileData[0]
-    
-  
+    const hed1 = ['teacher','course','department']
+    let x =0
+    const heads = headers.map(head => ({ title: head, field: head }))
     // setCol(columns)
     
 
@@ -149,12 +245,13 @@ const importExcel = (e) => {
     console.log("data")
     let listt = convertToJson(headers, fileData)
     console.log(listt)
-  //   for (let k = 0;k<listt.length;k++){
-  //     let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&name="
-  // +listt[k].name
-  // axios.get(url).then(res => {console.log(res)},)
+    for (let k = 0;k<listt.length;k++){
+      let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
+  +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name=قاعة تدريس"
 
-  //   }
+  axios.get(url).then(res => {console.log(res)},)
+
+    }
   }
 
   if (file) {
@@ -169,25 +266,52 @@ const importExcel = (e) => {
   }
 }
   useEffect(()=>{
-    let listt = []
+    let list1 =[];
     setLoading(true)
-    axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
-  
-     
-    .then(res => {
-      console.log(res)
-        console.log(res.data.response);
-        let w = res.data.response;
-        for(let k = 0 ;k<w.length;k++){
-          let teach = {name:w[k].name}
-          listt[k] = teach
-          
+    console.log(DepId)
+     axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+DepId)
+    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+    
+        .then(res => {
+          console.log(res)
+            console.log(res.data.response);
+             
+             for (let i = 0;i<res.data.response.length ; i++){
+               if(res.data.response[i].type ==="قاعة تدريس"){
+               let location2 = 20
+             
+               if(res.data.response[i].campous === "الحرم الجديد")
+                  location2 = 10
+              
 
-        }
-       setData(listt)
-       setLoading(false)
-       },
-        )
+               let x={
+                 id:res.data.response[i].number,
+                 type:10,
+                 location:location2,
+               }
+               list1.push(x)}
+               
+               
+             }
+             
+             setData(list1)
+             setLoading(false)
+             console.log("list1")
+             console.log(list1)
+             console.log("data")
+             console.log(data)
+
+               
+
+
+          
+            // setData(res.data.response)
+          },
+
+          
+            
+            
+            )
           
   },[]) 
   
@@ -268,7 +392,7 @@ const importExcel = (e) => {
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على  عامود واحد بعنوان اسم المدرس 
+              يحتوي على ثلاث عواميد بعنوان رقم القاعة ,اسم القاعة,الحرم الدراسي بالترتيب
                 </div>
               </DialogContentText>
             </DialogContent>
@@ -297,7 +421,12 @@ const importExcel = (e) => {
           <div style={{marginLeft:20}}>
              <DeleteIcon {...props} style={{color:'#963333'}} />
              </div>,
-        
+          Edit: props =>
+            
+              <div style={{marginLeft:20}}>
+
+            <EditIcon {...props} style={{color:'#045F5F'}} />
+              </div>,
         
       }}
       
@@ -341,20 +470,23 @@ const importExcel = (e) => {
         }}
         localization={{
           header: {
-              actions:""
+              actions: <div  style={{display:'flex',flexDirection:'row'}}>
+                <div style={{marginLeft:20}}>تعديل</div>
+                <div style={{marginLeft:20}}>حذف</div>
+                </div>,
           },
         //   pagination: {
         //     labelRowsSelect:"صفوف"
         // },
         
         body: {
-          emptyDataSourceMessage:"لا يوجد مدرسين مضافين بعد  ",
+          emptyDataSourceMessage:"لا يوجد قاعات  ",
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
-          addTooltip:"اضافة مدرس جديدة",
+          addTooltip:"اضافة قاعة جديدة",
           
           editRow:{
-            deleteText:"هل انت متأكد من حذف هذا المدرس",
+            deleteText:"هل انت متأكد من حذف هذه القاعة",
             cancelTooltip:"إلغاء",
             saveTooltip:"حفظ"
           },
@@ -394,7 +526,19 @@ const importExcel = (e) => {
               resolve()
             }, 2000)
           }),
-       
+          onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
+            const index=oldRow.tableData.id;
+            const updatedRows=[...data]
+            console.log(updatedRow)
+            updatedRows[index]=updatedRow
+            handelEditInDataBase(updatedRow)
+    
+
+            setTimeout(() => {
+              setData(updatedRows)
+              resolve()
+            }, 2000)
+          })
 
         }}
        

@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
     fontFamily:'Markazi Text',
     fontSize:'25px',
   },
@@ -116,11 +116,11 @@ const useStyles = makeStyles((theme) => ({
       flexDirection:'row'
   },
   cont:{
-    
+    backgroundColor:'white',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
   
   }
 }));
@@ -187,9 +187,7 @@ export default function CSSGrid(Props) {
   const handleChangeTime = (event) => {
     setTime(event.target.value);
   };
-  const handleChangeRadio = (event) => {
-    setValue(event.target.value);
-  };
+ 
 
   const handelSave = () =>{
     let course = document.getElementById('course').value
@@ -302,32 +300,11 @@ export default function CSSGrid(Props) {
     history.goBack()
 
   }
-  const handleCloseTime = () => {
-    setOpenTime(false);
-  };
-
-  const handleOpenTime = () => {
-    setOpenTime(true);
-  };
 
   const handleChangeYear = (event) => {
     setYear(event.target.value);
   };
-  const getIdForName =(name) =>{
-      console.log(dataDep)
-      console.log("yes   الاصلي" +name)
-      for(let j = 0;j<dataDep.length;j++){
-          if(dataDep[j].name === name){
-              console.log("yes   name" +dataDep[j].name)
-              console.log("yes   number" +dataDep[j].number)
-              return dataDep[j].number
-              
-          }
-      }
-      console.log("-1")
-      return -1
-
-  }
+ 
   const handleChangeDep = (event) => {
     setDep(event.target.value);
     console.log("hi")
@@ -365,24 +342,7 @@ export default function CSSGrid(Props) {
     }
     
   };
-  const handleCloseYear = () => {
-    setOpenYear(false);
-  };
-
-  const handleOpenYear = () => {
-    setOpenYear(true);
-  };
-  const handleChangeRoom = (event) => {
-    setRoom(event.target.value);
-  };
-
-  const handleCloseRoom = () => {
-    setOpenRoom(false);
-  };
-
-  const handleOpenRoom = () => {
-    setOpenRoom(true);
-  };
+  
   const BootstrapInput = withStyles((theme) => ({
     root: {
       "label + &": {
@@ -445,132 +405,13 @@ export default function CSSGrid(Props) {
     <div>
      {done&&<div>
 
-        <Box boxShadow={3}
-        bgcolor="background.paper"
-        m={1}
-        p={1}
-        className={classes.cont}>
+        
 
-      <Grid container className={classes.cont} spacing={1} >
+      <div container className={classes.cont}  >
           
-        <Grid item xs={12}>
           <Paper className={classes.paper1} >اضافة مساق جديد</Paper>
-        </Grid>
-
-        <Grid item xs={1}>
-            <div className={classes.papertext}></div>
-            </Grid>
-        
-        <Grid item xs={3}>
-          
-          <FormControl  style={{width:230}} className={classes.choose}>
-          <NativeSelect
-            id="course"
-            value={course}
-            onChange={handleChangeCourse}
-            input={<BootstrapInput />}
-            >
-            <option aria-label="None" value="" />
-            {dataCourse.map(row=>(
-              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
-              
-            }} value={row.number}>{row.name}</option>
-            ))}
-            
-  
-            
-          </NativeSelect>
-        </FormControl>
-          </Grid>
-  
-  
-          <Grid item xs={2}>
-            <div className={classes.papertext}>اسم المساق</div>
-            </Grid>
-            <Grid item xs={1}>
-            <div className={classes.papertext}></div>
-            </Grid>
-            
-
-
-        <Grid item xs={3}>
-          
+        <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',margin:15}}>
         <FormControl className={classes.choose}>
-        <NativeSelect
-          id="time2"
-          value={dep}
-          onChange={handleChangeDep}
-          input={<BootstrapInput />}
-          >
-          <option aria-label="None" value="" />
-          {dataDep.map(row=>(
-            <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
-            
-        }} value={row.number}>{row.name}</option>
-        ))}
-
-          
-        </NativeSelect>
-      </FormControl>
-        </Grid>
-
-
-        <Grid item xs={2}>
-          <div className={classes.papertext}>اسم القسم</div>
-          </Grid>
-
-          <Grid item xs={12}>
-          <div className={classes.papertext}></div>
-          </Grid>
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-
-          <Grid item xs={2}>
-          
-          <FormControl className={classes.choose}>
-          <NativeSelect
-            id="time2"
-            onChange={handleChangeSection}
-            input={<BootstrapInput />}
-            >
-            <option aria-label="None" value="" />
-            {console.log(sections),
-            console.log("sections")}
-            {sections.map(row=>(
-              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
-              
-            }} value={row.sec}>{row.sec}</option>
-            ))}
-  
-            
-          </NativeSelect>
-        </FormControl>
-          </Grid>
-  
-  
-          <Grid item xs={2}>
-            <div className={classes.papertext}>اسم التخصص</div>
-            </Grid> 
-          
-        
-       
-
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-
-          
-          
-         
-
-         
-
-         
-         
-      
-            <Grid item xs={2}>
-            <FormControl className={classes.choose}>
         <NativeSelect
           id="time"
           value={year}
@@ -593,17 +434,35 @@ export default function CSSGrid(Props) {
           
         </NativeSelect>
       </FormControl>
-            </Grid>
-            <Grid item xs={4}>
-          <div className={classes.papertext}>الموعد حسب الخطة الدراسية  </div>
-          </Grid>
-          <Grid item xs={9}>
-          <div className={classes.papertext}></div>
-          </Grid>
+          <div className={classes.papertext} style={{marginLeft:10}}>الموعد حسب الخطة الدراسية  </div>
+          
+          
             
+           
+          
+        <FormControl className={classes.choose} style={{marginLeft:80}}>
+        <NativeSelect
+          id="time2"
+          value={dep}
+          onChange={handleChangeDep}
+          input={<BootstrapInput />}
+          >
+          <option aria-label="None" value="" />
+          {dataDep.map(row=>(
+            <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+            
+        }} value={row.number}>{row.name}</option>
+        ))}
 
-          <Grid item xs={1}>
-            <FormControl className={classes.choose}>
+          
+        </NativeSelect>
+      </FormControl>
+      <div style={{marginLeft:17}} className={classes.papertext}>:اسم القسم</div>
+        </div>
+
+
+        <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',marginRight:15,marginBottom:50,marginTop:50}}>
+        <FormControl className={classes.choose}>
         <NativeSelect
           id="hour"
           value={time}
@@ -617,24 +476,63 @@ export default function CSSGrid(Props) {
 <option style = {{fontFamily:'Markazi Text',fontSize:'20px',}} value={3}>3</option>
         </NativeSelect>
       </FormControl>
-            </Grid>
-           
-            <Grid item xs={2}>
-          <div className={classes.papertext}>الساعة المعتمدة</div>
-          </Grid>
+            
+          <div className={classes.papertext} style={{marginLeft:10,marginRight:42}}>الساعة المعتمدة</div>
+         
+          
+          <FormControl className={classes.choose}>
+          <NativeSelect
+            id="time2"
+            onChange={handleChangeSection}
+            input={<BootstrapInput />}
+            >
+            <option aria-label="None" value="" />
+            {console.log(sections),
+            console.log("sections")}
+            {sections.map(row=>(
+              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+              
+            }} value={row.sec}>{row.sec}</option>
+            ))}
+  
+            
+          </NativeSelect>
+        </FormControl>
+         
+            <div className={classes.papertext} style={{marginRight:42 ,marginLeft:10}}>اسم التخصص</div>
+            <FormControl  style={{width:230}} className={classes.choose} >
+          <NativeSelect
+            id="course"
+            value={course}
+            onChange={handleChangeCourse}
+            input={<BootstrapInput />}
+            >
+            <option aria-label="None" value="" />
+            {dataCourse.map(row=>(
+              <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
+              
+            }} value={row.number}>{row.name}</option>
+            ))}
+            
+  
+            
+          </NativeSelect>
+        </FormControl>
+        <div className={classes.papertext} style={{marginLeft:10}}>:اسم المساق</div>
+         
+            </div>
+            <div >
+          
+            
+          </div>
         
-          <Grid item xs={12}>
-          <div className={classes.papertext}></div>
-          </Grid>
+         
 
 
 
 
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-
-          <Grid item xs={1}>
+        
+          <div style={{marginLeft:70}} >
           <Button variant="contained" style={{backgroundColor:'#37474f'}} onClick={handelCancel}>
           <CancelIcon style={{color:'white'}}/>
               <div style = {{textAlign: 'right',
@@ -643,13 +541,8 @@ export default function CSSGrid(Props) {
                  الغاء
               </div>
       </Button>
-          </Grid>
-          <Grid item xs={1}>
-          <div className={classes.papertext}></div>
-          </Grid>
-
-          <Grid item xs={1}>
-          <Button variant="contained" style={{backgroundColor:'#045F5F'}} onClick={handelSave}>
+          
+          <Button variant="contained" style={{backgroundColor:'#045F5F',margin:30}} onClick={handelSave}>
           <SaveAltIcon style={{color:'white'}}/>
               <div style = {{textAlign: 'right',
           fontFamily:'Markazi Text',
@@ -657,20 +550,18 @@ export default function CSSGrid(Props) {
                  حفظ
               </div>
       </Button>
-          </Grid>
-          <Grid item xs={12}>
-          <div className={classes.papertext}></div>
-          </Grid>
+          </div>
+          
           
          
       
-      </Grid>
+      </div>
      
       
       
       
      
-       </Box>
+      
             </div>}
     </div>
   );
