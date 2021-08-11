@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import firstLoad ,{MTableToolbar,MTablePagination,MTableEditRow} from 'material-table';
@@ -22,14 +23,17 @@ const empList = [
 
 
 function TableR(props) {
-  const {name , DepId} = props;
+  const {name , DepId , year , sem} = props;
   const [inst,setInst] = React.useState({})
   const [data, setData] = useState()
+  const [totalDataRoom, setTotalDataRoom] = useState()
+
   const [rooms,setRooms] = React.useState({})
+  const [days,setDays] = React.useState({})
+  
   const mapIns=[]
-  const mapRoom=[
-   
-  ]
+  const mapRoom=[]
+  const mapDays=[]
 
   const findInedx =(obj,da) =>{
     for(let i = 0;i<obj.length;i++){
@@ -57,8 +61,7 @@ const room1 =() =>{
   return new Promise((Resolve,Reject)=>{
     axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+DepId)
 .then(res => {
-      console.log(res)
-        console.log(res.data.response);
+        setTotalDataRoom(res.data.response)
         let x = res.data.response
         for(let r = 0 ;r<x.length;r++){
           if( x[r].name === 'قاعة تدريس'){
@@ -69,8 +72,6 @@ const room1 =() =>{
           }
 
         }
-        console.log("iniiit")
-        console.log(mapRoom)
           
           
              
@@ -90,14 +91,10 @@ const room1 =() =>{
     
       axios.get("https://core-graduation.herokuapp.com/getFinalTable?idDep="+DepId+"&tableName="+name)
       .then(res => {
-              console.log(res)
-                console.log(res.data.response);
                 let w = res.data.response;
+                
                 let x = 0
                 let listdd = []
-                console.log("w.length")
-
-                console.log(w.length)
                 for(let y = 0 ;y<w.length;y++){
                   if(w[y].tableName ===name ){
                     let temp
@@ -107,8 +104,15 @@ const room1 =() =>{
                     else{
                      temp = w[y].roomType
                     }
+                    let ss = w[y].startHour
+                    let strStart = w[y].startHour
+                    if(strStart.length === 4) ss="0"+strStart
+
+                    let ee = w[y].endHour
+                    let strEnd = w[y].endHour
+                    if(strEnd.length === 4) ee="0"+strEnd
                     
-                    listdd[x] = {teacher:w[y].instName,room:temp,ToTime:w[y].endHour,FromTime:w[y].startHour,
+                    listdd[x] = {teacher:w[y].instName,room:temp,ToTime:ee,FromTime:ss,
                     day:w[y].days,course:w[y].courseName,number:w[y].courseNumber,classConflict:w[y].classConflict,flagConflict:w[y].flagConflict}
                                 x =x+1
 
@@ -118,23 +122,20 @@ const room1 =() =>{
                 
           
     
-    console.log("listd = ")
-    console.log(listdd)
 
-    console.log("mapRoom = ")
-    console.log(mapRoom)
 
     for (let i = 0;i<listdd.length;i++){
-      console.log("to func" +listdd[i].rooms)
       let index1= findInedx1(mapRoom,listdd[i].room)
       listdd[i].room = index1
       let index = findInedx1(mapIns,listdd[i].teacher)
       listdd[i].teacher = index
+
+      let index2 = findInedx1(mapDays,listdd[i].day)
+      listdd[i].day = index2
       // if(i == listd.length -1) 
     }
     
-    console.log(" after roooms listd = ")
-    console.log(listdd)
+  
   
     setData(listdd)
   })
@@ -146,6 +147,7 @@ const room1 =() =>{
     // await course1()
     await inst1()
     await room1()
+    await day1()
      initialData()
 
     let list1 ={}
@@ -160,10 +162,13 @@ const room1 =() =>{
     
     mapRoom.map(row =>list1[x++] = row.name)
     mapIns.map(row =>list2[y++] = row.name)
+    mapDays.map(row =>list3[z++] = row.name)
+
     
          
           setInst(list2)
           setRooms(list1)
+          setDays(list3)
 
          
 
@@ -176,8 +181,6 @@ const room1 =() =>{
   
      
       .then(res => {
-        console.log(res)
-          console.log(res.data.response);
           let w = res.data.response;
           let x = 0
           w.map(row =>(
@@ -190,15 +193,32 @@ const room1 =() =>{
     })
   }
 
+  const day1 =() =>{
+    return new Promise((Resolve,Reject)=>{
+
+      axios.get("https://core-graduation.herokuapp.com/getDays?date="+year+"&semester="+sem)
+  
+     
+      .then(res => {
+        console.log(res)
+          console.log(res.data.response);
+          let w = res.data.response;
+          let x = 0
+          w.map(row =>(
+            mapDays[x++] = {name:row}
+          ))
+          Resolve()
+         },
+          )
+          .catch(res =>{
+            Resolve()
+          })
+          
+    })
+  }
+
   useEffect(()=>{
-    // console.log("name= "+ name)
-    // console.log("DepId= "+ DepId)
-console.log("from use effect")
     FilledData()
-    console.log("end use effect")
-   
- 
-   console.log("end use effect")
       
  },[]) 
   
@@ -324,6 +344,7 @@ console.log("from use effect")
     },
     { title: "الايام",
     field: "day" ,
+    lookup:days,
    
  
       cellStyle: {
@@ -368,6 +389,32 @@ console.log("from use effect")
   }
   const HandelTestConflict =()=>{
 
+  }
+  const handelEditInDataBase = (updateRow) =>{
+    let room1 = rooms[updateRow.room]
+    let inst1 = inst[updateRow.teacher]
+    let days1 = days[updateRow.day]
+    let num
+    let nam
+    {totalDataRoom.filter(course => (course.name === room1) || (course.number === room1)).map(cor => (
+      num = cor.number,
+      nam = cor.name
+         ))}
+   
+
+    let url = "https://core-graduation.herokuapp.com/editFinalTable?idDep="+DepId+"&tableName="+name
+    +"&startHour="+updateRow.FromTime+"&endHour="+updateRow.ToTime+"&roomNumber="+num
+    +"&roomType="+nam+"&days="+days1+"&courseNumber="+updateRow.number
+    +"&instName="+inst1
+    
+    axios.get(url).then(res => {},)
+  }
+  const handelDeleteInDataBase= (row) =>{
+    
+    let url="https://core-graduation.herokuapp.com/deleteFromFinalTable?idDep="+DepId+"&tableName="+name
+    +"&courseNumber="+row.number+"&courseName="+row.course
+   
+    axios.get(url).then(res => {},)
   }
 
 
@@ -441,6 +488,8 @@ console.log("from use effect")
 
           onRowDelete: selectedRow => new Promise((resolve, reject) => {
             const index = selectedRow.tableData.id;
+            handelDeleteInDataBase(selectedRow)
+
             const updatedRows = [...data]
             updatedRows.splice(index, 1)
             setTimeout(() => {
@@ -453,6 +502,7 @@ console.log("from use effect")
             const updatedRows=[...data]
             
             updatedRows[index]=updatedRow
+            handelEditInDataBase(updatedRow)
             setTimeout(() => {
               setData(updatedRows)
               resolve()

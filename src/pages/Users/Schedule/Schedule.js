@@ -4,7 +4,7 @@ import Table1 from './Table1.js';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import PrintIcon from '@material-ui/icons/Print';
-import DrawerAdmin from "../DrawerAdmin.js"
+import DrawerUser from "../DrawerUser.js"
 import {
   BrowserRouter as Router,
   Switch,
@@ -34,14 +34,14 @@ export default function App(props) {
   const classes = useStyles();
   return (
     <div style={{height:1000}} className="back">
-      <DrawerAdmin DepId={state.DepId}/>
+      <DrawerUser DepName={state.DepName} DepId ={state.DepId} InstName = {state.InstName}/>
 
       <div className = {classes.root}>
    
         <div className ={classes.mar}>
           {/* <div>{state.name}</div> */}
 
-        <Table1 name = {state.name} DepId={state.DepId} year={state.year} sem={state.sem}/>
+        <Table1  DepId={state.DepId} inst = {state.InstName}/>
         </div>
 
 

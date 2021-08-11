@@ -229,7 +229,7 @@ export default function CSSGrid(Props) {
      history.push({
       pathname: './tableCreate',
       state: { name: name ,DepId:DepId,
-        index:3,year:date1
+        index:3,year:date1,sem:value1
       }
     })
   }
@@ -237,49 +237,14 @@ export default function CSSGrid(Props) {
   const handleChangeRadio = (event) => {
     setValue(event.target.value);
   };
-   const handelSem = (event) =>{
-     setCurrentSem(event.target.Select)
-
-   }
-
-
-  const handleChangeTime = (event) => {
-    setTime(event.target.value);
-  };
+  
   const handelDate =(event)=>{
    setDate(event.target.value)
    
   }
-  const handleCloseTime = () => {
-    setOpenTime(false);
-  };
 
-  const handleOpenTime = () => {
-    setOpenTime(true);
-  };
 
-  const handleChangeYear = (event) => {
-    setYear(event.target.value);
-  };
 
-  const handleCloseYear = () => {
-    setOpenYear(false);
-  };
-
-  const handleOpenYear = () => {
-    setOpenYear(true);
-  };
-  const handleChangeRoom = (event) => {
-    setRoom(event.target.value);
-  };
-
-  const handleCloseRoom = () => {
-    setOpenRoom(false);
-  };
-
-  const handleOpenRoom = () => {
-    setOpenRoom(true);
-  };
   const BootstrapInput = withStyles((theme) => ({
     root: {
       "label + &": {

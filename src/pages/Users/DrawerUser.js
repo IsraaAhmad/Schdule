@@ -172,6 +172,12 @@ export default function PersistentDrawerRight(Props) {
       icon: <AppstoreFilled style={{ fontSize: '20px' ,marginLeft:'7px' }}/>,
       path:'/MyTime',
     },
+    {
+      text:'جدولي',
+      icon: <AppstoreFilled style={{ fontSize: '20px' ,marginLeft:'7px' }}/>,
+      path:'/TeacherTable',
+    },
+    
    
   ]
   const menuId = 'primary-search-account-menu';

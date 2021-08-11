@@ -41,14 +41,16 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData ,setChild,child ,DepId ,year} = Props
-  console.log("from top saved ="+ savedData)
+  let {TableName , savedData ,setChild,child ,DepId ,year , sem} = Props
+
  
   const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = useState([])
   const [course,setCourse] = React.useState({})
+ 
+
   const [department,setDepartment] = React.useState({})
   const [days,setDays] = React.useState({})
   const [ren, setRen] = React.useState(false)
@@ -72,11 +74,7 @@ function TableR(Props) {
     const headerName = ["course","FromTime","ToTime","days"]
   
 
-  const mapDays =[{days:'احد,ثلاثاء,خميس'},
-  {days:'اثنين,اربعاء'},
-  {days:'احد'},
-  {days:'اربعاء'},
-  {days:'ثلاثاء'},]
+  const mapDays =[]
   const mapCourse =[]
   const mapDepartment =[]
 
@@ -88,8 +86,6 @@ function TableR(Props) {
   
      
       .then(res => {
-        // console.log(res)
-        //   console.log(res.data.response);
           let w = res.data.response;
           let x = 0
 
@@ -107,27 +103,43 @@ function TableR(Props) {
 
   const department1 =() =>{
     return new Promise((Resolve,Reject)=>{
-      console.log("from use effect")
+     
       let url = "https://core-graduation.herokuapp.com/getAllDep"
       let list1 =[]
       let x = 0 
     axios.get(url)
           .then(res => {
-            console.log(res)
-              console.log(res.data.response);
               res.data.response.map(row => (
                 mapDepartment[x++] = {name:row.name}
   
               ))
               Resolve()
-            },
-   
-              )
+            },)}, )
+          
     
+  }
 
-       
-         },
-          )
+  const day1 =() =>{
+    return new Promise((Resolve,Reject)=>{
+    
+      let url = "https://core-graduation.herokuapp.com/getDays?date="+year+"&semester="+sem
+      let list1 =[]
+      let x = 0 
+    axios.get(url)
+          .then(res => {
+            console.log(res)
+              res.data.response.map(row => (
+                mapDays[x++] = {days:row}
+  
+              ))
+              Resolve()
+            },)
+            .catch(res =>{
+              Resolve()
+            }
+
+            )
+          }, )
           
     
   }
@@ -154,19 +166,14 @@ function TableR(Props) {
   const initialData=() =>{
 
     
-    console.log("form inital data")
      let listd=[]
      let x = 0 
-     console.log("saved mat="+savedData)
-     console.log("saveData mat="+savDate)
      
      savDate.filter(row => (row.fromOtherDep ==="true")&(row.toOtherDep ==="false")&(row.tableName===TableName )  ).map(cor => (
            listd[x++] = {time:cor.timeSolt,course:cor.courseName}
 
     ))
     
-    console.log("listd = ")
-    console.log(listd)
     let newList = []
     for (let i = 0;i<listd.length;i++){
     
@@ -175,7 +182,7 @@ function TableR(Props) {
 
       
      let c = listd[i].time
-     console.log(c)
+    
 
      const x = c.split("/")
      let  indexD = findInedxD(mapDays,x[2])
@@ -185,8 +192,7 @@ function TableR(Props) {
 
     }
     
-    console.log(" after roooms listd = ")
-    console.log(listd)
+   
   
     setData(newList)
  
@@ -195,6 +201,7 @@ function TableR(Props) {
   const FilledData = async() =>{
     await course1()
      await department1()
+     await day1()
      initialData()
 
     let list1 ={}
@@ -217,9 +224,7 @@ function TableR(Props) {
  }
  useEffect(()=>{
    setLoading(true)
-  console.log("from use effect")
     FilledData()
-    console.log("end use effect")
 
      
 },[ren]) 
@@ -360,7 +365,6 @@ const convertToJson = (headers, data) => {
 }
 
 const importExcel = (e) => {
-  console.log("from import execl")
   const file = e.target.files[0]
 
   const reader = new FileReader()
@@ -375,7 +379,7 @@ const importExcel = (e) => {
     const workSheet = workBook.Sheets[workSheetName]
     //convert to array
     const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-    // console.log(fileData)7
+    
     const headers = fileData[0]
     const hed1 = ['teacher','course','department']
     let x =0
@@ -388,9 +392,9 @@ const importExcel = (e) => {
 
 
     // setData(convertToJson(headers, fileData))
-    console.log("data")
+  
     let listt = convertToJson(headers, fileData)
-    console.log(listt)
+    
     for (let k = 0;k<listt.length;k++){
 
       // let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
@@ -404,7 +408,7 @@ const importExcel = (e) => {
       +nameTable+"&courseIns=0&courseName="+listt[k].course+
       "&flag=1&timeSlot="+time+"&roomType=0&date="+year
 
-  axios.get(url).then(res => {console.log(res)},)
+  axios.get(url).then(res => {},)
   
 }
 setChild(!child)
@@ -431,17 +435,14 @@ setRen(!ren)
   let f = row.FromTime
   let t = row.ToTime
 
- console.log("Departmqnt = " + d1)
-  console.log("course = " + c1)
-  console.log("from time = " + f)
-  console.log("to time = " + t)
+
   let time = f+"/"+t+"/"+day1
 
 
 let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="
  +nameTable+"&courseIns=0&courseName="+c1+"&flag=1&timeSlot="+time+"&roomType=0&date="+year
-console.log("url="+ url)
-  axios.get(url).then(res => {console.log(res)},)
+
+  axios.get(url).then(res => {},)
 
         
 }
@@ -454,17 +455,13 @@ const handelDeleteInDataBase =(row) =>{
   let f = row.FromTime
   let t = row.ToTime
 
- console.log("Departmqnt = " + d1)
-  console.log("course = " + c1)
-  console.log("from time = " + f)
-  console.log("to time = " + t)
-  console.log("TableName = " + TableName)
+
 
   let time = f+"/"+t+"/"+day1
   let url="https://core-graduation.herokuapp.com/deleteFromSaveMatOfDraft?depId="+DepId+"&tableName="+
   TableName+"&courseIns=0&courseName="+c1+"&flag=1&timeSlot="+time+"&roomType=0&date="+year
-console.log(url)
-  axios.get(url).then(res => {console.log(res)},)
+
+  axios.get(url).then(res => {},)
 }
   
 

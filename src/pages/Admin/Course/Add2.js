@@ -1,29 +1,21 @@
 import React from 'react';
 import { makeStyles ,withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import InputBase from "@material-ui/core/InputBase";
 import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CancelIcon from '@material-ui/icons/Cancel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useHistory ,useLocation } from 'react-router-dom';
 import axios from 'axios';
 import  { useEffect } from 'react';
-import { DepartureBoard } from '@material-ui/icons';
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 
 
@@ -132,7 +124,6 @@ export default function CSSGrid(Props) {
   const classes = useStyles();
   const [nameCourse,setNameCourse] = React.useState(''); 
   const [year, setYear] = React.useState('');
-  const [room, setRoom] = React.useState('');
   const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
   const [dep, setDep] = React.useState();
@@ -140,12 +131,18 @@ export default function CSSGrid(Props) {
   const [done , setDone] = React.useState(false);
   const [sections , setSections] = React.useState();
   const [sec,SetSec] = React.useState();
-
-
+  const [dia,setDia] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const  history  = useHistory();
-  const [openYear, setOpenYear] = React.useState(false);
-  const [openRoom, setOpenRoom] = React.useState(false);
-  const [openTime, setOpenTime] = React.useState(false);
+
+  
+  const handleClose = () => {
+    setOpen(false);
+    history.goBack()
+    
+  };
+
+
   
 
   useEffect(()=>{
@@ -292,7 +289,8 @@ export default function CSSGrid(Props) {
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
   axios.get(url).then(res => {console.log(res.data.response);},)
 
-
+  setOpen(true);
+  setDia(true)
 
   }
 
@@ -562,6 +560,35 @@ export default function CSSGrid(Props) {
       
      
       
+            </div>}
+
+            {dia&&<div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 تم اضافة المساق بنجاح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
             </div>}
     </div>
   );

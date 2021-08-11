@@ -53,7 +53,7 @@ const useStyles =  makeStyles((theme) => ({
 
         marginTop:70,
         marginRight:200,
-        width:800
+        width:820
     },
     com:{
       backgroundColor:'white',
@@ -366,7 +366,7 @@ const handelchange1=(event) =>{
         onChange = {handelW}
         valueLabelDisplay="auto"
         aria-label="pretto slider"
-        defaultValue={30}
+        defaultValue={0}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider"
         id = "weight"

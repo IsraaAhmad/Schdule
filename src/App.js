@@ -25,6 +25,7 @@ import Department from "./pages/Administrator/Department.js"
 import Dep from './pages/Administrator/Home/Dep.js'
 import AdministratorRooms from './pages/Administrator/Rooms/Rooms.js'
 import AdministratorTeachers from './pages/Administrator/Teachers/Teacher.js'
+import TeacherTable from './pages/Users/Schedule/Schedule.js'
 
 
 
@@ -80,6 +81,7 @@ export default function App() {
         <Route exact path="/Dep" render={props => <Dep {...props} />} /> 
         <Route exact path="/AdministratorRooms" render={props => <AdministratorRooms {...props} />} /> 
         <Route exact path="/AdministratorTeachers" render={props => <AdministratorTeachers {...props} />} /> 
+        <Route exact path="/TeacherTable" render={props => <TeacherTable {...props} />} /> 
 
         
 

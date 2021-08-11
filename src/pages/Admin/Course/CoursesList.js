@@ -115,9 +115,9 @@ export default function SimpleAccordion(Props) {
     
   };
   const handelDeleteCourse =(x) =>{
-    console.log("https://core-graduation.herokuapp.com/deleteCourseFromDep?toDepartments="+DepId+"&number="+
+    console.log("https://core-graduation.herokuapp.com/deleteCourseFromDep?idDep="+DepId+"&number="+
     x)
-    axios.get("https://core-graduation.herokuapp.com/deleteCourseFromDep?toDepartments="+DepId+"&number="+
+    axios.get("https://core-graduation.herokuapp.com/deleteCourseFromDep?idDep="+DepId+"&number="+
     x)
     
     

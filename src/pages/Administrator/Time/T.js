@@ -156,7 +156,7 @@ export default function App(Props) {
     setBreak1(w[1])
     setBreak2(w[0])
     console.log("v[1] = " + v1[1])
-    if(v1[5] ==="1"){
+    if(v1[5] ==="0"){
       setDisabledTotal(false)
       setState({ ...state, checkedA: false });
     }
@@ -180,23 +180,30 @@ export default function App(Props) {
     setTime1(d[1])
     setTime2(d[0])
   
-
+    HandelOnChangeData(time1,time2,disabled1,break1,break2,duration,group, disabledTotal)
     setFlag(true)
            
  },[])
 
  const HandelOnChangeData =(t1,t2,d1,b1,b2,duration,group,d2) =>{
    console.log("test bla dddbla")
-   let x="0"
-   if(d1 === true)
-   x = "1"
-   let r = "0"
+   let x="1"
+   if(d1 === false)
+   x = "0"
+   let r = "1"
    if(d2 === false)
    r="0"
   console.log("new data ")
 
-  console.log(t2+"/"+t1+","+x+","+b2+"/"+b1+","+duration+","+group +","+r)
-   setData(t2+"/"+t1+","+x+","+b2+"/"+b1+","+duration+","+group +","+r)
+  let du 
+  if(duration === 10) du =1
+  if(duration === 20) du =1.5
+  if(duration === 30) du =2
+  if(duration === 40) du =3
+
+
+  console.log(t2+"/"+t1+","+x+","+b2+"/"+b1+","+du+","+group +","+r)
+   setData(t2+"/"+t1+","+x+","+b2+"/"+b1+","+du+","+group +","+r)
 
  }
  const HandelOnChangeBreak1 =(e) =>{

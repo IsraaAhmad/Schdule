@@ -153,19 +153,23 @@ const [loading, setLoading] = React.useState(false);
   const handelOpenPage =(row) =>{
     console.log(row)
     console.log("row")
+    let sem1=-1
+    if(row.sem === "فصل اول") sem1 = 1
+    if(row.sem === "فصل ثاني") sem1 = 2
+    console.log(sem1)
 
 
     if(row.flag === "2"){
       history.push({
         pathname: '/view',
-        state: { name: row.name, DepId:DepId ,year:row.date }
+        state: { name: row.name, DepId:DepId ,year:row.date  ,sem:sem1}
       })
     }
     if(row.flag === "3"){
       history.push({
         pathname: '/tableCreate',
         state: { name: row.name,DepId:DepId ,
-          index:3 ,year:row.date
+          index:3 ,year:row.date,sem:sem1
         }
       })
     }

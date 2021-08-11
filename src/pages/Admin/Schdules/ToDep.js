@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData ,setChild,child , DepId ,year} = Props
+  let {TableName , savedData ,setChild,child , DepId ,year ,sem} = Props
   console.log("from top saved ="+ savedData)
   const [rooms,setRooms] = React.useState({})
   const [savDate,setSavDate] = React.useState(savedData)
@@ -78,11 +78,7 @@ const classes = useStyles();
     const headerName = ["course","teacher","FromTime","ToTime","days","room"]
   
 
-  const mapDays =[{days:'احد,ثلاثاء,خميس'},
-  {days:'اثنين,اربعاء'},
-  {days:'احد'},
-  {days:'اربعاء'},
-  {days:'ثلاثاء'},]
+  const mapDays =[]
 
 
   const mapCourse =[]
@@ -114,6 +110,7 @@ const classes = useStyles();
          },
           )
           
+          
     })
   }
 
@@ -125,8 +122,6 @@ const classes = useStyles();
   
      
       .then(res => {
-        // console.log(res)
-        //   console.log(res.data.response);
           let w = res.data.response;
           let x = 0
 
@@ -158,6 +153,30 @@ const classes = useStyles();
           Resolve()
          },
           )
+          
+    })
+  }
+
+  const day1 =() =>{
+    return new Promise((Resolve,Reject)=>{
+
+      axios.get("https://core-graduation.herokuapp.com/getDays?date="+year+"&semester="+sem)
+  
+     
+      .then(res => {
+        console.log(res)
+          console.log(res.data.response);
+          let w = res.data.response;
+          let x = 0
+          w.map(row =>(
+            mapDays[x++] = {days:row}
+          ))
+          Resolve()
+         },
+          )
+          .catch(res =>{
+            Resolve()
+          })
           
     })
   }
@@ -267,6 +286,7 @@ const findInedx =(obj,da) =>{
      await department1()
      await inst1()
      await room1()
+     await day1()
      initialData()
 
     let list1 ={}

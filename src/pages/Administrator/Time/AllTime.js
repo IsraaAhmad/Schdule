@@ -109,8 +109,7 @@ export default function ScrollableTabsButtonPrevent(Props) {
        console.log("&&&&&&&&&&&")
             
             let w = res.data.response
-            console.log("yyyyyyyyyyyyyyyyyyyyyy")
-            console.log(w[0].labsTimes);
+            
            
               setLabList(w[0].labsTimes)
             

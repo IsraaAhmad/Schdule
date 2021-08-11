@@ -95,7 +95,8 @@ const useStyles = makeStyles({
   
 });
 
-export default function App() {
+export default function App(Props) {
+  const {setEmail} = Props
   const classes = useStyles();
   const  history  = useHistory();
   const [flag,SetFlag] =React.useState(false);
@@ -106,7 +107,9 @@ export default function App() {
   const [password,SetPassword] =React.useState();
   const [loading, setLoading] = React.useState(false);
 
- 
+ const handelEmail = () =>{
+  setEmail(true)
+ }
 const handelUser = () =>{
  
  let url = "https://core-graduation.herokuapp.com/loginAuthorization?idUser="+userName+"&password="+password
@@ -160,6 +163,7 @@ const handelUser = () =>{
  
             
 }
+
  
 const handelOnChangeNumber = (event)=>{
   SetUserName(event.target.value)
@@ -227,7 +231,7 @@ const handelOnChangePassword = (event) =>{
       </Button>
       {flag&&<label  style={{ color: 'red',fontWeight: 'bold'}}>**اسم المستخ\م او كلمة المرور غير صحيحة **</label>}
              <Button> 
-             <div className={classes.forget}>?هل نسيت كلمة المرور</div>
+             <div  onClick={handelEmail} className={classes.forget}>?هل نسيت كلمة المرور</div>
              </Button>
     
     </div>

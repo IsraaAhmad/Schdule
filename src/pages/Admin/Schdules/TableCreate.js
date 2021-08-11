@@ -10,6 +10,7 @@ import axios from 'axios';
 import  { useEffect } from 'react';
 import TimeForTeacher from './TimeForTeacher.js'
 import TableSS from "./TableSS";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TableSS1 from "./TableSS1";
 import DataTable from "./DataTable"
 import { Button } from '@material-ui/core';
@@ -18,6 +19,11 @@ import BeatLoader from "react-spinners/BeatLoader";
 import ToDep from "./ToDep.js"
 import "./b1.css"
 import { useHistory ,useLocation } from 'react-router-dom';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 
 function TabPanel(props) {
@@ -112,15 +118,34 @@ export default function ScrollableTabsButtonPrevent(props) {
   const [child,setChild] = React.useState(false);
   const [value, setValue] = React.useState(state.index);
   const [loading, setLoading] = React.useState(false);
+  const [dia,setDia] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+
+  const handleClose = () => {
+    setOpen(false);
+    history.goBack()
+    
+  };
 
   const handelSaveAndCreate =()=>{
-    axios.get("https://core-graduation.herokuapp.com/runCore?idDep=60ddc9735b4d43f8eaaabf83&tableName=الفصل الاول&date=2020/2021&semester=1&softFlag=true")
-    .then(res => {
-      
-      console.log(res.data.response)
-      
-      }, 
-          )
+    
+    let url ="http://192.168.1.7:3000/runCore?idDep="+DepId+"&tableName="+state.name+
+    "&date="+year+"&semester="+state.sem+"&softFlag=true"
+    console.log(url)
+    setOpen(true);
+    setDia(true)
+    // axios.get(url).then(res => {console.log(res.data.response)},)
+  }
+
+  const handelSaveAndCreate1 =()=>{
+    
+    let url ="http://192.168.1.7:3000/runCore?idDep="+DepId+"&tableName="+state.name+
+    "&date="+year+"&semester="+state.sem+"&softFlag=false"
+    console.log(url)
+    setOpen(true);
+    setDia(true)
+    // axios.get(url).then(res => {console.log(res.data.response)},)
   }
 
   const testing = () =>{
@@ -172,38 +197,69 @@ export default function ScrollableTabsButtonPrevent(props) {
             indicator: classes.indicator
           }}
           >
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
           
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year}/>
+      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
       </TabPanel>
       
       <div className={classes.bot}>
 
-      <Button variant="contained" className={classes.b1}  size='medium'>
-           حفظ
+      <Button onClick={handelSaveAndCreate1} variant="contained" className={classes.b1}  size='medium'>
+           انشاء سريع
        </Button>
       <Button  onClick={handelSaveAndCreate} variant="contained" className={classes.b1}  size='medium'>
-        حفظ وانشاء
+        انشاء
       </Button>
       </div>
     
     </div>}
     </div>}
+
+    {dia&&<div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 تم ارسال الجدول ..يرجى الانتظار بضع  الوقت 
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
+
+
           </div>
   );
 }
