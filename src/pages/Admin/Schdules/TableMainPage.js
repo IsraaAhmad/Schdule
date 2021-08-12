@@ -2,37 +2,20 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import {MTableToolbar} from 'material-table';
 import  { useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TablePagination from '@material-ui/core/TablePagination';
 import './main.css'
 import TimerIcon from '@material-ui/icons/Timer';
-import { Grid } from '@material-ui/core';
-import { composeClasses } from '@material-ui/x-grid';
-import { CallMissedSharp, FlareSharp } from '@material-ui/icons';
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory ,useLocation } from 'react-router-dom';
-import { Link} from "react-router-dom";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
-
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from 'axios';
 
 
 
 
-const empList = [
-  // {name : "ف1عام2020",sem: 1,date: '2019/2020',flag : '1'},
-  // {name : "ف1عام2021",sem: 2,date: '2019/2020',flag : '2'},
-  // {name : "ف1عام2019",sem: 2,date: '2020/2021',flag : '3'},
-  // {name : "ف2عام2019",sem: 1,date: '2020/2021',flag : '1'},
-  // {name : "ف2عام2020",sem: 1,date: '2021/2022',flag : '2'},
-]
 const useStyles = makeStyles({
   mar:{
     margin:100,
@@ -63,19 +46,10 @@ function TableR(Props) {
   const classes = useStyles();
   const [data, setData] = useState([])
   const [flagHandel,setFlagHandel] =useState(false);
-  const [page, setPage] = React.useState(0);
   
 const [loading, setLoading] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+ 
  const handelIcon =(row) =>{
    if (row.flag ==="1")
       return <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>

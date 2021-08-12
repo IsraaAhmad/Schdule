@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import './tabler.css';
 import axios from 'axios';
-import { TablePagination } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
-import { css } from "@emotion/react";
 import XLSX from 'xlsx';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from "@material-ui/core/IconButton";
@@ -41,20 +39,10 @@ const useStyles = makeStyles({
 });
 
 
-const empList = [
-  { id: "117859", type: 10, location:10},
-  { id: "5955695", type: 20, location:10},
-  { id: "5595646", type: 10, location:10},
-  { id: "57424", type: 20, location:20},
-  { id: "1178459", type: 10, location:10},
-  { id: "59554695", type: 20, location:10},
-  { id: "55954646", type: 20, location:20},
-  { id: "457424", type: 10, location: 10},
-]
+
 
 function TableR(Props) {
   const {DepId} = Props
-  
   const [data, setData] = useState([])
   const [loading, setLoading] = React.useState(false);
   const EXTENSIONS = ['xlsx', 'xls', 'csv']
@@ -79,14 +67,7 @@ const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.id
 let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep="+DepId+"&number="+id
 
-axios.get(url)
-// axios.get("https://jsonplaceholder.typicode.com/todos/1")
-
-    .then(res => {
-      console.log(res)
-    
-        },
-        )
+axios.get(url).then(res => {},)
 }
 
 const handelAddInDataBase = (newRow) =>{
@@ -100,13 +81,7 @@ const handelAddInDataBase = (newRow) =>{
   let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
   +newRow.id+"&type="+type+"&campous="+location+"&name="+newRow.name
 
-  axios.get(url)
-// axios.get("https://jsonplaceholder.typicode.com/todos/1")
-
-    .then(res => {
-      console.log(res)
-        },
-        )
+  axios.get(url).then(res => {},)
 }
 
 const handelEditInDataBase =(rowUp) =>{
@@ -120,19 +95,10 @@ const handelEditInDataBase =(rowUp) =>{
     type="قاعة تدريس";
   }
  
-  console.log("id="+ id)
-  console.log("type="+ type)
-  console.log("locaion="+ location)
   let url = "https://core-graduation.herokuapp.com/editRoom?idDep="+DepId+"&number="+id+
   "&type="+type+"&campous="+location+"&name="+rowUp.name
   
-  axios.get(url)
- // axios.get("https://jsonplaceholder.typicode.com/todos/1")
- 
-     .then(res => {
-       console.log(res)
-         },
-         )
+  axios.get(url).then(res => {},)
 }
  
 
@@ -143,11 +109,7 @@ const handelEditInDataBase =(rowUp) =>{
      field: "location",
      lookup:{10:'الحرم الجديد',20:'الحرم القديم'},
      initialEditValue: 10, validate: rowData => rowData.location? true : 'يجب ادخال مكان القاعة',
-     cellStyle: {
-      // fontFamily: 'Markazi Text',
-      fontSize:'25px',
-   
-             }, 
+     cellStyle: {fontSize:'25px',}, 
     },
    
 
@@ -205,12 +167,11 @@ const handelEditInDataBase =(rowUp) =>{
   }
   
   const importExcel = (e) => {
-    console.log("from import execl")
     const file = e.target.files[0]
   
     const reader = new FileReader()
     reader.onload = (event) => {
-      //parse data
+     
   
       const bstr = event.target.result
       const workBook = XLSX.read(bstr, { type: "binary" })
@@ -220,11 +181,10 @@ const handelEditInDataBase =(rowUp) =>{
       const workSheet = workBook.Sheets[workSheetName]
       //convert to array
       const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-      // console.log(fileData)7
+      
       const headers = fileData[0]
-      const hed1 = ['teacher','course','department']
-      let x =0
-      const heads = headers.map(head => ({ title: head, field: head }))
+      
+     
       // setCol(columns)
       
   
@@ -234,14 +194,14 @@ const handelEditInDataBase =(rowUp) =>{
       // let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="
       // +newRow.id+"&type="+type+"&campous="+location+"&name="+newRow.name
       // setData(convertToJson(headers, fileData))
-      console.log("data")
+    
       let listt = convertToJson(headers, fileData)
-      console.log(listt)
+     
       for (let k = 0;k<listt.length;k++){
         let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
     +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name="+listt[k].name
   
-    axios.get(url).then(res => {console.log(res)},)
+    axios.get(url).then(res => {})
   
       }
     }
@@ -261,11 +221,9 @@ const handelEditInDataBase =(rowUp) =>{
     let list1 =[];
     setLoading(true)
      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+DepId)
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+  
     
         .then(res => {
-          console.log(res)
-            console.log(res.data.response);
              
              for (let i = 0;i<res.data.response.length ; i++){
                if(res.data.response[i].type ==="مختبر"){
@@ -287,22 +245,9 @@ const handelEditInDataBase =(rowUp) =>{
              }
              setLoading(false)
              setData(list1)
-             console.log("list1")
-             console.log(list1)
-             console.log("data")
-             console.log(data)
 
                
-
-
-          
-            // setData(res.data.response)
-          },
-
-          
-            
-            
-            )
+          },)
           
   },[]) 
   
@@ -516,7 +461,6 @@ const handelEditInDataBase =(rowUp) =>{
           onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
             const index=oldRow.tableData.id;
             const updatedRows=[...data]
-            console.log(updatedRow)
             updatedRows[index]=updatedRow
             handelEditInDataBase(updatedRow)
     

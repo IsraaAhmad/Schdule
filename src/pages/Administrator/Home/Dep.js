@@ -37,7 +37,7 @@ export default function App() {
          
          <Comp UrlImage={room} name="القاعات" pathTo="/AdministratorRooms" DepId={state.number} />
          <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule"/>
-         <Comp UrlImage={course} name="المساقات" pathTo="/Course"/>
+         <Comp UrlImage={course} name="المساقات" pathTo="/AdmainistratorCourse" DepId={state.number}/>
          <Comp UrlImage={teacher} name="المدرسين" pathTo="/AdministratorTeachers" DepId={state.number}/>
          <Comp UrlImage={time} name="أوقات الدوام" pathTo="/Teacher"/>
 

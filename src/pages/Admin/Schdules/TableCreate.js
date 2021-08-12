@@ -12,7 +12,6 @@ import TimeForTeacher from './TimeForTeacher.js'
 import TableSS from "./TableSS";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TableSS1 from "./TableSS1";
-import DataTable from "./DataTable"
 import { Button } from '@material-ui/core';
 import DrawerAdmin from "../DrawerAdmin.js";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -52,12 +51,7 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `scrollable-prevent-tab-${index}`,
-    'aria-controls': `scrollable-prevent-tabpanel-${index}`,
-  };
-}
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -148,9 +142,7 @@ export default function ScrollableTabsButtonPrevent(props) {
     // axios.get(url).then(res => {console.log(res.data.response)},)
   }
 
-  const testing = () =>{
-    console.log(savedData)
-  }
+  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

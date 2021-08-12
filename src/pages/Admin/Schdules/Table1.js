@@ -1,31 +1,29 @@
 /* eslint-disable no-lone-blocks */
 import React, { useState } from 'react';
 import MaterialTable from 'material-table';
-import firstLoad ,{MTableToolbar,MTablePagination,MTableEditRow} from 'material-table';
 import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TablePagination from '@material-ui/core/TablePagination';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from '@material-ui/core/TextField';
 import  { useEffect } from 'react';
 import axios from 'axios';
+import { useHistory ,useLocation } from 'react-router-dom';
+import TimerIcon from '@material-ui/icons/Timer';
 
 
 
 
-const empList = [
-  { course: 10, number: 10, FromTime:"04:30",ToTime:"06:15",day:10,location:10,teacher:10,room:10},
-  { course: 20, number: 20, FromTime:"04:30",ToTime:"06:15",day:20,location:20,teacher:20,room:20},
-  { course: 30, number: 30, FromTime:"04:30",ToTime:"06:15",day:10,location:10,teacher:30,room:30},
-  { course: 40, number: 40, FromTime:"04:30",ToTime:"06:15",day:20,location:10,teacher:40,room:40},
-]
 
 
 function TableR(props) {
   const {name , DepId , year , sem} = props;
   const [inst,setInst] = React.useState({})
   const [data, setData] = useState()
+  const [newData, setNewData] = useState(false)
   const [totalDataRoom, setTotalDataRoom] = useState()
 
   const [rooms,setRooms] = React.useState({})
@@ -34,16 +32,31 @@ function TableR(props) {
   const mapIns=[]
   const mapRoom=[]
   const mapDays=[]
+  const  history  = useHistory();
+  const [open1, setOpen1] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [dia1,setDia1] = React.useState(false);
+  const [dia2,setDia2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
+  const [dia3,setDia3] = React.useState(false);
+  
 
-  const findInedx =(obj,da) =>{
-    for(let i = 0;i<obj.length;i++){
-      if (obj[i].name === da){
+  
+  const handleClose1 = () => {
+    setOpen1(false);
+    
+  };
+  const handleClose2 = () => {
+    setOpen2(false);
+    
+  };
 
-        return i
-      }
-     }
-     return -1 
- }
+  const handleClose3 = () => {
+    setOpen3(false);
+    
+  };
+
+ 
 
  const findInedx1 =(obj,da) =>{
    for(let i = 0;i<obj.length;i++){
@@ -91,6 +104,7 @@ const room1 =() =>{
     
       axios.get("https://core-graduation.herokuapp.com/getFinalTable?idDep="+DepId+"&tableName="+name)
       .then(res => {
+        console.log("from heree")
                 let w = res.data.response;
                 
                 let x = 0
@@ -218,22 +232,23 @@ const room1 =() =>{
   }
 
   useEffect(()=>{
+    console.log("start of use effect")
     FilledData()
       
- },[]) 
+ },[newData]) 
   
  const handelIcon =(row) =>{
-  if (row.flagConflict ==="false")
+  if (row.flagConflict === false)
      return <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
       
-      <CheckCircleIcon style={{color:'#045F5F '}}/>
+      <CheckCircleIcon style={{color:'#045F5F ',fontSize:'35px',}}/>
      </div>
 
      else{
      return <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
 
-     <div style={{width:25,height:25,backgroundColor:'red',}}>
-     <div style={{fontSize:'20px',color:'white',display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}}>{row.classConflict +1}</div>
+     <div style={{width:35,height:35,backgroundColor:'red',}}>
+     <div style={{fontSize:'22px',color:'white',display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}}>{row.classConflict +1}</div>
     
      </div>
     </div>
@@ -251,7 +266,7 @@ const room1 =() =>{
               
     },
     { title: "القاعة",
-    field: "room" ,
+    field: "room" ,  
     lookup:rooms,
     cellStyle: {fontSize:'20px',},
               
@@ -385,9 +400,28 @@ const room1 =() =>{
      
   ]
   const HandelOK =() =>{
-
-  }
+    let url = "https://core-graduation.herokuapp.com/setApprovalTable?idDep="+DepId+"&tableName="+name
+    axios.get(url).then(res => {
+      console.log(res)
+      setOpen2(true);
+      setDia2(true)
+  })
+}
   const HandelTestConflict =()=>{
+    setOpen3(true);
+    setDia3(true)
+    let url = "https://core-graduation.herokuapp.com/checkConflict?idDep="+DepId+"&tableName="+name
+    axios.get(url).then(res => {
+      console.log(res)
+      setNewData(!newData)
+      setOpen1(true);
+      setDia1(true)
+      setOpen3(false);
+      setDia3(false)
+
+    },
+      )
+
 
   }
   const handelEditInDataBase = (updateRow) =>{
@@ -513,6 +547,93 @@ const room1 =() =>{
        
         
       />
+       {dia1&&<div>
+            <Dialog
+            open={open1}
+            onClose={handleClose1}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                تم فحص التعارضات بنجاح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose1} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
+
+            {dia2&&<div>
+            <Dialog
+            open={open2}
+            onClose={handleClose2}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                تم اعتماد الجدول
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose2} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
+
+            {dia3&&<div>
+            <Dialog
+            open={open3}
+            onClose={handleClose3}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title"  style={{marginRight:90}}>
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px',display:'flex',flexDirection:'center',alignContent:'center'}}>
+             <TimerIcon  style={{color:'#F1C40F',fontSize:40 }} />
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+               يرجى الانتظار لبضع ثواني
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose3} color="primary" autoFocus style={{margin:0,color:'#045F5F'}}>
+               {/* <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/> */}
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'25px',borderRadius:'5px'}}>تم</div>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
     </div>
   );
 }

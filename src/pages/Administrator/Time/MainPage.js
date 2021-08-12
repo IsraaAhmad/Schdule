@@ -110,6 +110,19 @@ function TableR() {
     })
   
   }
+  const handelDeleteInDataBase= (row) =>{
+    console.log(row)
+    let sem = -1
+    if (row.sem === 10) sem =1
+    if (row.sem === 20) sem=2
+    
+    
+      let url="https://core-graduation.herokuapp.com/deleteTimes?semester="+sem+"&date="+row.date
+    
+      axios.get(url).then(res => {console.log(res)},)
+    
+
+  }
 
   useEffect(()=>{
     let list1 = []
@@ -269,6 +282,7 @@ function TableR() {
           
           onRowDelete: selectedRow => new Promise((resolve, reject) => {
             const index = selectedRow.tableData.id;
+            handelDeleteInDataBase(selectedRow)
             const updatedRows = [...data]
             updatedRows.splice(index, 1)
             setTimeout(() => {

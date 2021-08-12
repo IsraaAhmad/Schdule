@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import  { useEffect } from 'react';
 import axios from 'axios';
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 import { useHistory ,useLocation } from 'react-router-dom';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
@@ -369,9 +368,6 @@ function TableR(Props) {
       let listt = convertToJson(headers, fileData)
       console.log(listt)
       for (let k = 0;k<listt.length;k++){
-
-        // let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId=60ddc9735b4d43f8eaaabf83&tableName="
-        // +nameTable+"&courseIns="+inst1+"&courseName="+course1+"&flag=0&timeSlot=0&roomType="+room1+"&date=2020/2019"
 
 
         let url = "https://core-graduation.herokuapp.com/saveMatOfDraft?depId="+DepId+"&tableName="

@@ -1,9 +1,20 @@
 import React from 'react';
 import { makeStyles ,withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -63,6 +74,8 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
+    // borderTopLeftRadius: 40,
+    // borderTopRightRadius: 40,
     
     fontFamily:'Markazi Text',
     fontSize:'25px',
@@ -106,7 +119,8 @@ const useStyles = makeStyles((theme) => ({
       },
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
         border: "2px solid red",
- 
+    // borderRadius: 4,
+    // border: "2px solid #045F5F",
       }
   },
   choose:{
@@ -143,8 +157,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CSSGrid(Props) {
   const {DepId}=Props
+  console.log("from tset")
+  console.log(DepId)
   const classes = useStyles();
   const [year, setYear] = React.useState('');
+  const [room, setRoom] = React.useState('');
   const [time, setTime] = React.useState('');
   const [value, setValue] = React.useState();
   const [value1, setValue1] = React.useState();
@@ -164,12 +181,18 @@ export default function CSSGrid(Props) {
 
 
   const  history  = useHistory();
+  const [openYear, setOpenYear] = React.useState(false);
+  const [openRoom, setOpenRoom] = React.useState(false);
+  const [openTime, setOpenTime] = React.useState(false);
   
   useEffect(()=>{
+    console.log("from use effect")
     let url = "https://core-graduation.herokuapp.com/getAllDep"
-  
+    let list1 =[]
+    let x = 0 
   axios.get(url)
         .then(res => {
+          console.log(res)
             let da =res.data.response 
             for (let i =0 ;i<da.length;i++){
               if( da[i].idDepartment === DepId){
@@ -183,11 +206,14 @@ export default function CSSGrid(Props) {
                   
                 }
                 setSections(listt)
+                console.log("listt seccc")
+                console.log(listt)
  }}
               setDone(true)
           },
  
             )
+   console.log("end use effect")
       
  },[]) 
   const handleChangeTime = (event) => {
@@ -205,7 +231,7 @@ export default function CSSGrid(Props) {
     let number = document.getElementById('number').value
     let name = document.getElementById('name').value
     let hour = document.getElementById('hour').value
-   
+    let depa = document.getElementById('dep').value
 
     let type1 = value
     let dep = value1
@@ -216,6 +242,7 @@ export default function CSSGrid(Props) {
     let type = "اجباري"
     let year = 0 
     let semester = 0
+    console.log("type1="+type1)
     
 
    
@@ -303,7 +330,7 @@ export default function CSSGrid(Props) {
     number+"&type="+type+"&year="+year+"&sem="+semester+"&name="+name+"&numberOfHour="+hour+"&specialty="+sec
     +"&toDepartments="+DepId+"&flag="+flag1
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
-  axios.get(url).then(res => {;},)
+  axios.get(url).then(res => {console.log(res.data.response);},)
   setOpen(true);
   setDia(true)
 

@@ -77,9 +77,6 @@ export default function App() {
   const classes = useStyles();
   const  location  = useLocation();
   const {state} = location;
-  console.log(location)
-  console.log("from tot")
-  console.log(state)
   const [value, setValue] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);

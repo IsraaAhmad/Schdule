@@ -1,9 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Test from "./Test.js";
-import DrawerAdmin from "../DrawerAdmin.js"
+import Add2 from "./Add2.js"
+import DrawerAdminstrator from "../DrawerAdminstrator.js"
 import { useHistory ,useLocation } from 'react-router-dom';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 const useStyles = makeStyles({
   mar:{
     margin:150,
@@ -17,9 +23,9 @@ export default function App() {
   const classes = useStyles();
   return (
     <div  style={{height:1000}} className="back">
-<DrawerAdmin DepId={state.DepId}/>
+<DrawerAdminstrator DepId={state.DepId}/>
    <div className={classes.mar}>
-     <Test DepId={state.DepId}/>
+     <Add2 DepId={state.DepId}/>
    </div>
     </div>
   );

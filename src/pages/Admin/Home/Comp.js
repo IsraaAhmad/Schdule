@@ -2,20 +2,9 @@ import React from "react";
 
 import { Button } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { useHistory ,useLocation } from 'react-router-dom';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
-import S1 from "./S1.png";
+
 
 
 const useStyles = makeStyles({
@@ -46,13 +35,9 @@ name:{
 export default function App(props) {
   const {UrlImage , name , pathTo ,DepId} = props
   const  history  = useHistory();
-  console.log("from comp")
-  console.log(DepId)
 
   const classes = useStyles();
   const handelOnClick=() =>{
-    console.log("from click")
-  console.log(DepId)
     history.push({
       pathname:pathTo,
       state:{DepId:DepId}

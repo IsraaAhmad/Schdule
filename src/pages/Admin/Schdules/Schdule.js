@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TableMainPage from "./TableMainPage"
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { useHistory ,useLocation } from 'react-router-dom';
 import DrawerAdmin from "../DrawerAdmin.js"
 import "../back.css"
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
 const useStyles = makeStyles({
   mar:{
     margin:100,

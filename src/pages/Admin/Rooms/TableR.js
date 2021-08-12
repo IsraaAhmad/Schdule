@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import './tabler.css';
 import axios from 'axios';
-import { TablePagination } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
-import { css } from "@emotion/react";
-
 import XLSX from 'xlsx';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from "@material-ui/core/IconButton";
@@ -48,23 +45,11 @@ const useStyles = makeStyles({
 });
 
 
-const empList = [
-  { id: "117859", type: 10, location:10},
-  { id: "5955695", type: 20, location:10},
-  { id: "5595646", type: 10, location:10},
-  { id: "57424", type: 20, location:20},
-  { id: "1178459", type: 10, location:10},
-  { id: "59554695", type: 20, location:10},
-  { id: "55954646", type: 20, location:20},
-  { id: "457424", type: 10, location: 10},
-]
+
 
 function TableR(Props) {
   const {DepId} = Props
-  
   const [data, setData] = useState([])
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [loading, setLoading] = React.useState(false);
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -90,14 +75,7 @@ const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.id
 let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep="+DepId+"&number="+id
 
-axios.get(url)
-// axios.get("https://jsonplaceholder.typicode.com/todos/1")
-
-    .then(res => {
-      console.log(res)
-    
-        },
-        )
+axios.get(url).then(res => {},)
 }
 
 const handelAddInDataBase = (newRow) =>{
@@ -111,7 +89,7 @@ const handelAddInDataBase = (newRow) =>{
   let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
   +newRow.id+"&type="+type+"&campous="+location+"&name=قاعة تدريس"
 
-  axios.get(url).then(res => {console.log(res)},)
+  axios.get(url).then(res => {},)
 }
 
 const handelEditInDataBase =(rowUp) =>{
@@ -125,24 +103,12 @@ const handelEditInDataBase =(rowUp) =>{
     type="قاعة تدريس";
   }
  
-  console.log("id="+ id)
-  console.log("type="+ type)
-  console.log("locaion="+ location)
   let url = "https://core-graduation.herokuapp.com/editRoom?idDep="+DepId+"&number="+id+
   "&type="+type+"&campous="+location+"&name=قاعة تدريس"
   
-  axios.get(url)
- // axios.get("https://jsonplaceholder.typicode.com/todos/1")
- 
-     .then(res => {
-       console.log(res)
-         },
-         )
+  axios.get(url).then(res => {},)
 }
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+ 
   
   const columns = [
     
@@ -163,24 +129,7 @@ const handelEditInDataBase =(rowUp) =>{
     initialEditValue: 10, validate: rowData => rowData.type? true : 'يجب ادخال نوع القاعه',
     lookup: {10:'قاعة تدريس', 20:'مختبر' },
     editable:'never',
-  //   render:sele =>(
-  //   <Select
-  //   labelId="demo-simple-select-label"
-  //   id="demo-simple-select"
-  //   style = {{fontSize:'25px',}}
-    
-  // >
-  //   <MenuItem style = {{fontSize:'20px',}} value={10}>قاعة</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={20}>مختبر متحكمات دقيقة</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={30}>متبر تصميم دوائر رقمية 1</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={40}>مختبر شبكات</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={50}>مختبر تصميم الكمبيوتر</MenuItem>
-  //   <MenuItem style = {{fontSize:'20px',}} value={60}>مختبر تصميم دوائر رقمية 2</MenuItem>
-  // </Select>),
-      cellStyle: {
-        //  fontFamily: 'Markazi Text',
-         fontSize:'25px',
-              },
+    cellStyle: {fontSize:'25px',},
               
     },
     { title: "رقم القاعة",
@@ -214,7 +163,6 @@ const convertToJson = (headers, data) => {
 }
 
 const importExcel = (e) => {
-  console.log("from import execl")
   const file = e.target.files[0]
 
   const reader = new FileReader()
@@ -229,11 +177,9 @@ const importExcel = (e) => {
     const workSheet = workBook.Sheets[workSheetName]
     //convert to array
     const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-    // console.log(fileData)7
+  
     const headers = fileData[0]
-    const hed1 = ['teacher','course','department']
-    let x =0
-    const heads = headers.map(head => ({ title: head, field: head }))
+  
     // setCol(columns)
     
 
@@ -241,10 +187,8 @@ const importExcel = (e) => {
     fileData.splice(0, 1)
 
 
-    // setData(convertToJson(headers, fileData))
-    console.log("data")
     let listt = convertToJson(headers, fileData)
-    console.log(listt)
+    
     for (let k = 0;k<listt.length;k++){
       let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
   +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name=قاعة تدريس"
@@ -270,11 +214,9 @@ const importExcel = (e) => {
     setLoading(true)
     console.log(DepId)
      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+DepId)
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+ 
     
         .then(res => {
-          console.log(res)
-            console.log(res.data.response);
              
              for (let i = 0;i<res.data.response.length ; i++){
                if(res.data.response[i].type ==="قاعة تدريس"){
@@ -295,16 +237,6 @@ const importExcel = (e) => {
              }
              setLoading(false)
              setData(list1)
-             console.log("list1")
-             console.log(list1)
-             console.log("data")
-             console.log(data)
-
-               
-
-
-          
-            // setData(res.data.response)
           },
 
           
@@ -474,9 +406,7 @@ const importExcel = (e) => {
                 <div style={{marginLeft:20}}>حذف</div>
                 </div>,
           },
-        //   pagination: {
-        //     labelRowsSelect:"صفوف"
-        // },
+       
         
         body: {
           emptyDataSourceMessage:"لا يوجد قاعات  ",
@@ -528,7 +458,6 @@ const importExcel = (e) => {
           onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
             const index=oldRow.tableData.id;
             const updatedRows=[...data]
-            console.log(updatedRow)
             updatedRows[index]=updatedRow
             handelEditInDataBase(updatedRow)
     

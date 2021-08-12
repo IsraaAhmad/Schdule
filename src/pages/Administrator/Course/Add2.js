@@ -148,7 +148,8 @@ export default function CSSGrid(Props) {
   useEffect(()=>{
     console.log("from use effect")
     let url = "https://core-graduation.herokuapp.com/getAllDep"
-
+    let list1 =[]
+    let x = 0 
   axios.get(url)
         .then(res => {
           console.log(res)
@@ -165,12 +166,14 @@ export default function CSSGrid(Props) {
                   
                 }
                 setSections(listt)
+                console.log("listt seccc")
+                console.log(listt)
  }}
               setDone(true)
           },
  
             )
-  
+   console.log("end use effect")
       
  },[]) 
 
@@ -185,12 +188,16 @@ export default function CSSGrid(Props) {
 
   const handelSave = () =>{
     let course = document.getElementById('course').value
+    // let name = document.getElementById('name').value
     let hour = document.getElementById('hour').value
     let idDepartmant = dep
+    let idCourse = course
+    let flag = 1
     let type1 = value
     let type = "اجباري"
     let year = 0 
     let semester = 0
+    console.log("type1="+type1)
     
 
    
@@ -258,7 +265,18 @@ export default function CSSGrid(Props) {
         break;
     }
 
- 
+   
+    
+    console.log(time)
+    console.log("DepId" + DepId)
+    console.log("number" + course)
+    console.log("name" + nameCourse)
+    console.log("hour" + hour)
+    console.log("year" + year)
+    console.log("semester" + semester)
+    console.log("type" + type)
+    console.log("sec="+sec)
+    console.log("toDepartment" + idDepartmant)
 
 
 
@@ -287,13 +305,22 @@ export default function CSSGrid(Props) {
  
   const handleChangeDep = (event) => {
     setDep(event.target.value);
+    console.log("hi")
+    //  let idd = getIdForName(event.target.value)
+
+
+    // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
     let list1 =[]
     let x = 0 
+    console.log("event terget value" + event.target.value )
+
     let url = "https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+event.target.value
     axios.get(url)
     
  
         .then(res => {
+          console.log(res)
+            console.log(res.data.response);
             res.data.response.map(row => (
                 list1[x++] = {name:row.name,number:row.number}
 
@@ -352,11 +379,14 @@ export default function CSSGrid(Props) {
 
 
   useEffect(()=>{
+    console.log("from use effect")
     let url = "https://core-graduation.herokuapp.com/getAllDep"
     let list1 =[]
     let x = 0 
   axios.get(url)
         .then(res => {
+          console.log(res)
+            console.log(res.data.response);
             res.data.response.map(row => (
                 list1[x++] = {name:row.name,number:row.idDepartment}
 
@@ -365,6 +395,7 @@ export default function CSSGrid(Props) {
           },
  
             )
+   console.log("end use effect")
       
  },[])
 
@@ -454,6 +485,8 @@ export default function CSSGrid(Props) {
             input={<BootstrapInput />}
             >
             <option aria-label="None" value="" />
+            {console.log(sections),
+            console.log("sections")}
             {sections.map(row=>(
               <option style = {{fontFamily:'Markazi Text',fontSize:'20px',height:'35px'
               

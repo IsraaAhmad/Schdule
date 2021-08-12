@@ -1,8 +1,14 @@
 import React from "react";
 import CourseList from "./CoursesList.js"
 import { makeStyles } from "@material-ui/core/styles";
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import "../back.css"
-import DrawerAdmin from "../DrawerAdmin.js"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import DrawerAdminstrator from "../DrawerAdminstrator.js"
 import { useHistory ,useLocation } from 'react-router-dom';
 
 
@@ -21,7 +27,7 @@ export default function App() {
   const {state} = location;
   return (
     <div style={{height:1000}} className="back">
-<DrawerAdmin  DepId={state.DepId}/>
+<DrawerAdminstrator  DepId={state.DepId}/>
    <diV className={classes.mar}>
 
        <CourseList DepId={state.DepId}/>

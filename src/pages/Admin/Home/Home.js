@@ -27,9 +27,6 @@ const useStyles = makeStyles({
 export default function App() {
   const  location  = useLocation();
   const {state} = location;
-  console.log("state=")
-  console.log(state.DepId)
-
   const classes = useStyles();
   return (
    <div  style={{height:1000}}className="back">

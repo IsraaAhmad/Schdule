@@ -22,6 +22,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useEffect, useState } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import axios from 'axios';
 
 
@@ -99,6 +100,8 @@ width:600,
 
 export default function SimpleAccordion(Props) {
   const {DepId} = Props
+  console.log("from course list ")
+  console.log(DepId)
 
   const [data, setData] = useState([])
   const classes = useStyles();
@@ -112,19 +115,22 @@ export default function SimpleAccordion(Props) {
     
   };
   const handelDeleteCourse =(x) =>{
-    
+    console.log("https://core-graduation.herokuapp.com/deleteCourseFromDep?idDep="+DepId+"&number="+
+    x)
     axios.get("https://core-graduation.herokuapp.com/deleteCourseFromDep?idDep="+DepId+"&number="+
     x)
     
     
-    .then(res => {},)
+    .then(res => {console.log(res.data.response);},)
     setOpen(true);
     setDia(true)
 
   }
   const HandelAddCourse = ()=>{
+         console.log("from funcion")
+         console.log(DepId)
          history.push({
-          pathname:'/AddCourse',
+          pathname:'/AddCourse1',
           state:{DepId:DepId}
         })
          
@@ -133,16 +139,23 @@ export default function SimpleAccordion(Props) {
   
     
     history.push({
-      pathname:'/addCourseFromOtherDep',
+      pathname:'/addCourseFromOtherDep1',
       state:{DepId:DepId}
     })
 }
 
 
   useEffect(()=>{
-   
+    let list1 =[];
      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+DepId)
-     .then(res => {setData(res.data.response)},)
+    
+    
+        .then(res => {
+          console.log("dataaaaaaaaaa")
+            console.log(res.data.response);
+  
+            setData(res.data.response)
+          },)
           
   },[ren]) 
   
@@ -211,7 +224,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "1") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
-        
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -270,7 +286,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "1") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
-            
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -355,7 +374,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "2") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
-           
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -415,7 +437,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "2") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -503,7 +528,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "3") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -563,7 +591,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "3") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -648,7 +679,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "4") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -708,7 +742,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "4") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -793,7 +830,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "5") && (course.semester === "1") && (course.flagTo === "false")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -853,7 +893,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "5") && (course.semester === "2") && (course.flagTo === "false")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -937,7 +980,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.year === "-1") && (course.semester === "-1")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
@@ -1025,7 +1071,10 @@ export default function SimpleAccordion(Props) {
          
         
             {data.filter(course => (course.flagTo === "true")).map(cor => (
-          
+            //    <div className={classes.t1}>
+            //    <div>{cor.name}</div> 
+            //    <div>{cor.number}</div>     
+            // </div>
 
                      <TableRow className={classes.even}>
                      <TableCell component="th" scope="row" className={classes.cor}>
