@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import ViewChat from "./ViewChat.js"
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,6 +34,7 @@ import Menu from '@material-ui/core/Menu';
 import { withRouter } from 'react-router-dom';
 import {AppstoreFilled } from '@ant-design/icons';
 import { useHistory ,useLocation } from 'react-router-dom';
+import "./back.css"
 
 
 const drawerWidth = 200;
@@ -192,6 +194,7 @@ export default function PersistentDrawerRight(Props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const [chat, setChat] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const location  = useLocation();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -266,6 +269,11 @@ export default function PersistentDrawerRight(Props) {
    
   ]
 
+  const handelChat =()=> {
+   setChat(!chat)
+  
+  }
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -289,12 +297,12 @@ export default function PersistentDrawerRight(Props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
+        <IconButton aria-label="show 4 new mails" color="inherit" onClick={handelChat}>
+         
             <MailIcon />
-          </Badge>
+         
         </IconButton>
-        <p>Messages</p>
+        
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -338,8 +346,8 @@ export default function PersistentDrawerRight(Props) {
             </IconButton>
 
 
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton aria-label="show 4 new mails" color="inherit" onClick={handelChat}>
+              <Badge  color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
@@ -443,6 +451,16 @@ export default function PersistentDrawerRight(Props) {
         </List>
           </div>
       </Drawer>
+      {chat&&<div style={{
+        position:'fixed',
+        top:75,left:10,height: 500,
+        width: 400,
+        backgroundColor:'white',
+        zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
+        }}>
+        <ViewChat DepId={DepId}/>
+        
+      </div>}
     </div>
           
   );

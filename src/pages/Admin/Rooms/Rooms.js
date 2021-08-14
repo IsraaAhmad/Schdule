@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TableR from "./TableR.js";
 
 
+
 import PropTypes from 'prop-types';
 import { useHistory ,useLocation } from 'react-router-dom';
 
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '1000',
+    height:1000,
     margin:100,
     backgroundColor: theme.palette.background.paper,
   },
@@ -70,7 +72,8 @@ const useStyles = makeStyles((theme) => ({
   color:'white',
   fontFamily:'Markazi Text',
   fontSize:'30px'
-  }
+  },
+ 
 }));
 
 export default function App() {
@@ -85,7 +88,7 @@ export default function App() {
 
 
   return (
-    <div style={{height:10000}} className="back">
+    <div style={{height:1100}} className="back">
 <DrawerAdmin   DepId={state.DepId}/>
 
 <div className={classes.root} className="b1">
@@ -117,6 +120,7 @@ export default function App() {
  
   
     </div>
+    
     
     </div>
   );

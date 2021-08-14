@@ -250,7 +250,7 @@ const importExcel = (e) => {
   const classes = useStyles();
   return (
     
-    <div className="App">
+    <div >
       {loading?
          <div className={classes.lod}>
          
@@ -374,13 +374,8 @@ const importExcel = (e) => {
             fontFamily: 'Markazi Text',
             fontSize:'25px',
             display:'flex',
-            flexDirection:'row-reverse',
-          
+            flexDirection:'row-reverse', },
             
-            
-
-            
-          },
           paging:false,
        
          
@@ -392,7 +387,8 @@ const importExcel = (e) => {
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
-            paddingRight:0
+            paddingRight:0,
+            zIndex: '0'
             
             
 

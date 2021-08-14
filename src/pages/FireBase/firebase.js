@@ -2,13 +2,13 @@ import firebase from 'firebase'
 import "firebase/firestore"
 
 const  firebaseConfig = {
-    apiKey: "AIzaSyDlwzy0BBHJaqnpDN4CTbNMRY-n-s3VA64",
-    authDomain: "chat-5f177.firebaseapp.com",
-    projectId: "chat-5f177",
-    storageBucket: "chat-5f177.appspot.com",
-    messagingSenderId: "902522902383",
-    appId: "1:902522902383:web:48c90fd02b4e5d73daba9a",
-    measurementId: "G-BBY0WH8FZS"
+  apiKey: "AIzaSyAWhbx7qK2YzHg6A8Ril2y82z1VepM8zco",
+  authDomain: "graduationproject-f27fe.firebaseapp.com",
+  projectId: "graduationproject-f27fe",
+  storageBucket: "graduationproject-f27fe.appspot.com",
+  messagingSenderId: "575626207690",
+  appId: "1:575626207690:web:4a4aad243dbd2fa8e7ef33",
+  measurementId: "G-ZCH6YN1KD8"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);

@@ -3,3 +3,11 @@
     height: 100%;
     /* background-color: chartreuse; */
 }
+.chat1{
+    position: absolute;
+    top: 20;
+left: 20;
+    width: 400px;
+    height: 400px;
+    background-color: blueviolet;
+}

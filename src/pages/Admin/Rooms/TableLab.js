@@ -398,7 +398,8 @@ const handelEditInDataBase =(rowUp) =>{
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
-            paddingRight:0
+            paddingRight:0,
+            zIndex: '0'
             
             
 

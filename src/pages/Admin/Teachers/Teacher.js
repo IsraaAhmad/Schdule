@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TableMainPage from './TableMainPage.js'
 import Tea from './tea.png'
+import Chat from "../../LogIn/Chat.js"
 
 import PropTypes from 'prop-types';
 import {
@@ -54,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
     position:'absolute',
     top:130,
     right:730
+  },
+  chat:{
+    width:600,
+    height:600,
+    backgroundColor:'white',
   }
 
 }));
@@ -78,6 +84,7 @@ export default function App() {
 
 <div className={classes.root} >
       <TableMainPage DepId={state.DepId}/>
+      <div className= {classes.chat}><Chat/></div>
       
      
  
