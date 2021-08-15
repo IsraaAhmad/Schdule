@@ -6,6 +6,13 @@ import Divider from '@material-ui/core/Divider';
 import  { useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import TLab from "./TLab.js"
 import {
@@ -49,8 +56,6 @@ export default function App(Props) {
   const classes = useStyles();
   const {courseList,setCourseList,labList,setLabList , sem , date} = Props
   let str = labList
-  console.log("labList from ent")
-  console.log(labList)
   const arr = str.split("*")
   const [a0, setA0] = React.useState(arr[0]);
   const [a1, setA1] = React.useState(arr[1]);
@@ -58,14 +63,17 @@ export default function App(Props) {
   const [a3, setA3] = React.useState(arr[3]);
   const [a4, setA4] = React.useState(arr[4]);
   const [a5, setA5] = React.useState(arr[5]);
+  const [dia,setDia] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  
+  const handleClose = () => {
+    setOpen(false);
+    
+  };
 
 
   
-  console.log("labList")
-  console.log(labList)
- 
- 
-  console.log("test")
   const HandelSave =() =>{
     let ww = a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5
     axios.get("https://core-graduation.herokuapp.com/editTimes?semester="+sem+"&date="+date+
@@ -75,28 +83,13 @@ export default function App(Props) {
   
     
     setLabList(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
-    console.log("this is all data after change")
-    console.log(labList)
-
+    
+    setOpen(true);
+    setDia(true)
   }
 
   useEffect(()=>{
-
-    console.log("testing")
-  console.log("from lab")
-  console.log(courseList)
-    let list1 = []
-    // axios.get("https://core-graduation.herokuapp.com/getTables?idDep=60ddc9735b4d43f8eaaabf83")
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
-    
-        // .then(res => {
-        //   console.log(res)
-        //     console.log(res.data.response);
-            
-             
-             
-        //       },)
-            
+      
   },[])
   return (
     <div className={classes.mar}>
@@ -126,6 +119,34 @@ export default function App(Props) {
      <Button variant="contained" onClick={HandelSave} style={{margin:40,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>
            حفظ
        </Button>
+       {dia&&<div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 تم حفظ اوقات المختبرات بنجاح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
     </div>
   );
 }

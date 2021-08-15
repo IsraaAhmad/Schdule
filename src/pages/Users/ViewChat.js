@@ -13,7 +13,7 @@ import Chat from "../../pages/LogIn/Chat.js"
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Img from "./chating.png"
+import Img from "../Admin/chating.png"
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -96,9 +96,10 @@ export default function App(Props) {
       .then(res => {
         let w = res.data.response
         for(let kk = 0 ;kk<w.length;kk++){
-          if(w[kk].name == name) setHead(w[kk].id)
-          if(w[kk].name == doc.name) setDoctor(w[kk].id)
+          if(w[kk].name == name) setDoctor(w[kk].id)
+        //   if(w[kk].type == "head of department") setHead(w[kk].id)
         }
+        setHead("123")
         setView(false)
      
          },

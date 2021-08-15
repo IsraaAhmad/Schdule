@@ -94,6 +94,8 @@ export default function App(Props) {
   const [time2, setTime2] = React.useState('');
   const [break1, setBreak1] = React.useState('');
   const [break2, setBreak2] = React.useState('');
+ 
+  
   
 
 
@@ -102,11 +104,9 @@ export default function App(Props) {
   const [disabledTotal,setDisabledTotal] = React.useState(true);
   const [disabled1,setDisabled1] = React.useState(false);
   const [color, setColor] = React.useState({
-    checkedB: false,
+    checkedB: true,
   });
-  useEffect(()=>{
   
- },[])
 
   const handleChangeBox = (event) => {
     setColor({ ...color, [event.target.name]: event.target.checked });
@@ -124,7 +124,7 @@ export default function App(Props) {
     HandelOnChangeData(time1,time2,disabled1,break1,break2,event.target.value,group,disabledTotal)
   };
   const [state, setState] = React.useState({
-    checkedA: true,
+    checkedA: false,
   });
 
  
@@ -142,20 +142,14 @@ export default function App(Props) {
     setDuration(30)
     else if( dur === "3")
     setDuration(40)
-
-
+  
+  
     const gro = v1[4]
-    if( gro === "1")
-    setGroup(10)
-    else if( gro === "2")
-    setGroup(20)
-    else if( gro === "3")
-    setGroup(30)
-    else if( gro === "4")
-    setGroup(40)
+  
+    setGroup(gro)
+   
     setBreak1(w[1])
     setBreak2(w[0])
-    console.log("v[1] = " + v1[1])
     if(v1[5] ==="0"){
       setDisabledTotal(false)
       setState({ ...state, checkedA: false });
@@ -165,8 +159,7 @@ export default function App(Props) {
       setState({ ...state, checkedA: true });
     }
     if(v1[1] === "0"){
-      
-      // setColor(false)
+     
       setColor({ ...color, checkedB: false });
       setDisabled1(false)
     }
@@ -180,27 +173,30 @@ export default function App(Props) {
     setTime1(d[1])
     setTime2(d[0])
   
-    HandelOnChangeData(time1,time2,disabled1,break1,break2,duration,group, disabledTotal)
+   
     setFlag(true)
+    
+    
            
  },[])
 
- const HandelOnChangeData =(t1,t2,d1,b1,b2,duration,group,d2) =>{
-   console.log("test bla dddbla")
+ const HandelOnChangeData =(t1,t2,d1,b1,b2,duration1,group,d2) =>{
+ 
    let x="1"
    if(d1 === false)
    x = "0"
    let r = "1"
    if(d2 === false)
    r="0"
-  console.log("new data ")
+  
 
   let du 
-  if(duration === 10) du =1
-  if(duration === 20) du =1.5
-  if(duration === 30) du =2
-  if(duration === 40) du =3
-
+  if(duration == 10) du =1
+  if(duration == 20) du =1.5
+  if(duration == 30) du =2
+  if(duration == 40) du =3
+console.log("duration")
+console.log(duration)
 
   console.log(t2+"/"+t1+","+x+","+b2+"/"+b1+","+du+","+group +","+r)
    setData(t2+"/"+t1+","+x+","+b2+"/"+b1+","+du+","+group +","+r)
@@ -208,7 +204,6 @@ export default function App(Props) {
  }
  const HandelOnChangeBreak1 =(e) =>{
      setBreak1(e.target.value)
-     console.log("from break1")
     HandelOnChangeData(time1,time2,disabled1,e.target.value,break2,duration,group, disabledTotal)
    
   

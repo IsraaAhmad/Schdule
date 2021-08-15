@@ -142,7 +142,7 @@ export default function App(Props) {
    console.log("test bla dddbla")
   
    
-   let r = "0"
+   let r = "1"
    if(d2 === false)
    r="0"
   console.log("new data ")

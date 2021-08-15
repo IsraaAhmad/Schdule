@@ -9,23 +9,44 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from '@material-ui/core/TextField';
+import BeatLoader from "react-spinners/BeatLoader";
 import  { useEffect } from 'react';
 import axios from 'axios';
 import { useHistory ,useLocation } from 'react-router-dom';
 import TimerIcon from '@material-ui/icons/Timer';
+import { makeStyles } from "@material-ui/core/styles";
 
 
 
-
+const useStyles = makeStyles({
+  mar:{
+    margin:100,
+    width:1000,
+    
+  },
+  input: {
+    display: "none"
+  },
+  lod:{
+    marginRight:100,
+    marginTop:200,
+    width:800,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+  }
+});
 
 
 function TableR(props) {
-  const {name , DepId , year , sem} = props;
+  const {name , DepId , year , sem ,namme} = props;
   const [inst,setInst] = React.useState({})
   const [data, setData] = useState()
   const [newData, setNewData] = useState(false)
   const [totalDataRoom, setTotalDataRoom] = useState()
-
+  const [loading, setLoading] = React.useState(false);
   const [rooms,setRooms] = React.useState({})
   const [days,setDays] = React.useState({})
   
@@ -152,6 +173,7 @@ const room1 =() =>{
   
   
     setData(listdd)
+    setLoading(false)
   })
  
   }
@@ -232,8 +254,10 @@ const room1 =() =>{
   }
 
   useEffect(()=>{
+    setLoading(true)
     console.log("start of use effect")
     FilledData()
+    
       
  },[newData]) 
   
@@ -451,9 +475,17 @@ const room1 =() =>{
     axios.get(url).then(res => {},)
   }
 
-
+  const classes = useStyles();
   return (
     <div className="App">
+      {loading?
+         <div className={classes.lod}>
+         
+         <BeatLoader  loading={loading} color='#045F5F' size={30} margin ={3} /> 
+       </div>
+    
+    :
+    <div>
      <Button variant="contained" onClick={HandelOK}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
              اعتماد الجدول 
       </Button>
@@ -482,6 +514,7 @@ const room1 =() =>{
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            zIndex: '0'
             
             
 
@@ -547,6 +580,7 @@ const room1 =() =>{
        
         
       />
+      </div>}
        {dia1&&<div>
             <Dialog
             open={open1}

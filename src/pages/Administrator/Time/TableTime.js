@@ -14,7 +14,8 @@ import { useHistory ,useLocation } from 'react-router-dom';
 import DrawerAdminstrator from "../DrawerAdminstrator.js"
 const useStyles = makeStyles({
   tot:{
-    margin:120,
+    marginRight:120,
+    marginTop:50,
     width:1000
   }
 });
@@ -24,7 +25,7 @@ export default function App() {
   const  location  = useLocation();
   const {state} = location;
   return (
-    <div style={{height:1000}}className="back">
+    <div style={{height:1200}}className="back">
      <DrawerAdminstrator/>
     <div className={classes.tot}>
        <AllTime date={state.date} sem = {state.sem}/> 

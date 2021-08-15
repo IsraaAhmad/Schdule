@@ -38,8 +38,7 @@ const useStyles = makeStyles({
     
   },
   tit:{
-    marginTop:100,
-    marginRight:100,
+    margin:120,
 
     width:800,
   }
@@ -257,13 +256,13 @@ function TableR() {
         //     labelRowsSelect:"صفوف"
         // },
         body: {
-          emptyDataSourceMessage:"لا يوجد قاعات مضافه بعد",
+          emptyDataSourceMessage:"لا يوجد فصول مضافه بعد",
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
-          addTooltip:"اضافة قاعة جديدة",
+          addTooltip:"اضافة فصل جديدة",
           exportName:"csv حفظ",
           editRow:{
-            deleteText:"هل انت متأكد من حذف هذه القاعة",
+            deleteText:"هل انت متأكد من حذف هذه الفصل",
             cancelTooltip:"إلغاء",
             saveTooltip:"حفظ"
           },

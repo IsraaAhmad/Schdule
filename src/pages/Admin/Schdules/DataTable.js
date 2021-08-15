@@ -143,7 +143,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CSSGrid(Props) {
-  const {DepId} = Props;
+  const {DepId } = Props;
+  const namme = Props.name
   const classes = useStyles();
   const [year, setYear] = React.useState('');
   const [room, setRoom] = React.useState('');
@@ -220,7 +221,7 @@ export default function CSSGrid(Props) {
      history.push({
       pathname: './tableCreate',
       state: { name: name ,DepId:DepId,
-        index:3,year:date1,sem:value1
+        index:3,year:date1,sem:value1 ,namme:namme
       }
     })
   }

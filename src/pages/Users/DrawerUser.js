@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import ViewChat from "./ViewChat.js"
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -152,6 +153,7 @@ export default function PersistentDrawerRight(Props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const location  = useLocation();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [chat, setChat] = React.useState(false);
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -334,6 +336,16 @@ export default function PersistentDrawerRight(Props) {
         </List>
           </div>
       </Drawer>
+      {/* {chat&&<div style={{
+        position:'fixed',
+        top:75,left:10,height: 500,
+        width: 400,
+        backgroundColor:'white',
+        zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
+        }}>
+        <ViewChat DepId={DepId} name={InstName}/>
+        
+      </div>} */}
     </div>
           
   );

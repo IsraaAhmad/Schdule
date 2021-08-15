@@ -189,7 +189,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PersistentDrawerRight(Props) {
-  const {DepId} = Props
+  const {DepId , name} = Props
   const  history  = useHistory();
   const classes = useStyles();
   const theme = useTheme();
@@ -414,7 +414,7 @@ export default function PersistentDrawerRight(Props) {
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-          <div style={{fontFamily:'Markazi Text',fontSize:'28px'}}>رئيس القسم-سامر العرندي</div>
+          <div style={{fontFamily:'Markazi Text',fontSize:'24px'}}>رئيس القسم- {name}</div>
         </div>
         <Divider />
        
@@ -426,7 +426,7 @@ export default function PersistentDrawerRight(Props) {
             onClick={() => {
               history.push({
                 pathname:item.path,
-                state:{DepId:DepId}
+                state:{DepId:DepId , name:name}
               })
               
               
@@ -458,7 +458,7 @@ export default function PersistentDrawerRight(Props) {
         backgroundColor:'white',
         zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
         }}>
-        <ViewChat DepId={DepId}/>
+        <ViewChat DepId={DepId} name={name}/>
         
       </div>}
     </div>

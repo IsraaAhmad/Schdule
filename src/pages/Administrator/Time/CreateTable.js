@@ -12,7 +12,8 @@ import {
 import DrawerAdminstrator from "../DrawerAdminstrator.js"
 const useStyles = makeStyles({
   tot:{
-    margin:120,
+    marginRight:120,
+    marginTop:80,
     width:950
   }
 });

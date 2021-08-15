@@ -77,19 +77,28 @@ function TableR(Props) {
 const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.name
 let url = "https://core-graduation.herokuapp.com/deleteInsFromDep?idDep="+DepId+"&name="+id
-axios.get(url).then(res => {console.log(res)},)
+axios.get(url).then(res => {},)
 }
 
 const handelAddInDataBase = (newRow) =>{
   let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep="+DepId+"&name="
-  +newRow.name
-  axios.get(url).then(res => {console.log(res)},)
+  +newRow.name+"&email="+newRow.email+"&gender="+newRow.gender
+  axios.get(url).then(res => {},)
 }
 
   
 
   const columns = [
+    { title: "البريد الالكتروني",
+    field: "email",
+    cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+   },
     
+   { title: "الجنس ",
+    field: "gender",
+    lookup:{10:'ذكر',20:'انثى'},
+    cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+   },
     { title: "اسم المدرس",
      field: "name",
      initialEditValue: '###', validate: rowData => rowData.name? true : 'يجب ادخال اسم المدرس',
@@ -119,7 +128,6 @@ const convertToJson = (headers, data) => {
 }
 
 const importExcel = (e) => {
-  console.log("from import execl")
   const file = e.target.files[0]
 
   const reader = new FileReader()
@@ -134,7 +142,7 @@ const importExcel = (e) => {
     const workSheet = workBook.Sheets[workSheetName]
     //convert to array
     const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-    // console.log(fileData)7
+    
     const headers = fileData[0]
     
   
@@ -146,15 +154,10 @@ const importExcel = (e) => {
 
 
     // setData(convertToJson(headers, fileData))
-    console.log("data")
+    
     let listt = convertToJson(headers, fileData)
-    console.log(listt)
-  //   for (let k = 0;k<listt.length;k++){
-  //     let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&name="
-  // +listt[k].name
-  // axios.get(url).then(res => {console.log(res)},)
-
-  //   }
+  
+  
   }
 
   if (file) {
@@ -171,15 +174,17 @@ const importExcel = (e) => {
   useEffect(()=>{
     let listt = []
     setLoading(true)
+    console.log("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId);
     axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
   
      
     .then(res => {
-      console.log(res)
         console.log(res.data.response);
         let w = res.data.response;
         for(let k = 0 ;k<w.length;k++){
-          let teach = {name:w[k].name}
+          let gend = 10
+          if(w[k].gender == "انثى") gend=20
+          let teach = {name:w[k].name,email:w[k].email,gender:gend}
           listt[k] = teach
           
 
@@ -332,7 +337,8 @@ const importExcel = (e) => {
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
-            paddingRight:0
+            paddingRight:0,
+            zIndex: '0'
             
             
 

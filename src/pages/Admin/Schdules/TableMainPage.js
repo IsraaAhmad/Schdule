@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 });
 
 function TableR(Props) {
-  const  {DepId} = Props;
+  const  {DepId,name} = Props;
   const  history  = useHistory();
   const classes = useStyles();
   const [data, setData] = useState([])
@@ -136,14 +136,14 @@ const [loading, setLoading] = React.useState(false);
     if(row.flag === "2"){
       history.push({
         pathname: '/view',
-        state: { name: row.name, DepId:DepId ,year:row.date  ,sem:sem1}
+        state: { name: row.name, DepId:DepId ,year:row.date  ,sem:sem1 ,namme:name}
       })
     }
     if(row.flag === "3"){
       history.push({
         pathname: '/tableCreate',
         state: { name: row.name,DepId:DepId ,
-          index:3 ,year:row.date,sem:sem1
+          index:3 ,year:row.date,sem:sem1,namme:name
         }
       })
     }
@@ -289,11 +289,13 @@ const [loading, setLoading] = React.useState(false);
           headerStyle:{
             hover: {
               color: 'green',
+              
            },
             backgroundColor:'#37474f',
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            zIndex: '0'
             
            
             

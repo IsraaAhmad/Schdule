@@ -115,6 +115,7 @@ const handelUser = () =>{
  let url = "https://core-graduation.herokuapp.com/loginAuthorization?idUser="+userName+"&password="+password
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
     setLoading(true)
+    console.log(url)
   axios.get(url)
         .then(res => {
           console.log(res)

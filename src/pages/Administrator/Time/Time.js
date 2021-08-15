@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 export default function App() {
   const classes = useStyles();
   return (
-    <div style={{height:1000}}className="back">
+    <div style={{height:1100}}className="back">
      <DrawerAdminstrator/>
     <div className={classes.tot}>
        <MainPage/> 

@@ -42,8 +42,6 @@ function TableR(Props) {
   const {DepId,DepName} = Props
   const [data, setData] = useState()
   const [loading, setLoading] = React.useState(true);
-  const [dialog,setDialog] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
 
 
   useEffect(()=>{
@@ -212,6 +210,7 @@ axios.get(url).then(res => {console.log(res)},)
         actionsColumnIndex:0,
         addRowPosition:'first',
         headerStyle:{
+          zIndex: '0',
             backgroundColor:'#D4AC0D',
             color:'white',
             fontFamily: 'Markazi Text',

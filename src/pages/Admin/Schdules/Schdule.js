@@ -53,7 +53,7 @@ export default function App() {
   const HandelOnClick = () =>{
       history.push({
         pathname:'/create',
-        state:{DepId:state.DepId}
+        state:{DepId:state.DepId ,name:state.name}
       })
   }
  
@@ -61,7 +61,7 @@ export default function App() {
 
   return (
     <div style={{height:1000}} className="back">
-<DrawerAdmin DepId={state.DepId}/>
+<DrawerAdmin DepId={state.DepId} name={state.name}/>
     <div className = {classes.mar}>
         <div>
         <Button  variant="contained" className = {classes.create} onClick={HandelOnClick} size='large'>
@@ -70,7 +70,7 @@ export default function App() {
 
         </div>
         {/* <div className={classes.tit}>الجداول الدراسية</div> */}
-        <TableMainPage  DepId={state.DepId}/>
+        <TableMainPage  DepId={state.DepId} name={state.name}/>
     </div>
     </div>
   );

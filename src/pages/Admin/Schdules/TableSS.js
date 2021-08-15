@@ -511,6 +511,7 @@ function TableR(Props) {
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
+            zIndex: '0'
             
             
 

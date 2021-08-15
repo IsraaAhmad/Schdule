@@ -233,13 +233,11 @@ export default function CSSGrid() {
 
 
   const  history  = useHistory();
- 
-  
-  
-  const handelNext =  () =>{ 
-    let date1 
+ const f1=() =>{
+  return new Promise((Resolve,Reject)=>{
     let value1 = "2"
-
+    
+    let date1 
     switch(date){
       case "10":
         date1 ="2018/2019"
@@ -305,15 +303,69 @@ export default function CSSGrid() {
               
     axios.get("https://core-graduation.herokuapp.com/addTimes?semester="+value1+"&date="+date1+
     "&courseTimes="+arr1+"&labsTimes="+arr+"&startandend="+TotalDate)
-    .then(res => {console.log(res) },)
+    .then(res => {console.log(res)
+      Resolve() },)
+    })
+ }
+  
+  const f2=()=>{
+    let date1 
+    switch(date){
+      case "10":
+        date1 ="2018/2019"
+        break;
+      
+      case "20":
+        date1 ="2019/2020"
+        break;
 
-    
-     history.push({
+      case "30":
+        date1 ="2020/2021"
+        break;
+
+      case "40":
+        date1 ="2021/2022"
+        break;
+
+      case "50":
+        date1 ="2022/2023"
+        break;
+      
+      case "60":
+        date1 ="2023/2024"
+        break;
+
+      case "70":
+        date1 ="2024/2025"
+        break;
+      
+      case "80":
+        date1 ="2025/2026"
+        break;
+
+     
+        
+      default:
+        break;
+    }
+    let value1 = "2"
+    if (value === "s2"){
+      value1 = "1"
+    }
+    history.push({
       pathname: './tableTime',
       state: { sem: value1 ,date:date1,flagT :"New",duration:"test"
        
       }
     })
+  }
+  const handelNext =  async() =>{ 
+    await f1()
+     f2()
+   
+
+    
+  
   }
 
   const handleChangeRadio = (event) => {

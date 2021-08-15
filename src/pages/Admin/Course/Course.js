@@ -21,10 +21,10 @@ export default function App() {
   const {state} = location;
   return (
     <div style={{height:1000}} className="back">
-<DrawerAdmin  DepId={state.DepId}/>
+<DrawerAdmin  DepId={state.DepId} name={state.name}/>
    <diV className={classes.mar}>
 
-       <CourseList DepId={state.DepId}/>
+       <CourseList DepId={state.DepId} name={state.name}/>
    </diV>
     </div>
   );

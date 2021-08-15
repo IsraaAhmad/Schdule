@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TableMainPage from './TableMainPage.js'
 import Tea from './tea.png'
-import Chat from "../../LogIn/Chat.js"
 
 import PropTypes from 'prop-types';
 import {
@@ -80,11 +79,10 @@ export default function App() {
 
   return (
     <div style={{height:10000}} className="back">
-<DrawerAdmin DepId={state.DepId} />
+<DrawerAdmin DepId={state.DepId} name={state.name}/>
 
 <div className={classes.root} >
       <TableMainPage DepId={state.DepId}/>
-      <div className= {classes.chat}><Chat/></div>
       
      
  

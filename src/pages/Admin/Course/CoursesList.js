@@ -98,7 +98,7 @@ width:600,
 }));
 
 export default function SimpleAccordion(Props) {
-  const {DepId} = Props
+  const {DepId ,name} = Props
 
   const [data, setData] = useState([])
   const classes = useStyles();
@@ -125,7 +125,7 @@ export default function SimpleAccordion(Props) {
   const HandelAddCourse = ()=>{
          history.push({
           pathname:'/AddCourse',
-          state:{DepId:DepId}
+          state:{DepId:DepId ,name:name}
         })
          
   }
@@ -134,7 +134,7 @@ export default function SimpleAccordion(Props) {
     
     history.push({
       pathname:'/addCourseFromOtherDep',
-      state:{DepId:DepId}
+      state:{DepId:DepId,name:name}
     })
 }
 

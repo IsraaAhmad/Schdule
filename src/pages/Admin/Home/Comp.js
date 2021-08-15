@@ -33,14 +33,14 @@ name:{
 });
 
 export default function App(props) {
-  const {UrlImage , name , pathTo ,DepId} = props
+  const {UrlImage , title , pathTo ,DepId , name} = props
   const  history  = useHistory();
 
   const classes = useStyles();
   const handelOnClick=() =>{
     history.push({
       pathname:pathTo,
-      state:{DepId:DepId}
+      state:{DepId:DepId , name:name}
     })
   }
 
@@ -53,7 +53,7 @@ export default function App(props) {
           <div style={{marginTop:20}}> <img src={UrlImage} width="130" height="90" />  </div>
           <div  className={classes.name} >
                
-                    {name}
+                    {title}
                
           </div>
      </div>

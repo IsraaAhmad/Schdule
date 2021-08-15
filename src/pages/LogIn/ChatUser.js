@@ -88,7 +88,7 @@ const useStyles = makeStyles({
       sendMsg :{
         position: 'fixed',
         display: 'flex',
-        
+        width: '100%',
         bottom: 0,
         zIndex: 1,
         borderTop: '1px solid lightgray',
@@ -139,8 +139,8 @@ function App(Props) {
     console.log(d1)
        
     firebase.firestore().collection("messages").doc(group).collection(group).doc(d1).set({
-      senderId:headID,
-      anotherUserId:doctorID,
+      senderId:doctorID,
+      anotherUserId:headID,
       timestamp:d1,
       content:texting,
       type:'soso'
@@ -202,7 +202,7 @@ setTexting(event.target.value)
 
                     <div className={classes.msgs}>
                       
-                        <div  className={item.senderId !== headID ? classes.sent : classes.received}>
+                        <div  className={item.senderId !== doctorID ? classes.sent : classes.received}>
                             <img className={classes.im} src={photoURL} alt="" />
                             <p className={classes.pa}>{item.content}</p>
                         </div>

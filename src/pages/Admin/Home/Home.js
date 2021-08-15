@@ -32,10 +32,10 @@ export default function App() {
    <div  style={{height:1000}}className="back">
       <DrawerAdmin name={state.name} DepId={state.DepId} />
        <div className={classes.tot}>
-         <Comp UrlImage={S1} name="القاعات" pathTo="/Rooms" DepId={state.DepId} />
-         <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule" DepId={state.DepId}/>
-         <Comp UrlImage={course} name="المساقات" pathTo="/Course" DepId={state.DepId}/>
-         <Comp UrlImage={teacher} name="المدرسين" pathTo="/Teacher" DepId={state.DepId}/>
+         <Comp UrlImage={S1} title="القاعات" pathTo="/Rooms" DepId={state.DepId} name={state.name}/>
+         <Comp UrlImage={schdule} title="الجدول الدراسي" pathTo="/Schdule" DepId={state.DepId} name={state.name}/>
+         <Comp UrlImage={course} title="المساقات" pathTo="/Course" DepId={state.DepId} name={state.name}/>
+         <Comp UrlImage={teacher} title="المدرسين" pathTo="/Teacher" DepId={state.DepId} name={state.name}/>
 
 
 

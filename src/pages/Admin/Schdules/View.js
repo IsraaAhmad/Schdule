@@ -26,7 +26,7 @@ export default function App(props) {
   const classes = useStyles();
   return (
     <div style={{height:1000}} className="back">
-      <DrawerAdmin DepId={state.DepId}/>
+      <DrawerAdmin DepId={state.DepId} name={state.namme}/>
 
       <div className = {classes.root}>
    

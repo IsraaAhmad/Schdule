@@ -89,7 +89,7 @@ export default function App() {
 
   return (
     <div style={{height:1100}} className="back">
-<DrawerAdmin   DepId={state.DepId}/>
+<DrawerAdmin   DepId={state.DepId} name={state.name}/>
 
 <div className={classes.root} className="b1">
       <AppBar position="static" >

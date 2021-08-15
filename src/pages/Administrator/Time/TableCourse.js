@@ -7,13 +7,15 @@ import T from "./T.js"
 import  { useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
 import DrawerAdminstrator from "../DrawerAdminstrator.js"
 const useStyles = makeStyles({
   mar:{
@@ -56,40 +58,36 @@ export default function App(Props) {
   const [a3, setA3] = React.useState(arr[3]);
   const [a4, setA4] = React.useState(arr[4]);
   const [a5, setA5] = React.useState(arr[5]);
+  const [dia,setDia] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  
+  const handleClose = () => {
+    setOpen(false);
+    
+  };
 
 
 
   
 
   const HandelSave =() =>{
-  let ww = a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5
     
-    setCourseList(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
+  let ww = a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5
+    console.log("ww")
+    console.log(ww)
+    
     axios.get("https://core-graduation.herokuapp.com/editTimes?semester="+sem+"&date="+date+
     "&courseTimes="+ww+"&labsTimes="+labList+"&startandend=yet")
 
      .then(res => {console.log(res.data.response) },)
-    console.log("this is all data after change")
-    console.log(courseList)
-    console.log(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
+     setCourseList(a0+"*"+a1+"*"+a2+"*"+a3+"*"+a4+"*"+a5)
+     setOpen(true);
+    setDia(true)
+
   }
   useEffect(()=>{
-
-    setCourseList("put in from course List")
-    console.log("from course")
-    console.log(courseList)
-    let list1 = []
-    // axios.get("https://core-graduation.herokuapp.com/getTables?idDep=60ddc9735b4d43f8eaaabf83")
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
-    
-        // .then(res => {
-        //   console.log(res)
-        //     console.log(res.data.response);
-            
-             
-             
-        //       },)
-            
+         
   },[])
   return (
     <div>
@@ -130,6 +128,34 @@ export default function App(Props) {
      <Button variant="contained" onClick={HandelSave} style={{margin:40,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'30px'}} size='medium'>
            حفظ
        </Button>
+       {dia&&<div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 تم حفظ اوقات المختبرات بنجاح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
     </div>
     </div>
   );
