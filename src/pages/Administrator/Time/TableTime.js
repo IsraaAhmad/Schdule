@@ -26,7 +26,7 @@ export default function App() {
   const {state} = location;
   return (
     <div style={{height:1200}}className="back">
-     <DrawerAdminstrator/>
+     <DrawerAdminstrator name={state.name} DepId={state.DepId}/>
     <div className={classes.tot}>
        <AllTime date={state.date} sem = {state.sem}/> 
        {/* <Test/> */}

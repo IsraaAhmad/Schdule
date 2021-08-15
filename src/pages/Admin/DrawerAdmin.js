@@ -34,6 +34,7 @@ import Menu from '@material-ui/core/Menu';
 import { withRouter } from 'react-router-dom';
 import {AppstoreFilled } from '@ant-design/icons';
 import { useHistory ,useLocation } from 'react-router-dom';
+import ViewNotify from "./ViewNotify.js"
 import "./back.css"
 
 
@@ -195,6 +196,8 @@ export default function PersistentDrawerRight(Props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [chat, setChat] = React.useState(false);
+  const [notify, setNotify] = React.useState(false);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const location  = useLocation();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -270,9 +273,18 @@ export default function PersistentDrawerRight(Props) {
   ]
 
   const handelChat =()=> {
+    setNotify(false)
    setChat(!chat)
+   
+  
   
   }
+  const handelNotify =()=> {
+    setChat(false)
+    setNotify(!notify)
+    
+   
+   }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -296,22 +308,6 @@ export default function PersistentDrawerRight(Props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit" onClick={handelChat}>
-         
-            <MailIcon />
-         
-        </IconButton>
-        
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -321,8 +317,25 @@ export default function PersistentDrawerRight(Props) {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+     
       </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 4 new mails" color="inherit" onClick={handelChat}>
+         
+            <MailIcon />
+         
+        </IconButton>
+        
+      </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 11 new notifications" color="inherit" onClick={handelNotify}>
+          <Badge color="secondary">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      
     </Menu>
   );
  
@@ -345,20 +358,6 @@ export default function PersistentDrawerRight(Props) {
               
             </IconButton>
 
-
-            <IconButton aria-label="show 4 new mails" color="inherit" onClick={handelChat}>
-              <Badge  color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary" >
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-        
-
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -369,6 +368,22 @@ export default function PersistentDrawerRight(Props) {
             >
               <AccountCircle />
             </IconButton>
+
+
+            <IconButton style={!chat?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}} color="inherit" onClick={handelChat}>
+              <Badge  color="secondary">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            
+            <IconButton style={!notify?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}}  color="inherit" onClick={handelNotify}>
+              <Badge  color="secondary" >
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+        
+
+           
           </div>
           
                 
@@ -459,6 +474,16 @@ export default function PersistentDrawerRight(Props) {
         zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
         }}>
         <ViewChat DepId={DepId} name={name}/>
+        
+      </div>}
+      {notify&&<div style={{
+        position:'fixed',
+        top:75,left:10,height: 500,
+        width: 400,
+        backgroundColor:'white',
+        zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
+        }}>
+        <ViewNotify DepId={DepId} name={name}/>
         
       </div>}
     </div>

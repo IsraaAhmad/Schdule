@@ -112,9 +112,12 @@ const useStyles = makeStyles({
 
 
 function App(Props) {
-  const {otherName,headID,doctorID,setView} = Props
-  console.log("first")
-  console.log(otherName)
+  const {doctor,headID,doctorID,head} = Props
+  console.log("doctor = " + doctor )
+  console.log("headID = " + headID )
+  console.log("doctorID = " + doctorID )
+  console.log("head = " + head )
+
     const classes = useStyles();
   const [data, setData] = useState([])
   const [texting,setTexting] = useState("")
@@ -182,14 +185,12 @@ setTexting(event.target.value)
     <>
     <div style={{width:'100%',height:50,fontFamily: "Markazi Text",
                       fontSize: "30px",display:'flex',justifyContent:'center'}}>
-                         <div style={{display:'flex',marginRight:110}}>
-                           <Button onClick={()=>{setView(true)}}>
-                             <ArrowBackIosIcon/>
-                           </Button>
+                         <div style={{display:'flex',marginRight:40}}>
+                           
 
                          </div>
-                       <div style={{display:'flex',marginRight:150}}>
-                         {otherName.name}
+                       <div style={{display:'flex',marginRight:10}}>
+                        رئيس القسم :{head}
                          </div> 
                         </div>
     
@@ -202,7 +203,7 @@ setTexting(event.target.value)
 
                     <div className={classes.msgs}>
                       
-                        <div  className={item.senderId !== doctorID ? classes.sent : classes.received}>
+                        <div  className={item.senderId == doctorID ? classes.sent : classes.received}>
                             <img className={classes.im} src={photoURL} alt="" />
                             <p className={classes.pa}>{item.content}</p>
                         </div>

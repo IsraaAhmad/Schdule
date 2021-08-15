@@ -430,6 +430,10 @@ const room1 =() =>{
       setOpen2(true);
       setDia2(true)
   })
+const note = "الجدول الدراسي الخاص بدك لهذا الفصل جاهز وموجود في خانة جدولي"
+  axios.get("https://core-graduation.herokuapp.com/addNotification?idDep="+DepId+"&note="+note+
+  "&flag=1&time=0&hour=0")
+  .then(res => {console.log(res)})
 }
   const HandelTestConflict =()=>{
     setOpen3(true);

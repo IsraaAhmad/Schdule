@@ -207,6 +207,7 @@ axios.get(url).then(res => {console.log(res)},)
         actionsColumnIndex:0,
         addRowPosition:'first',
         headerStyle:{
+          zIndex: '0',
             backgroundColor:'#D4AC0D',
             color:'white',
             fontFamily: 'Markazi Text',

@@ -163,6 +163,14 @@ export default function PersistentDrawerRight(Props) {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  
+  const handelChat =()=> {
+  
+   setChat(!chat)
+   
+  
+  
+  }
   const menuItems = [
     {
       text:'الرئيسية',
@@ -232,14 +240,14 @@ export default function PersistentDrawerRight(Props) {
             </IconButton>
 
 
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton aria-label="show 4 new mails" color="inherit" onClick={handelChat}>
+              <Badge  color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
             
             <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary" >
+              <Badge color="secondary" >
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -297,7 +305,7 @@ export default function PersistentDrawerRight(Props) {
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-          <div style={{fontFamily:'Markazi Text',fontSize:'30px'}}>المدرس </div>
+          <div style={{fontFamily:'Markazi Text',fontSize:'30px'}}>المدرس:{InstName} </div>
         </div>
         <Divider />
        
@@ -336,7 +344,7 @@ export default function PersistentDrawerRight(Props) {
         </List>
           </div>
       </Drawer>
-      {/* {chat&&<div style={{
+      {chat&&<div style={{
         position:'fixed',
         top:75,left:10,height: 500,
         width: 400,
@@ -345,7 +353,7 @@ export default function PersistentDrawerRight(Props) {
         }}>
         <ViewChat DepId={DepId} name={InstName}/>
         
-      </div>} */}
+      </div>}
     </div>
           
   );

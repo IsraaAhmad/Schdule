@@ -183,7 +183,8 @@ backgroundColor:'white'
 }));
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY/MM/DD";
-export default function CSSGrid() {
+export default function CSSGrid(Props) {
+  const {name, DepId} = Props
    const customTheme = createTheme({
     overrides: {
       MuiPickersToolbar: {
@@ -307,8 +308,134 @@ export default function CSSGrid() {
       Resolve() },)
     })
  }
+
+ const f2=() =>{
+  return new Promise((Resolve,Reject)=>{
+    
+    
+    let date1 
+    switch(date){
+      case "10":
+        date1 ="2018/2019"
+        break;
+      
+      case "20":
+        date1 ="2019/2020"
+        break;
+
+      case "30":
+        date1 ="2020/2021"
+        break;
+
+      case "40":
+        date1 ="2021/2022"
+        break;
+
+      case "50":
+        date1 ="2022/2023"
+        break;
+      
+      case "60":
+        date1 ="2023/2024"
+        break;
+
+      case "70":
+        date1 ="2024/2025"
+        break;
+      
+      case "80":
+        date1 ="2025/2026"
+        break;
+
+     
+        
+      default:
+        break;
+    }
+    let value1 = "الثاني"
+    if (value === "s2"){
+      value1 = "الاول"
+    }
+    console.log("date:  "+ date1)
+    console.log("sem:   "+ value1)
+    const x1 = " تم اضافه الفصل "
+    const x2 = value1
+    const x3 = " من العام الدراسي "
+    const x4 = date1
+    const x5 = " , "
+    const x6 = "يرجى البدء بانشاء الجدول الدراسي "
+    const note = x1+x2+x3+x4+x5+x6
   
-  const f2=()=>{
+    axios.get("https://core-graduation.herokuapp.com/addNotification?idDep=0&note="+note+
+    "&flag=2&time=0&hour=0")
+    .then(res => {console.log(res)
+      Resolve() },)
+    })
+ }
+ const f3=() =>{
+  return new Promise((Resolve,Reject)=>{
+    
+    
+    let date1 
+    switch(date){
+      case "10":
+        date1 ="2018/2019"
+        break;
+      
+      case "20":
+        date1 ="2019/2020"
+        break;
+
+      case "30":
+        date1 ="2020/2021"
+        break;
+
+      case "40":
+        date1 ="2021/2022"
+        break;
+
+      case "50":
+        date1 ="2022/2023"
+        break;
+      
+      case "60":
+        date1 ="2023/2024"
+        break;
+
+      case "70":
+        date1 ="2024/2025"
+        break;
+      
+      case "80":
+        date1 ="2025/2026"
+        break;
+
+     
+        
+      default:
+        break;
+    }
+    let value1 = "الثاني"
+    if (value === "s2"){
+      value1 = "الاول"
+    }
+    console.log("date:  "+ date1)
+    console.log("sem:   "+ value1)
+    const x1 = " تم اضافه الفصل "
+    const x2 = value1
+    const x3 = " من العام الدراسي "
+    const x4 = date1
+    const x5 = " , "
+    const x6 = "يرجى اضافة مواعيد الدوام الخاصة بك"
+    const note = x1+x2+x3+x4+x5+x6
+  
+    axios.get("https://core-graduation.herokuapp.com/addNotification?idDep=0&note="+note+
+    "&flag=3&time=0&hour=0")
+    .then(res => {console.log(res)
+      Resolve() },)
+    })
+ }
+  const f4=()=>{
     let date1 
     switch(date){
       case "10":
@@ -354,14 +481,18 @@ export default function CSSGrid() {
     }
     history.push({
       pathname: './tableTime',
-      state: { sem: value1 ,date:date1,flagT :"New",duration:"test"
-       
+      state: { sem: value1 ,date:date1,flagT :"New",duration:"test",name:name,DepId:DepId
+      
       }
     })
   }
   const handelNext =  async() =>{ 
     await f1()
-     f2()
+
+    await f2()
+
+    await f3()
+    f4()
    
 
     

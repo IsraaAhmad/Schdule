@@ -212,6 +212,7 @@ function TableR(props) {
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
+            zIndex: '0',
             backgroundColor:'#37474f',
             color:'white',
             fontFamily: 'Markazi Text',

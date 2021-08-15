@@ -142,7 +142,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PersistentDrawerRight() {
+export default function PersistentDrawerRight(Props) {
+  const {DepId,name} = Props;
   const  history  = useHistory();
   const classes = useStyles();
   const theme = useTheme();
@@ -289,7 +290,7 @@ export default function PersistentDrawerRight() {
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-          <div style={{fontFamily:'Markazi Text',fontSize:'30px'}}>عميد الكلية</div>
+          <div style={{fontFamily:'Markazi Text',fontSize:'30px'}}>عميد الكلية:{name}</div>
         </div>
         <Divider />
        
@@ -299,7 +300,11 @@ export default function PersistentDrawerRight() {
             <ListItem button key={item.text}
             
             onClick={() => {
-              history.push(item.path);
+              history.push({
+                pathname:item.path,
+                state:{DepId:DepId , name:name}
+              })
+              
               setOpen(false)
             }}
             style={location.pathname == item.path?{backgroundColor: '#045F5F',width:'100%',height:'100%',marginBottom:'1px',color:'#045F5F'}:{backgroundColor: '#efefef',width:'100%',height:'100%',marginBottom:'1px'}}

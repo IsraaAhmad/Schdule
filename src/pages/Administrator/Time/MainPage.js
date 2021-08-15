@@ -44,7 +44,8 @@ const useStyles = makeStyles({
   }
 });
 
-function TableR() {
+function TableR(Props) {
+  const {name ,DepId} = Props
   const arr = ['2017/2018','2018/2019','2019/2020','2020/2021','2021/2022','2022/2023',
   '2023/2024','2024/2025','2025/2026','2026/2027']
   const  history  = useHistory();
@@ -103,7 +104,7 @@ function TableR() {
  sem=2
     history.push({
       pathname: './tableTime',
-      state: { sem:sem ,date:row.date,flagT :"New",duration:"test"
+      state: { sem:sem ,date:row.date,flagT :"New",duration:"test",name:name ,DepId:DepId
        
       }
     })
@@ -161,7 +162,13 @@ function TableR() {
  },[]) 
   const HandelAddSem =() =>{
       console.log("hi")
-      history.push('./createSemester')
+      history.push({
+        pathname: './createSemester',
+        state: {name:name ,DepId:DepId
+         
+        }
+      })
+      
       
   }
 

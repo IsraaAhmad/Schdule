@@ -68,16 +68,18 @@ const useStyles = makeStyles({
 
 export default function App() {
   const classes = useStyles();
+  const  location  = useLocation();
+  const {state} = location;
+  console.log("state")
+  console.log(state)
   const  history  = useHistory();
-  const HandelOnClick = () =>{
-      history.push('/create')
-  }
+  
   
 
 
   return (
         <div style={{height:1000}} className="back">
-          <DrawerAdminstrator/>
+          <DrawerAdminstrator name={state.InstName} DepId={state.DepId}/>
   <div className = {classes.mar}>
         <div className={classes.ent} onClick={() => {
           history.push({pathname: './Dep',state: { number: "610ac4a6c2196db2fe637823" ,}})}}>

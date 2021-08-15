@@ -150,6 +150,17 @@ const handelUser = () =>{
               })
 
             }
+            else if(dep.type === "head"){
+              
+              history.push({
+                pathname: './AdministratorHome',
+                state: { DepName: dep.depName ,
+                  DepId:dep.idDep,
+                  InstName:dep.name
+                }
+              })
+
+            }
 
 
           }

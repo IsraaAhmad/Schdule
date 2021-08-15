@@ -4,6 +4,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import TableTime from "./TableCourse.js";
 import Test from "./Test.js"
 import MainPage from "./MainPage";
+import { useHistory ,useLocation } from 'react-router-dom';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,12 +19,14 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
+  const  location  = useLocation();
+  const {state} = location;
   const classes = useStyles();
   return (
     <div style={{height:1100}}className="back">
-     <DrawerAdminstrator/>
+     <DrawerAdminstrator name={state.name} DepId={state.DepId}/>
     <div className={classes.tot}>
-       <MainPage/> 
+       <MainPage name={state.name} DepId={state.DepId}/> 
        {/* <Test/> */}
     </div>
     </div>
