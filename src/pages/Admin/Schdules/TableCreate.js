@@ -162,7 +162,7 @@ export default function ScrollableTabsButtonPrevent(props) {
         }, 
             )
       }
-  ,[value,child]) 
+  ,[value,child , setChild]) 
   return (
     <div>
 <DrawerAdmin DepId={DepId} name={state.namme}/>
@@ -189,24 +189,24 @@ export default function ScrollableTabsButtonPrevent(props) {
             indicator: classes.indicator
           }}
           >
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
-          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}} label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}}  label="  مواعيد المدرسين"  TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}}  label=" مواد الى قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}}  label="   مواد من قسم اخر" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
+          <Tab style={{fontFamily:'Markazi Text',fontSize:'30px'}}  label="مواد من القسم" TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
           
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+        <TimeForTeacher TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+     <ToDep TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+      <TableSS1 TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem}/>
+      <TableSS TableName = {state.name} savedData={savedData} setChild={setChild} child={child} DepId={DepId} year={year} sem={state.sem} name={state.namme}/>
       </TabPanel>
       
       <div className={classes.bot}>

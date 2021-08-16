@@ -358,12 +358,12 @@ export default function CSSGrid(Props) {
     }
     console.log("date:  "+ date1)
     console.log("sem:   "+ value1)
-    const x1 = " تم اضافه الفصل "
-    const x2 = value1
-    const x3 = " من العام الدراسي "
-    const x4 = date1
+    const x1 = "تم اضافه الفصل"
+    const x2 = " "+value1+" "
+    const x3 = "من العام الدراسي"
+    const x4 = " "+date1+" "
     const x5 = " , "
-    const x6 = "يرجى البدء بانشاء الجدول الدراسي "
+    const x6 = "يرجى البدء بانشاء الجدول الدراسي"
     const note = x1+x2+x3+x4+x5+x6
   
     axios.get("https://core-graduation.herokuapp.com/addNotification?idDep=0&note="+note+
@@ -421,10 +421,10 @@ export default function CSSGrid(Props) {
     }
     console.log("date:  "+ date1)
     console.log("sem:   "+ value1)
-    const x1 = " تم اضافه الفصل "
-    const x2 = value1
-    const x3 = " من العام الدراسي "
-    const x4 = date1
+    const x1 = "تم اضافه الفصل"
+    const x2 = " "+value1+" "
+    const x3 = "من العام الدراسي"
+    const x4 = " "+date1+" "
     const x5 = " , "
     const x6 = "يرجى اضافة مواعيد الدوام الخاصة بك"
     const note = x1+x2+x3+x4+x5+x6

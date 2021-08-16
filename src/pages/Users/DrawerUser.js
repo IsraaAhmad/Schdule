@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import ViewChat from "./ViewChat.js"
+import ViewNotify from "./ViewNotify.js"
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -153,6 +154,7 @@ export default function PersistentDrawerRight(Props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const location  = useLocation();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [notify, setNotify] = React.useState(false);
   const [chat, setChat] = React.useState(false);
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -165,12 +167,18 @@ export default function PersistentDrawerRight(Props) {
   };
   
   const handelChat =()=> {
-  
+    setNotify(false)
    setChat(!chat)
    
   
   
   }
+  const handelNotify =()=> {
+    setChat(false)
+    setNotify(!notify)
+    
+   
+   }
   const menuItems = [
     {
       text:'الرئيسية',
@@ -238,22 +246,7 @@ export default function PersistentDrawerRight(Props) {
                 <ArrowBackIosIcon />
               
             </IconButton>
-
-
-            <IconButton aria-label="show 4 new mails" color="inherit" onClick={handelChat}>
-              <Badge  color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge color="secondary" >
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-        
-
-        <IconButton 
+            <IconButton 
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -263,6 +256,22 @@ export default function PersistentDrawerRight(Props) {
               >
               <AccountCircle />
         </IconButton>
+
+
+            <IconButton style={!chat?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}} color="inherit" onClick={handelChat}>
+              <Badge  color="secondary">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            
+            <IconButton style={!notify?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}} color="inherit" onClick={handelNotify}>
+              <Badge color="secondary" >
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+        
+
+       
                 </div>
           <Typography variant="h6" noWrap className={classes.title}>
           
@@ -352,6 +361,16 @@ export default function PersistentDrawerRight(Props) {
         zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
         }}>
         <ViewChat DepId={DepId} name={InstName}/>
+        
+      </div>}
+      {notify&&<div style={{
+        position:'fixed',
+        top:75,left:10,height: 500,
+        width: 400,
+        backgroundColor:'white',
+        zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
+        }}>
+        <ViewNotify DepId={DepId} name={InstName}/>
         
       </div>}
     </div>

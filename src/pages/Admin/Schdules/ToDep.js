@@ -46,7 +46,6 @@ function TableR(Props) {
   let {TableName , savedData ,setChild,child , DepId ,year ,sem} = Props
   console.log("from top saved ="+ savedData)
   const [rooms,setRooms] = React.useState({})
-  const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
   const [loading, setLoading] = React.useState(false);
 
@@ -102,7 +101,7 @@ const classes = useStyles();
             mapRoom[x++] = {name:cor.name}
                ))
                setTimeout(() => {
-                setSavDate(savedData)
+                
                
               }, 2000)
          
@@ -244,9 +243,9 @@ const findInedx =(obj,da) =>{
      let listd=[]
      let x = 0 
      console.log("saved mat="+savedData)
-     console.log("saveData mat="+savDate)
+     console.log("saveData mat="+savedData)
      
-     savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="true")&(row.tableName===TableName )  ).map(cor => (
+     savedData.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="true")&(row.tableName===TableName )  ).map(cor => (
            listd[x++] = {room:cor.roomType,time:cor.timeSolt,teacher:cor.courseIns,course:cor.courseName}
 
     ))
@@ -321,7 +320,7 @@ const findInedx =(obj,da) =>{
     console.log("end use effect")
 
      
-},[ren]) 
+},[ren,savedData]) 
   const columns = [
 
     { title: "نوع القاعة",
@@ -525,7 +524,9 @@ const importExcel = (e) => {
       +nameTable+"&courseIns="+listt[k].teacher+"&courseName="+listt[k].course+
       "&flag=2&timeSlot="+time+"&roomType="+listt[k].room+"&date="+year
 
-  axios.get(url).then(res => {console.log(res)},)
+  axios.get(url).then(res => {
+    setChild((Math.random() ))
+  },)
   
 }
 setChild(!child)
@@ -668,7 +669,7 @@ console.log(url)
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على ثلاث عواميد بعنوان رقم القاعة ,اسم القاعة,الحرم الدراسي بالترتيب
+              يحتوي على ستة عواميد بعنوان اسم المساق ,اسم المدرس,من الساعة,الى الساعة,الايام ,ونوع القاعة بالترتيب
                 </div>
               </DialogContentText>
             </DialogContent>

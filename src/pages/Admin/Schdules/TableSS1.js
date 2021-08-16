@@ -15,6 +15,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import CommentIcon from '@material-ui/icons/Comment';
+import { useHistory ,useLocation } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
@@ -41,15 +42,14 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData ,setChild,child ,DepId ,year , sem} = Props
+  let {TableName , savedData ,setChild,child ,DepId ,year , sem , namme} = Props
 
  
-  const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = useState([])
   const [course,setCourse] = React.useState({})
- 
+  const  history  = useHistory();
 
   const [department,setDepartment] = React.useState({})
   const [days,setDays] = React.useState({})
@@ -74,7 +74,7 @@ function TableR(Props) {
     const headerName = ["course","FromTime","ToTime","days"]
   
 
-  const mapDays =[]
+  const mapDays =[{days:'احد ثلاثا'}]
   const mapCourse =[]
   const mapDepartment =[]
 
@@ -169,7 +169,7 @@ function TableR(Props) {
      let listd=[]
      let x = 0 
      
-     savDate.filter(row => (row.fromOtherDep ==="true")&(row.toOtherDep ==="false")&(row.tableName===TableName )  ).map(cor => (
+     savedData.filter(row => (row.fromOtherDep ==="true")&(row.toOtherDep ==="false")&(row.tableName===TableName )  ).map(cor => (
            listd[x++] = {time:cor.timeSolt,course:cor.courseName}
 
     ))
@@ -227,7 +227,7 @@ function TableR(Props) {
     FilledData()
 
      
-},[ren]) 
+},[ren,savedData]) 
   const columns = [
 
     { title: "الايام ",
@@ -364,6 +364,9 @@ const convertToJson = (headers, data) => {
   return rows
 }
 
+
+
+
 const importExcel = (e) => {
   const file = e.target.files[0]
 
@@ -408,11 +411,24 @@ const importExcel = (e) => {
       +nameTable+"&courseIns=0&courseName="+listt[k].course+
       "&flag=1&timeSlot="+time+"&roomType=0&date="+year
 
-  axios.get(url).then(res => {},)
+  axios.get(url).then(res => {
+  
+    setChild((Math.random() ))
+    
+    
+    
+   
+
+  
+    
+    
+  },)
+ 
+
+  
   
 }
-setChild(!child)
-setRen(!ren)
+
   }
 
   if (file) {
@@ -538,7 +554,7 @@ const classes = useStyles();
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على ثلاث عواميد بعنوان رقم القاعة ,اسم القاعة,الحرم الدراسي بالترتيب
+              يحتوي على اربع عواميد بعنوان اسم المساق ,من الساعة,الى الساعة,الايام بالترتيب
                 </div>
               </DialogContentText>
             </DialogContent>

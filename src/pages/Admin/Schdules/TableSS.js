@@ -40,9 +40,8 @@ const useStyles = makeStyles({
 
 
 function TableR(Props) {
-  let {TableName , savedData,setChild,child ,DepId , year} = Props
+  let {TableName , savedData,setChild,child ,DepId , year ,setExcelRender,execlRender} = Props
   console.log("from top saved ="+ savedData)
-  const [savDate,setSavDate] = React.useState(savedData)
   const [nameTable,setNameTable] = React.useState(TableName)
   const [loading, setLoading] = React.useState(false)
   const  history  = useHistory();
@@ -86,13 +85,11 @@ function TableR(Props) {
 
       axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+DepId)
   
-     
+      // data.filter(course => (course.flagTo === "false")).map(cor => (
       .then(res => {
-        // console.log(res)
-        //   console.log(res.data.response);
           let w = res.data.response;
           let x = 0
-          w.map(row =>(
+          w.filter(course => (course.flagTo === "false")&&(course.flagFrom === "false")).map(row =>(
            mapCourse[x++] = {name:row.name}
           ))
           Resolve()
@@ -115,7 +112,7 @@ function TableR(Props) {
             mapRoom[x++] = {name:cor.name}
                ))
                setTimeout(() => {
-                setSavDate(savedData)
+               
                
               }, 2000)
          
@@ -175,9 +172,9 @@ function TableR(Props) {
      let listd=[]
      let x = 0 
      console.log("saved mat="+savedData)
-     console.log("saveData mat="+savDate)
+     console.log("saveData mat="+savedData)
      
-     savDate.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="false")&(row.tableName===TableName ) ).map(cor => (
+     savedData.filter(row => (row.fromOtherDep ==="false")&(row.toOtherDep ==="false")&(row.tableName===TableName ) ).map(cor => (
            listd[x++] = {type:cor.roomType,teacher:cor.courseIns,course:cor.courseName}
 
     ))
@@ -275,7 +272,7 @@ function TableR(Props) {
     FilledData()
     console.log("end use effect")
        
-  },[ren]) 
+  },[ren,savedData]) 
   const columns = [
   
    
@@ -374,9 +371,10 @@ function TableR(Props) {
         +nameTable+"&courseIns="+listt[k].teacher+"&courseName="+listt[k].course+
         "&flag=0&timeSlot=0&roomType="+listt[k].type+"&date="+year
   
-    axios.get(url).then(res => {console.log(res)},)
-    setChild(!child)
-    setRen(!ren)
+    axios.get(url).then(res => {
+      setChild((Math.random() ))
+    },)
+   
   
       }
     }
@@ -466,7 +464,7 @@ function TableR(Props) {
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على ثلاث عواميد بعنوان رقم القاعة ,اسم القاعة,الحرم الدراسي بالترتيب
+              يحتوي على ثلاث عواميد بعنوان اسم المساق,اسم المدرس,نوع القاعة بالترتيب
                 </div>
               </DialogContentText>
             </DialogContent>

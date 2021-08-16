@@ -1,12 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import ViewChat from "./ViewChat.js"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -377,7 +372,7 @@ export default function PersistentDrawerRight(Props) {
             </IconButton>
             
             <IconButton style={!notify?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}}  color="inherit" onClick={handelNotify}>
-              <Badge  color="secondary" >
+              <Badge   badgeContent={<div style={{color:'red',fontSize:'35px'}}><FiberManualRecordIcon/></div>}>
                 <NotificationsIcon />
               </Badge>
             </IconButton>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
+import { MTableEditRow } from 'material-table';
 import './tabler.css';
 import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -41,6 +42,9 @@ const useStyles = makeStyles({
     justifyContent:'center',
     alignContent:'center',
     alignItems:'center'
+  },
+  tableRow:{
+    fontSize:'35px',
   }
 });
 
@@ -50,6 +54,7 @@ const useStyles = makeStyles({
 function TableR(Props) {
   const {DepId} = Props
   const [data, setData] = useState([])
+  const [ren,setRen] =  React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -136,6 +141,10 @@ const handelEditInDataBase =(rowUp) =>{
     field: "id",
     initialEditValue: '####', validate: rowData => rowData.id? true : 'يجب ادخال رقم القاعه',
     editable: 'onAdd',
+    options:{
+
+      actionsCellStyle:{fontSize:'35px'},
+    },
     cellStyle: {
         fontFamily: 'Markazi Text',
         fontSize:'25px',
@@ -193,7 +202,9 @@ const importExcel = (e) => {
       let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
   +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name=قاعة تدريس"
 
-  axios.get(url).then(res => {console.log(res)},)
+  axios.get(url).then(res => {
+    setRen((Math.random() ))
+  },)
 
     }
   }
@@ -244,7 +255,7 @@ const importExcel = (e) => {
             
             )
           
-  },[]) 
+  },[ren]) 
   
 
   const classes = useStyles();
@@ -265,6 +276,7 @@ const importExcel = (e) => {
         className = "table"
         title=""
         data={data}
+
         actions={[
           {
             icon: () => 
@@ -364,12 +376,17 @@ const importExcel = (e) => {
         
 
         columns={columns}
-        
-     
+        components={{
+          EditRow: props => <MTableEditRow {...props} className={classes.tableRow} />,
+        }}
+       
        
         options={{
+          
         
-
+          rowStyle:{
+            fontSize:'35px',
+          },
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
             fontSize:'25px',

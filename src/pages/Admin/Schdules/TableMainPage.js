@@ -312,13 +312,13 @@ const [loading, setLoading] = React.useState(false);
         //     labelRowsSelect:"صفوف"
         // },
         body: {
-          emptyDataSourceMessage:"لا يوجد قاعات مضافه بعد",
+          emptyDataSourceMessage:"لا يوجد جداول مضافه بعد",
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
           addTooltip:"اضافة قاعة جديدة",
           exportName:"csv حفظ",
           editRow:{
-            deleteText:"هل انت متأكد من حذف هذه القاعة",
+            deleteText:"هل انت متأكد من حذف هذا الجدول",
             cancelTooltip:"إلغاء",
             saveTooltip:"حفظ"
           },

@@ -178,6 +178,7 @@ export default function PersistentDrawerRight(Props) {
   const menuId = 'primary-search-account-menu';
   const handelLogOut =() =>{
     history.push("./")
+    
   }
   const renderMenu = (
     <Menu
@@ -203,7 +204,13 @@ export default function PersistentDrawerRight(Props) {
     setAnchorEl(event.currentTarget);
   };
   const HandelPreviwes = () =>{
-    history.goBack();
+    history.goBack({state:{DepId:DepId}});
+    let x = window.history
+    console.log(x)
+    // history.push(
+    //   {pathname:history.goBack(),
+    //   state: { name:name,DepId:DepId}})
+    
   }
   return (
     
@@ -226,7 +233,7 @@ export default function PersistentDrawerRight(Props) {
 
 
             <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={""} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>

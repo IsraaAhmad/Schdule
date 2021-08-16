@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
+import { MTableEditRow,MTableEditField } from 'material-table';
 import './tabler.css';
+import { createTheme } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
 import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
@@ -16,6 +20,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import CommentIcon from '@material-ui/icons/Comment';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 const useStyles = makeStyles({
   mar:{
@@ -35,6 +40,16 @@ const useStyles = makeStyles({
     justifyContent:'center',
     alignContent:'center',
     alignItems:'center'
+  },
+  tableRow:{
+    '& td': {
+      fontSize: '30px',
+    },
+    // backgroundColor:'red',
+    // inputProps:{
+    //   fontSize:'30px'
+    // }
+    
   }
 });
 
@@ -44,9 +59,10 @@ const useStyles = makeStyles({
 function TableR(Props) {
   const {DepId} = Props
   const [data, setData] = useState([])
+  const [ren,setRen] = React.useState(0)
   const [loading, setLoading] = React.useState(false);
   const EXTENSIONS = ['xlsx', 'xls', 'csv']
-  const headerName = ["id","type","location","name"]
+  const headerName = ["id","name","type","location"]
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
  
@@ -109,25 +125,72 @@ const handelEditInDataBase =(rowUp) =>{
      field: "location",
      lookup:{10:'الحرم الجديد',20:'الحرم القديم'},
      initialEditValue: 10, validate: rowData => rowData.location? true : 'يجب ادخال مكان القاعة',
-     cellStyle: {fontSize:'25px',}, 
+     cellStyle: {fontSize:'25px'}, 
+   
+    
     },
    
 
     { title: "نوع القاعة",
     field: "type" ,
+    
     initialEditValue: 20, validate: rowData => rowData.type? true : 'يجب ادخال نوع القاعه',
     lookup: {10:'قاعة تدريس', 20:'مختبر' },
+  
     editable:'never',
-    cellStyle: {fontSize:'25px',},
+    inputProps:{
+      fontSize:'35px'
+    },
+    cellStyle: {fontSize:'25px',width:200},
               
     },
     { title: "اسم القاعة",
     field: "name",
     initialEditValue: '####', validate: rowData => rowData.name? true : 'يجب ادخال اسم القاعه',
     editable: 'onAdd',
+    
+    inputProps:{
+      fontSize:'35px'
+    },
+    editComponent: (props) => 
+     
+
+    <TextField
+ 
+   value={props.value}
+   inputProps={{min: 0, style: { textAlign: 'right',
+    fontFamily:'Markazi Text',
+    fontSize:'25px', }}}
+   
+    onChange={(e) =>props.onChange(e.target.value)}
+    />
+     ,
+  //   render:(rowData) => 
+     
+  //   <TextField
+  //   inputProps={{min: 0, style: { textAlign: 'right',
+  //   fontFamily:'Markazi Text',
+  //   fontSize:'25px', }}}
+  
+  //  value={rowData.FromTime}
+  //  InputLabelProps={{
+  //    shrink: true,
+  //   }}
+   
+  //   />,
+     
+
+    // <TextField 
+    // inputProps={{min: 0, style: { textAlign: 'right',
+    // fontFamily:'Markazi Text',
+    // fontSize:'25px', }}}
+    // id="number"
+    // label=" "
+    // required='true'
+    // />,
     cellStyle: {
         fontFamily: 'Markazi Text',
-        fontSize:'25px',
+        fontSize:25,
         
        },
     },
@@ -201,7 +264,9 @@ const handelEditInDataBase =(rowUp) =>{
         let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
     +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name="+listt[k].name
   
-    axios.get(url).then(res => {})
+    axios.get(url).then(res => {
+      setRen((Math.random() ))
+    })
   
       }
     }
@@ -249,13 +314,15 @@ const handelEditInDataBase =(rowUp) =>{
                
           },)
           
-  },[]) 
+  },[ren]) 
   
 
   const classes = useStyles();
   return (
     
     <div className="App">
+   
+
         {loading?
          <div className={classes.lod}>
          
@@ -268,32 +335,35 @@ const handelEditInDataBase =(rowUp) =>{
     
     
     
-      <MaterialTable
-        className = "table"
-        title=""
-        data={data}
-        icons={{
-          Delete: props =>
-          <div style={{marginLeft:20}}>
+    <MaterialTable
+    className = "table"
+    title=""
+    data={data}
+    icons={{
+      Delete: props =>
+      <div style={{marginLeft:20}}>
              <DeleteIcon {...props} style={{color:'#963333'}} />
              </div>,
           Edit: props =>
-            
-              <div style={{marginLeft:20}}>
+          
+          <div style={{marginLeft:20}}>
 
             <EditIcon {...props} style={{color:'#045F5F'}} />
               </div>
            
-      }}
-      
-        
-
-        columns={columns}
-
-        actions={[
-          {
-            icon: () => 
-            <div>
+          }}
+          
+          
+          
+          columns={columns}
+          components={{
+            EditField: props => <MTableEditField {...props} className={classes.tableRow} />,
+            AddRow:props => <MTableEditRow {...props} className={classes.tableRow} />
+          }}
+          actions={[
+            {
+              icon: () => 
+              <div>
             {dialog?
               <div >
            <input
@@ -302,14 +372,14 @@ const handelEditInDataBase =(rowUp) =>{
         type="file"
         onChange={importExcel}
         
-      />
+        />
       <label htmlFor="icon-button-file">
         <IconButton
           color="primary"
           aria-label="upload picture"
           component="span"
           
-        >
+          >
           <CloudUploadIcon  style={{color:'#808880'}}/>
         </IconButton>
       </label>
@@ -323,7 +393,7 @@ const handelEditInDataBase =(rowUp) =>{
           aria-label="upload picture"
           component="span"
           onClick={handleClickOpen}
-        >
+          >
           <CommentIcon  style={{color:'#808880'}}/>
         </IconButton>
           
@@ -334,7 +404,7 @@ const handelEditInDataBase =(rowUp) =>{
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             dir='rtl'
-          >
+            >
             <DialogTitle id="alert-dialog-title" >
               <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',}}>
               طريقة ادراج الملف
@@ -348,7 +418,7 @@ const handelEditInDataBase =(rowUp) =>{
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على اربع عواميد بعنوان رقم القاعة ,نوع القاعة,الحرم الدراسي واسم القاعة بالترتيب
+              يحتوي على اربع عواميد بعنوان رقم القاعة ,اسم القاعة,نوع القاعة ,الحرم  بالترتيب
                 </div>
               </DialogContentText>
             </DialogContent>
@@ -363,33 +433,36 @@ const handelEditInDataBase =(rowUp) =>{
           </Dialog>
           </div>
           
-          }
+        }
           </div>
            
-          ,
-            tooltip: "استيراد من ملف",
-            isFreeAction: true,
-          
+           ,
+           tooltip: "استيراد من ملف",
+           isFreeAction: true,
+           
           }
         ]}
-       
-        options={{
         
-
+        options={{
+          rowStyle: {
+            fontSize: 34,
+          },
+          
+          
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
             fontSize:'25px',
             display:'flex',
             flexDirection:'row-reverse',
-          
             
             
-
+            
+            
             
           },
           paging:false,
-       
-         
+          
+          
           exportButton: true,
           actionsColumnIndex:0,
           addRowPosition:'first',
@@ -402,43 +475,45 @@ const handelEditInDataBase =(rowUp) =>{
             zIndex: '0'
             
             
-
+            
           }
-
+          
         }}
         localization={{
           header: {
-              actions: <div  style={{display:'flex',flexDirection:'row'}}>
+            actions: <div  style={{display:'flex',flexDirection:'row'}}>
                 <div style={{marginLeft:20}}>تعديل</div>
                 <div style={{marginLeft:20}}>حذف</div>
                 </div>,
           },
-        body: {
-          emptyDataSourceMessage:"لا يوجد قاعات  ",
-          deleteTooltip:"حذف",
-          editTooltip:"تعديل",
-          addTooltip:"اضافة قاعة جديدة",
-          
-          editRow:{
-            deleteText:"هل انت متأكد من حذف هذه القاعة",
-            cancelTooltip:"إلغاء",
-            saveTooltip:"حفظ"
+          body: {
+            emptyDataSourceMessage:"لا يوجد قاعات  ",
+            deleteTooltip:"حذف",
+            editTooltip:"تعديل",
+            addTooltip:"اضافة قاعة جديدة",
+            
+            editRow:{
+              deleteText:"هل انت متأكد من حذف هذه القاعة",
+              cancelTooltip:"إلغاء",
+              saveTooltip:"حفظ"
+            },
+            
           },
-         
-      },
-      toolbar:{
-        searchTooltip:"بحث",
-        searchPlaceholder:"بحث",
-        exportTitle:'تصدير',
-        exportCSVName: " Excelتصدير ملف ",
-        exportPDFName:  " PDF ملف ",
-      }
+          toolbar:{
+            searchTooltip:"بحث",
+            searchPlaceholder:"بحث",
+            exportTitle:'تصدير',
+            exportCSVName: " Excelتصدير ملف ",
+            exportPDFName:  " PDF ملف ",
+          }
       }}
+     
+      
+      editable={{
         
-        editable={{
-          
-          
-
+        
+        
+        
           onRowAdd: (newRow) => new Promise((resolve, reject) => {
             
             // const updatedRows = [...data, { id: Math.floor(Math.random() * 100), ...newRow }]
@@ -464,18 +539,18 @@ const handelEditInDataBase =(rowUp) =>{
             const updatedRows=[...data]
             updatedRows[index]=updatedRow
             handelEditInDataBase(updatedRow)
-    
-
+            
+            
             setTimeout(() => {
               setData(updatedRows)
               resolve()
             }, 2000)
           })
-
+          
         }}
-       
         
-      />}
+        
+        />}
     </div>
   );
 }

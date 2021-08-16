@@ -84,6 +84,8 @@ const Emplist=[
 ]
 export default function App(Props) {
     const {DepId , name} = Props;
+console.log(name)
+console.log("name")
 
   const classes = useStyles();
   const [flag,setFlag] = React.useState(false);
