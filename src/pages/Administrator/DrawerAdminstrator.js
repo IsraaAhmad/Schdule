@@ -204,9 +204,9 @@ export default function PersistentDrawerRight(Props) {
     setAnchorEl(event.currentTarget);
   };
   const HandelPreviwes = () =>{
-    history.goBack({state:{DepId:DepId}});
-    let x = window.history
-    console.log(x)
+    history.goBack();
+    // let x = window.history
+    // console.log(x)
     // history.push(
     //   {pathname:history.goBack(),
     //   state: { name:name,DepId:DepId}})

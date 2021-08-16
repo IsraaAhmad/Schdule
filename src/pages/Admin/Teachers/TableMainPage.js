@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
+import TextField from '@material-ui/core/TextField';
 import { css } from "@emotion/react";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
@@ -19,6 +20,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import CommentIcon from '@material-ui/icons/Comment';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 
@@ -92,6 +94,19 @@ const handelAddInDataBase = (newRow) =>{
     { title: "البريد الالكتروني",
     field: "email",
     cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+    editComponent: (props) => 
+     
+
+    <TextField
+ 
+   value={props.value}
+   inputProps={{min: 0, style: { textAlign: 'right',
+    fontFamily:'Markazi Text',
+    fontSize:'25px', }}}
+   
+    onChange={(e) =>props.onChange(e.target.value)}
+    />
+     ,
    },
     
    { title: "الجنس ",
@@ -103,6 +118,19 @@ const handelAddInDataBase = (newRow) =>{
      field: "name",
      initialEditValue: '###', validate: rowData => rowData.name? true : 'يجب ادخال اسم المدرس',
      cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+     editComponent: (props) => 
+     
+
+     <TextField
+  
+    value={props.value}
+    inputProps={{min: 0, style: { textAlign: 'right',
+     fontFamily:'Markazi Text',
+     fontSize:'25px', }}}
+    
+     onChange={(e) =>props.onChange(e.target.value)}
+     />
+      ,
     },
    
 
@@ -174,7 +202,7 @@ const importExcel = (e) => {
   useEffect(()=>{
     let listt = []
     setLoading(true)
-    console.log("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId);
+   
     axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
   
      
@@ -300,7 +328,7 @@ const importExcel = (e) => {
         icons={{
           Delete: props =>
           <div style={{marginLeft:20}}>
-             <DeleteIcon {...props} style={{color:'#963333'}} />
+             <DeleteOutlineIcon {...props} style={{color:'#963333'}} />
              </div>,
         
         

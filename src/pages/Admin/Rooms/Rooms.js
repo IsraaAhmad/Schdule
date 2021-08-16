@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TableR from "./TableR.js";
-
+import "./b1.css"
 
 
 import PropTypes from 'prop-types';
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '1000',
-    height:1000,
+    
     margin:100,
     backgroundColor: theme.palette.background.paper,
   },
@@ -88,7 +88,7 @@ export default function App() {
 
 
   return (
-    <div style={{height:1100}} className="back">
+    <div >
 <DrawerAdmin   DepId={state.DepId} name={state.name}/>
 
 <div className={classes.root} className="b1">

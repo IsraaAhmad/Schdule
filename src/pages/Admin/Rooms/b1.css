@@ -8,11 +8,3 @@
     width: 1000px;
     /* background-color: chartreuse; */
 }
-.tra{
-    border-style: solid;
-border-color: transparent transparent #D4AC0D transparent;
-border-width: 0 20px 35px 20px;
-display: inline-block;
-height: 0;
-width: 0;
-}

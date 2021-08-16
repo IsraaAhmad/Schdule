@@ -4,6 +4,7 @@ import { MTableEditRow } from 'material-table';
 import './tabler.css';
 import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,6 +18,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import CommentIcon from '@material-ui/icons/Comment';
+import TextField from '@material-ui/core/TextField';
 
 
 
@@ -141,6 +143,19 @@ const handelEditInDataBase =(rowUp) =>{
     field: "id",
     initialEditValue: '####', validate: rowData => rowData.id? true : 'يجب ادخال رقم القاعه',
     editable: 'onAdd',
+    editComponent: (props) => 
+     
+
+    <TextField
+ 
+   value={props.value}
+   inputProps={{min: 0, style: { textAlign: 'right',
+    fontFamily:'Markazi Text',
+    fontSize:'25px', }}}
+   
+    onChange={(e) =>props.onChange(e.target.value)}
+    />
+     ,
     options:{
 
       actionsCellStyle:{fontSize:'35px'},
@@ -362,7 +377,7 @@ const importExcel = (e) => {
         icons={{
           Delete: props =>
           <div style={{marginLeft:20}}>
-             <DeleteIcon {...props} style={{color:'#963333'}} />
+             <DeleteOutlineIcon {...props} style={{color:'#963333'}} />
              </div>,
           Edit: props =>
             

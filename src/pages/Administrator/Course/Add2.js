@@ -131,9 +131,9 @@ export default function CSSGrid(Props) {
   const [done , setDone] = React.useState(false);
   const [sections , setSections] = React.useState();
   const [sec,SetSec] = React.useState();
+  const  history  = useHistory();
   const [dia,setDia] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const  history  = useHistory();
 
   
   const handleClose = () => {

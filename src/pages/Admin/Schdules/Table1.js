@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useHistory ,useLocation } from 'react-router-dom';
 import TimerIcon from '@material-ui/icons/Timer';
 import { makeStyles } from "@material-ui/core/styles";
-
+import './b1.css'
 
 
 const useStyles = makeStyles({
@@ -271,8 +271,8 @@ const room1 =() =>{
      else{
      return <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
 
-     <div style={{width:35,height:35,backgroundColor:'red',}}>
-     <div style={{fontSize:'22px',color:'white',display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}}>{row.classConflict +1}</div>
+     <div style={{width:35,height:35,}} className="tra">
+     <div style={{fontSize:'25px',color:'white',display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center',marginTop:5}}>{row.classConflict +1}</div>
     
      </div>
     </div>
@@ -283,20 +283,20 @@ const room1 =() =>{
 }
 
   const columns = [
-    { title: "المدرس",
+    { title: "اسم المدرس",
     field: "teacher" ,
     lookup:inst,
     cellStyle: {fontSize:'20px',},
               
     },
-    { title: "القاعة",
+    { title: "رقم القاعة",
     field: "room" ,  
     lookup:rooms,
     cellStyle: {fontSize:'20px',},
               
     },
      
-    { title: "الى الساعة",
+    { title: "انتهاء المحاضرة",
     field: "ToTime" ,
     editComponent: (props) => 
      
@@ -335,7 +335,7 @@ const room1 =() =>{
             },
   },
     
-    { title: "من الساعة",
+    { title: "بدء المحاضره",
     field: "FromTime" ,
     editComponent: (props) => 
      
@@ -381,7 +381,7 @@ const room1 =() =>{
               },
               
     },
-    { title: "الايام",
+    { title: "ايام الدوام",
     field: "day" ,
     lookup:days,
    
@@ -499,7 +499,7 @@ const note = "الجدول الدراسي الخاص بدك لهذا الفصل 
       <MaterialTable
         className = "table"
         title={<span  style={{fontFamily: 'Markazi Text',
-        fontSize:'25px',}}>اسم الجدول المعروض:{name}</span>}
+        fontSize:'25px',marginLeft:35}}>اسم الجدول المعروض : {name}</span>}
         data={data}
        
         columns={columns}

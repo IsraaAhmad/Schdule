@@ -94,8 +94,8 @@ export default function App(Props) {
     {/* <DrawerAdminstrator/> */}
     <div className={classes.mar}>
      <div className={classes.title}>
-         <div>تفعيل/تعطيل</div>
-         <div>المجموعة</div>
+         <div>تفعيل</div>
+         <div style={{marginLeft:40}}>المجموعة</div>
 
 
          <div> مدة المحاضرة</div>
@@ -106,9 +106,12 @@ export default function App(Props) {
           
          </div>
          {/* <div>تفعيل</div> */}
-         <div style={{marginRight:35}}>
-         الدوام من الساعة - 
-           الدوام الى الساعة 
+         <div style={{marginRight:35 , display:'flex',flexDirection:'row'}}>
+           <div>انتهاء الدوام</div>
+           <div style={{marginRight:15,marginLeft:15}}>ــــ</div>
+           <div>بدء الدوام</div>
+              
+             
          
           </div>
          <div>اليوم</div>

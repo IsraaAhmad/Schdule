@@ -5,7 +5,7 @@ import  { useEffect, useState,useRef  } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory} from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import photoURL from "./prof.png"
+import photoURL from "./female.png"
 import { Input, Button } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send';
 import { css } from '@emotion/css';
@@ -22,11 +22,13 @@ const ROOT_CSS = css({
 const useStyles = makeStyles({
     im:{
         borderRadius: '50%',
-        height: '35px',
-        marginTop:'-10px',
-        marginLeft:10,
+        height: '43px',
+        width:'43px',
+        marginTop:'-5px',
+        marginLeft:17,
         marginRight:10,
-        border: '2px solid black',
+        backgroundColor:'white',
+        border: '2px solid white',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
@@ -182,15 +184,20 @@ setTexting(event.target.value)
     <>
     <div style={{width:'100%',height:50,fontFamily: "Markazi Text",
                       fontSize: "30px",display:'flex',justifyContent:'center'}}>
-                         <div style={{display:'flex',marginRight:110}}>
+                         <div style={{display:'flex',marginRight:25}}>
                            <Button onClick={()=>{setView(true)}}>
                              <ArrowBackIosIcon/>
                            </Button>
 
                          </div>
-                       <div style={{display:'flex',marginRight:150}}>
+                         <div style={{display:'flex',flexDirection:'row',marginRight:140}}>
+
+                         <div><img className={classes.im} src={photoURL} alt="" /> </div>
+                       <div style={{display:'flex'}}>
                          {otherName.name}
+
                          </div> 
+                         </div>
                         </div>
     
    
@@ -203,7 +210,7 @@ setTexting(event.target.value)
                     <div className={classes.msgs}>
                       
                         <div  className={item.senderId !== headID ? classes.sent : classes.received}>
-                            <img className={classes.im} src={photoURL} alt="" />
+                            {/* <img className={classes.im} src={photoURL} alt="" /> */}
                             <p className={classes.pa}>{item.content}</p>
                         </div>
                     </div>

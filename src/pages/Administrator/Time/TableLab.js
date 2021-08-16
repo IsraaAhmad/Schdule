@@ -97,9 +97,12 @@ export default function App(Props) {
          <div>تفعيل/تعطيل</div>
          
          
-         <div style={{marginRight:35}}>
-         الدوام من الساعة - 
-           الدوام الى الساعة 
+         <div style={{marginRight:35 , display:'flex',flexDirection:'row'}}>
+           <div>انتهاء الدوام</div>
+           <div style={{marginRight:15,marginLeft:15}}>ــــ</div>
+           <div>بدء الدوام</div>
+              
+             
          
           </div>
          <div>اليوم</div>

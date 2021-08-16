@@ -532,7 +532,7 @@ export default function CSSGrid(Props) {
    
   
     <div style={{display:'flex',flexDirection:'row',margin:15}}>
-            <div style={{marginLeft:150,marginRight:20}} >
+            <div style={{marginLeft:110,marginRight:20}} >
                 <Button variant="contained" style={{backgroundColor:'#37474f'}} onClick={handelCancel}>
                 <CancelIcon style={{color:'white'}}/>
                    <div style = {{textAlign: 'right',fontFamily:'Markazi Text',fontSize:'20px', marginLeft:4,color:'white'}}>

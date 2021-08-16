@@ -12,6 +12,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import BeatLoader from "react-spinners/BeatLoader";
 import axios from 'axios';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 
@@ -243,7 +244,7 @@ const [loading, setLoading] = React.useState(false);
         icons={{
           Delete: props =>
           <div style={{marginLeft:20}}>
-             <DeleteIcon {...props} style={{color:'#963333'}} />
+             <DeleteOutlineIcon {...props} style={{color:'#963333'}} />
              </div>,
           Edit: props =>
             

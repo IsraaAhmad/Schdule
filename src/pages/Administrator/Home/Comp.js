@@ -49,7 +49,7 @@ export default function App(props) {
 
   const classes = useStyles();
   const handelOnClick=() =>{
-    history.push(pathTo)
+    // history.push(pathTo)
     history.push({pathname:pathTo,state: { DepId: DepId }})
   }
 
@@ -59,7 +59,7 @@ export default function App(props) {
    
    <Button onClick={handelOnClick}>
      <div className={classes.mar}>
-          <div style={{marginTop:20}}> <img src={UrlImage} width="130" height="90" />  </div>
+          <div style={{marginTop:20}}> <img src={UrlImage} alt="" width="130" height="90" />  </div>
           <div  className={classes.name} >
                
                     {name}

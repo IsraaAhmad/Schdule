@@ -10,6 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import XLSX from 'xlsx';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from "@material-ui/core/IconButton";
@@ -147,7 +148,7 @@ const handelEditInDataBase =(rowUp) =>{
     { title: "اسم القاعة",
     field: "name",
     initialEditValue: '####', validate: rowData => rowData.name? true : 'يجب ادخال اسم القاعه',
-    editable: 'onAdd',
+    // editable: 'onAdd',
     
     inputProps:{
       fontSize:'35px'
@@ -165,29 +166,7 @@ const handelEditInDataBase =(rowUp) =>{
     onChange={(e) =>props.onChange(e.target.value)}
     />
      ,
-  //   render:(rowData) => 
-     
-  //   <TextField
-  //   inputProps={{min: 0, style: { textAlign: 'right',
-  //   fontFamily:'Markazi Text',
-  //   fontSize:'25px', }}}
-  
-  //  value={rowData.FromTime}
-  //  InputLabelProps={{
-  //    shrink: true,
-  //   }}
-   
-  //   />,
-     
-
-    // <TextField 
-    // inputProps={{min: 0, style: { textAlign: 'right',
-    // fontFamily:'Markazi Text',
-    // fontSize:'25px', }}}
-    // id="number"
-    // label=" "
-    // required='true'
-    // />,
+ 
     cellStyle: {
         fontFamily: 'Markazi Text',
         fontSize:25,
@@ -203,6 +182,19 @@ const handelEditInDataBase =(rowUp) =>{
         fontSize:'25px',
         
        },
+       editComponent: (props) => 
+     
+
+       <TextField
+    
+      value={props.value}
+      inputProps={{min: 0, style: { textAlign: 'right',
+       fontFamily:'Markazi Text',
+       fontSize:'25px', }}}
+      
+       onChange={(e) =>props.onChange(e.target.value)}
+       />
+        ,
     },
 
 
@@ -342,7 +334,7 @@ const handelEditInDataBase =(rowUp) =>{
     icons={{
       Delete: props =>
       <div style={{marginLeft:20}}>
-             <DeleteIcon {...props} style={{color:'#963333'}} />
+             <DeleteOutlineIcon {...props} style={{color:'#963333'}} />
              </div>,
           Edit: props =>
           

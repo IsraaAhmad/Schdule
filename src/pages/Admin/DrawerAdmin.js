@@ -190,6 +190,7 @@ export default function PersistentDrawerRight(Props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  
   const [chat, setChat] = React.useState(false);
   const [notify, setNotify] = React.useState(false);
 
