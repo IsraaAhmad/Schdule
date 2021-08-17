@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
+import { MTableEditRow,MTableEditField } from 'material-table';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './tabler.css';
+import { createTheme } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
 import axios from 'axios';
-import { TablePagination } from "@material-ui/core";
+import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
-import { css } from "@emotion/react";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import XLSX from 'xlsx';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +22,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import CommentIcon from '@material-ui/icons/Comment';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 const useStyles = makeStyles({
   mar:{
@@ -37,28 +42,34 @@ const useStyles = makeStyles({
     justifyContent:'center',
     alignContent:'center',
     alignItems:'center'
+  },
+  tableRow:{
+    '& td': {
+      fontSize: '30px',
+    },
+
+  '.mat-sort-header-arrow' :{
+      color: 'red !important',
+      opacity: '1 !important',
+      }
+    // backgroundColor:'red',
+    // inputProps:{
+    //   fontSize:'30px'
+    // }
+    
   }
 });
 
 
-const empList = [
-  { id: "117859", type: 10, location:10},
-  { id: "5955695", type: 20, location:10},
-  { id: "5595646", type: 10, location:10},
-  { id: "57424", type: 20, location:20},
-  { id: "1178459", type: 10, location:10},
-  { id: "59554695", type: 20, location:10},
-  { id: "55954646", type: 20, location:20},
-  { id: "457424", type: 10, location: 10},
-]
+
 
 function TableR(Props) {
   const {DepId} = Props
-  
   const [data, setData] = useState([])
+  const [ren,setRen] = React.useState(0)
   const [loading, setLoading] = React.useState(false);
   const EXTENSIONS = ['xlsx', 'xls', 'csv']
-  const headerName = ["id","type","location","name"]
+  const headerName = ["id","name","type","location"]
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
  
@@ -79,14 +90,7 @@ const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.id
 let url = "https://core-graduation.herokuapp.com/deleteRoomFromDep?idDep="+DepId+"&number="+id
 
-axios.get(url)
-// axios.get("https://jsonplaceholder.typicode.com/todos/1")
-
-    .then(res => {
-      console.log(res)
-    
-        },
-        )
+axios.get(url).then(res => {},)
 }
 
 const handelAddInDataBase = (newRow) =>{
@@ -100,13 +104,7 @@ const handelAddInDataBase = (newRow) =>{
   let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
   +newRow.id+"&type="+type+"&campous="+location+"&name="+newRow.name
 
-  axios.get(url)
-// axios.get("https://jsonplaceholder.typicode.com/todos/1")
-
-    .then(res => {
-      console.log(res)
-        },
-        )
+  axios.get(url).then(res => {},)
 }
 
 const handelEditInDataBase =(rowUp) =>{
@@ -120,19 +118,10 @@ const handelEditInDataBase =(rowUp) =>{
     type="قاعة تدريس";
   }
  
-  console.log("id="+ id)
-  console.log("type="+ type)
-  console.log("locaion="+ location)
   let url = "https://core-graduation.herokuapp.com/editRoom?idDep="+DepId+"&number="+id+
   "&type="+type+"&campous="+location+"&name="+rowUp.name
   
-  axios.get(url)
- // axios.get("https://jsonplaceholder.typicode.com/todos/1")
- 
-     .then(res => {
-       console.log(res)
-         },
-         )
+  axios.get(url).then(res => {},)
 }
  
 
@@ -143,29 +132,50 @@ const handelEditInDataBase =(rowUp) =>{
      field: "location",
      lookup:{10:'الحرم الجديد',20:'الحرم القديم'},
      initialEditValue: 10, validate: rowData => rowData.location? true : 'يجب ادخال مكان القاعة',
-     cellStyle: {
-      // fontFamily: 'Markazi Text',
-      fontSize:'25px',
+     cellStyle: {fontSize:'25px'}, 
    
-             }, 
+    
     },
    
 
     { title: "نوع القاعة",
     field: "type" ,
+    
     initialEditValue: 20, validate: rowData => rowData.type? true : 'يجب ادخال نوع القاعه',
     lookup: {10:'قاعة تدريس', 20:'مختبر' },
+  
     editable:'never',
-    cellStyle: {fontSize:'25px',},
+    inputProps:{
+      fontSize:'35px'
+    },
+    cellStyle: {fontSize:'25px',width:200},
               
     },
     { title: "اسم القاعة",
     field: "name",
     initialEditValue: '####', validate: rowData => rowData.name? true : 'يجب ادخال اسم القاعه',
-    editable: 'onAdd',
+    // editable: 'onAdd',
+    
+    inputProps:{
+      fontSize:'35px'
+    },
+    editComponent: (props) => 
+     
+
+    <TextField
+ 
+   value={props.value}
+   inputProps={{min: 0, style: { textAlign: 'right',
+    fontFamily:'Markazi Text',
+    fontSize:'25px', }}}
+   
+    onChange={(e) =>props.onChange(e.target.value)}
+    />
+     ,
+ 
     cellStyle: {
         fontFamily: 'Markazi Text',
-        fontSize:'25px',
+        fontSize:25,
         
        },
     },
@@ -178,6 +188,19 @@ const handelEditInDataBase =(rowUp) =>{
         fontSize:'25px',
         
        },
+       editComponent: (props) => 
+     
+
+       <TextField
+    
+      value={props.value}
+      inputProps={{min: 0, style: { textAlign: 'right',
+       fontFamily:'Markazi Text',
+       fontSize:'25px', }}}
+      
+       onChange={(e) =>props.onChange(e.target.value)}
+       />
+        ,
     },
 
 
@@ -205,12 +228,11 @@ const handelEditInDataBase =(rowUp) =>{
   }
   
   const importExcel = (e) => {
-    console.log("from import execl")
     const file = e.target.files[0]
   
     const reader = new FileReader()
     reader.onload = (event) => {
-      //parse data
+     
   
       const bstr = event.target.result
       const workBook = XLSX.read(bstr, { type: "binary" })
@@ -220,11 +242,10 @@ const handelEditInDataBase =(rowUp) =>{
       const workSheet = workBook.Sheets[workSheetName]
       //convert to array
       const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-      // console.log(fileData)7
+      
       const headers = fileData[0]
-      const hed1 = ['teacher','course','department']
-      let x =0
-      const heads = headers.map(head => ({ title: head, field: head }))
+      
+     
       // setCol(columns)
       
   
@@ -234,14 +255,16 @@ const handelEditInDataBase =(rowUp) =>{
       // let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&number="
       // +newRow.id+"&type="+type+"&campous="+location+"&name="+newRow.name
       // setData(convertToJson(headers, fileData))
-      console.log("data")
+    
       let listt = convertToJson(headers, fileData)
-      console.log(listt)
-      for (let k = 0;k<listt.length;k++){
+     
+      for (let k = 0;k<listt.length -1;k++){
         let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
     +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name="+listt[k].name
   
-    axios.get(url).then(res => {console.log(res)},)
+    axios.get(url).then(res => {
+      setRen((Math.random() ))
+    })
   
       }
     }
@@ -261,11 +284,9 @@ const handelEditInDataBase =(rowUp) =>{
     let list1 =[];
     setLoading(true)
      axios.get("https://core-graduation.herokuapp.com/getRoomsofDep?idDep="+DepId)
-    // axios.get("https://jsonplaceholder.typicode.com/todos/1")
+  
     
         .then(res => {
-          console.log(res)
-            console.log(res.data.response);
              
              for (let i = 0;i<res.data.response.length ; i++){
                if(res.data.response[i].type ==="مختبر"){
@@ -287,30 +308,19 @@ const handelEditInDataBase =(rowUp) =>{
              }
              setLoading(false)
              setData(list1)
-             console.log("list1")
-             console.log(list1)
-             console.log("data")
-             console.log(data)
 
                
-
-
+          },)
           
-            // setData(res.data.response)
-          },
-
-          
-            
-            
-            )
-          
-  },[]) 
+  },[ren]) 
   
 
   const classes = useStyles();
   return (
     
     <div className="App">
+   
+
         {loading?
          <div className={classes.lod}>
          
@@ -323,32 +333,36 @@ const handelEditInDataBase =(rowUp) =>{
     
     
     
-      <MaterialTable
-        className = "table"
-        title=""
-        data={data}
-        icons={{
-          Delete: props =>
-          <div style={{marginLeft:20}}>
-             <DeleteIcon {...props} style={{color:'#963333'}} />
+    <MaterialTable
+    className = "table"
+    title=""
+    data={data}
+    icons={{
+      Delete: props =>
+      <div style={{marginLeft:20}}>
+             <DeleteOutlineIcon {...props} style={{color:'#963333'}} />
              </div>,
           Edit: props =>
-            
-              <div style={{marginLeft:20}}>
+          
+          <div style={{marginLeft:20}}>
 
             <EditIcon {...props} style={{color:'#045F5F'}} />
-              </div>
-           
-      }}
-      
-        
-
-        columns={columns}
-
-        actions={[
-          {
-            icon: () => 
-            <div>
+              </div>,
+          
+         
+          }}
+          
+          
+          
+          columns={columns}
+          components={{
+            EditField: props => <MTableEditField {...props} className={classes.tableRow} />,
+            AddRow:props => <MTableEditRow {...props} className={classes.tableRow} />
+          }}
+          actions={[
+            {
+              icon: () => 
+              <div>
             {dialog?
               <div >
            <input
@@ -357,14 +371,14 @@ const handelEditInDataBase =(rowUp) =>{
         type="file"
         onChange={importExcel}
         
-      />
+        />
       <label htmlFor="icon-button-file">
         <IconButton
           color="primary"
           aria-label="upload picture"
           component="span"
           
-        >
+          >
           <CloudUploadIcon  style={{color:'#808880'}}/>
         </IconButton>
       </label>
@@ -378,7 +392,7 @@ const handelEditInDataBase =(rowUp) =>{
           aria-label="upload picture"
           component="span"
           onClick={handleClickOpen}
-        >
+          >
           <CommentIcon  style={{color:'#808880'}}/>
         </IconButton>
           
@@ -389,7 +403,7 @@ const handelEditInDataBase =(rowUp) =>{
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             dir='rtl'
-          >
+            >
             <DialogTitle id="alert-dialog-title" >
               <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',}}>
               طريقة ادراج الملف
@@ -403,7 +417,7 @@ const handelEditInDataBase =(rowUp) =>{
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على اربع عواميد بعنوان رقم القاعة ,نوع القاعة,الحرم الدراسي واسم القاعة بالترتيب
+              يحتوي على اربع عواميد بعنوان رقم القاعة ,اسم القاعة,نوع القاعة ,الحرم  بالترتيب
                 </div>
               </DialogContentText>
             </DialogContent>
@@ -418,34 +432,40 @@ const handelEditInDataBase =(rowUp) =>{
           </Dialog>
           </div>
           
-          }
+        }
           </div>
            
-          ,
-            tooltip: "استيراد من ملف",
-            isFreeAction: true,
-          
+           ,
+           tooltip: "استيراد من ملف",
+           isFreeAction: true,
+           
           }
         ]}
-       
-        options={{
         
-
+        options={{
+          rowStyle: {
+            fontSize: 34,
+          },
+          
+          
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
             fontSize:'25px',
             display:'flex',
             flexDirection:'row-reverse',
-          
             
             
-
+            
+            
             
           },
           paging:false,
-       
-         
-          exportButton: true,
+          
+          
+          exportButton: {
+            csv: true,
+            pdf: false
+          },
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
@@ -453,46 +473,49 @@ const handelEditInDataBase =(rowUp) =>{
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
-            paddingRight:0
+            paddingRight:0,
+            zIndex: '0'
             
             
-
+            
           }
-
+          
         }}
         localization={{
           header: {
-              actions: <div  style={{display:'flex',flexDirection:'row'}}>
+            actions: <div  style={{display:'flex',flexDirection:'row'}}>
                 <div style={{marginLeft:20}}>تعديل</div>
                 <div style={{marginLeft:20}}>حذف</div>
                 </div>,
           },
-        body: {
-          emptyDataSourceMessage:"لا يوجد قاعات  ",
-          deleteTooltip:"حذف",
-          editTooltip:"تعديل",
-          addTooltip:"اضافة قاعة جديدة",
-          
-          editRow:{
-            deleteText:"هل انت متأكد من حذف هذه القاعة",
-            cancelTooltip:"إلغاء",
-            saveTooltip:"حفظ"
+          body: {
+            emptyDataSourceMessage:"لا يوجد قاعات  ",
+            deleteTooltip:"حذف",
+            editTooltip:"تعديل",
+            addTooltip:"اضافة قاعة جديدة",
+            
+            editRow:{
+              deleteText:"هل انت متأكد من حذف هذه القاعة",
+              cancelTooltip:"إلغاء",
+              saveTooltip:"حفظ"
+            },
+            
           },
-         
-      },
-      toolbar:{
-        searchTooltip:"بحث",
-        searchPlaceholder:"بحث",
-        exportTitle:'تصدير',
-        exportCSVName: " Excelتصدير ملف ",
-        exportPDFName:  " PDF ملف ",
-      }
+          toolbar:{
+            searchTooltip:"بحث",
+            searchPlaceholder:"بحث",
+            exportTitle:'تصدير',
+            exportCSVName: " Excelتصدير ملف ",
+            exportPDFName:  " PDF ملف ",
+          }
       }}
+     
+      
+      editable={{
         
-        editable={{
-          
-          
-
+        
+        
+        
           onRowAdd: (newRow) => new Promise((resolve, reject) => {
             
             // const updatedRows = [...data, { id: Math.floor(Math.random() * 100), ...newRow }]
@@ -516,21 +539,20 @@ const handelEditInDataBase =(rowUp) =>{
           onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
             const index=oldRow.tableData.id;
             const updatedRows=[...data]
-            console.log(updatedRow)
             updatedRows[index]=updatedRow
             handelEditInDataBase(updatedRow)
-    
-
+            
+            
             setTimeout(() => {
               setData(updatedRows)
               resolve()
             }, 2000)
           })
-
+          
         }}
-       
         
-      />}
+        
+        />}
     </div>
   );
 }

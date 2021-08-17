@@ -183,7 +183,7 @@ function TableR(Props) {
       <MaterialTable
         
         className = "table"
-        title={<span style={{ fontFamily:'Markazi Text',fontSize:'35px',}}>أوقات الدوام للفصول الدرسية      </span>}
+        title={<span style={{ fontFamily:'Markazi Text',fontSize:'35px',}}>أوقات الدوام للفصول الدراسية      </span>}
         
         components={{
           Toolbar: (props) => (
@@ -225,6 +225,7 @@ function TableR(Props) {
 
         columns={columns}
         options={{
+         
           
           searchFieldStyle:{
             fontFamily: 'Markazi Text',
@@ -234,8 +235,10 @@ function TableR(Props) {
           
           search:true,
           paging:false,
-          exportButton: true,
-          exportDelimiter:"doc",
+          exportButton: {
+            csv: true,
+            pdf: false
+          },
           actionsColumnIndex:0,
           addRowPosition:'first',
           
@@ -259,15 +262,14 @@ function TableR(Props) {
           header: {
               actions: '',
           },
-        //   pagination: {
-        //     labelRowsSelect:"صفوف"
-        // },
+  
+       
         body: {
           emptyDataSourceMessage:"لا يوجد فصول مضافه بعد",
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
           addTooltip:"اضافة فصل جديدة",
-          exportName:"csv حفظ",
+        
           editRow:{
             deleteText:"هل انت متأكد من حذف هذه الفصل",
             cancelTooltip:"إلغاء",
@@ -278,7 +280,8 @@ function TableR(Props) {
       toolbar:{
         searchTooltip:"بحث",
         searchPlaceholder:"بحث",
-        exportTitle:"تصدير"
+        exportTitle:'تصدير',
+        exportCSVName: " Excelتصدير ملف ",
       }
       }}
         

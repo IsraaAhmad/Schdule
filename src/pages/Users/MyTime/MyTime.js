@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import PrintIcon from '@material-ui/icons/Print';
 import DrawerUser from "../DrawerUser.js"
+import ClearIcon from '@material-ui/icons/Clear';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -78,9 +79,11 @@ const useStyles =  makeStyles((theme) => ({
   tit:{
       display: 'flex',
       justifyContent:'flex-end',
+      alignContent:'center',
+      alignItems:'center',
       flexDirection: 'row',
       paddingTop:25,
-      paddingLeft:10,
+      paddingLeft:16,
       fontSize: 25,
       fontFamily: 'Markazi Text',
       
@@ -162,6 +165,8 @@ export default function App(props) {
   console.log(state)
   const [ren,setRen] =  useState(false)
   const [value1,setValue1] = useState()
+  const [flagNote,setFlagNote] = useState(true)
+
   const [value2,setValue2] = useState()
   const [weight,setWeight] = useState(0)
   const [dia,setDia] = React.useState(false);
@@ -233,6 +238,9 @@ export default function App(props) {
 const handleChangeRadio1 = (event) => {
   
 };
+const handelCloseNote =() =>{
+  setFlagNote(false)
+}
 const handleChangeRadio2 = (event) => {
   setValue2(event.target.value);
 };
@@ -255,7 +263,22 @@ const handelchange1=(event) =>{
       color :'white'
       }}>اوقات الدوام</div>
 <div style={{backgroundColor:'white',boxShadow: "3px 3px 3px #9E9E9E"}}>
-                <div className={classes.tit}>
+  
+  {flagNote&&<div style={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
+<div style={{boxShadow: "3px 3px 3px #9E9E9E",display:'flex',flexDirection:'row',
+alignContent:'center',marginTop:15,padding:10 }}>
+    <div>
+      <Button onClick={handelCloseNote} >
+
+      <ClearIcon fontSize="small" style={{color:'#045F5F'}}/>
+      </Button>
+    </div>
+  <div style={{fontSize: 20,fontFamily: 'Markazi Text',color:'#B4B2B2',display:'flex',justifyContent:'center',marginRight:13}}>
+    الرجاء ادخال مده محاضره واحده لكل اضافة</div>
+    </div>
+  </div>}
+ 
+                <div className={classes.tit} style={{marginBottom:22}}>
                   <TextField 
                   
                     inputProps={{min: 0, style: { textAlign: 'right' ,
@@ -277,7 +300,7 @@ const handelchange1=(event) =>{
                 </div>
                   {/* <input type ="number" placeholder="start" id="start" onChange={this.handelchange} value={this.state.start} ></input> */}
                   {/* <input type ="number" placeholder="end" id="end" onChange={this.handelchange} value={this.state.end} ></input> */}
-                 <div className={classes.time}>
+                 <div className={classes.time} style={{marginBottom:22}}>
 
                   <TextField
                       id="start"
@@ -305,7 +328,7 @@ const handelchange1=(event) =>{
                        <div className={classes.ti} style={{marginLeft:40}}>وقت البدء </div>
                        </div>
 
-    <div className={classes.day}>
+    <div className={classes.day} style={{marginBottom:22}}>
 
         <FormControlLabel
                   value="top"
@@ -356,7 +379,7 @@ const handelchange1=(event) =>{
 
           <div className={classes.tit} style={{marginLeft:50}}>:الايام</div>
           </div>
-<div className={classes.wieght}>
+<div className={classes.wieght} style={{marginBottom:22}}>
   
 
           <div className={classes.root}>
@@ -376,9 +399,9 @@ const handelchange1=(event) =>{
         max={100}
         />
     </div>
-    <div style={{fontSize: 25,fontFamily: 'Markazi Text',marginRight:10,marginLeft:15}}>:الوزن</div>
+    <div style={{fontSize: 25,fontFamily: 'Markazi Text',marginRight:10,marginLeft:50}}>:الأهمية</div>
         </div>
-        <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',marginRight:10,marginLeft:15}}>
+        <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',marginRight:10,marginLeft:15 ,marginBottom:22}}>
 
         <FormControlLabel
            value="top"

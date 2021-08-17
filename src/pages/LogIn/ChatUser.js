@@ -11,41 +11,43 @@ import SendIcon from '@material-ui/icons/Send';
 import { css } from '@emotion/css';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+import Female from "./female.png"
+import Male from "./male.png"
 const ROOT_CSS = css({
-  height: 380,
-  width: 400
+  height: 383,
+  width: 395
 });
 
 
 
 const useStyles = makeStyles({
     im:{
-        borderRadius: '50%',
-        height: '35px',
-        marginTop:'-10px',
-        marginLeft:10,
-        marginRight:10,
-        border: '2px solid black',
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
-        alignContent:'center',
+      borderRadius: '50%',
+      height: '37px',
+      width:'37px',
+      marginTop:'-5px',
+      
+      backgroundColor:'white',
+      border: '2px solid white',
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center',
+      alignContent:'center',
      },
    
     pa:{
-        width: 'auto',
-        fontFamily:'Markazi Text',
-        fontSize:'20px',
-        fontWeight: '500',
-        marginTop:'10px',
-        marginLeft:'10px',
-        marginRight:'10px',
-        overflowWap:'break-word',
+      width: 'auto',
+      fontFamily:'Markazi Text',
+      fontSize:'20px',
+      fontWeight: '500',
+      marginTop:'10px',
+      marginLeft:'10px',
+      marginRight:'10px',
+      overflowWap:'break-word',
         
     },
     msg: {
-        display: 'flex',
+      display: 'flex',
         padding: '20px 10px 0 20px',
         margin: '20px',
         borderRadius: '3000px',
@@ -53,27 +55,27 @@ const useStyles = makeStyles({
         alignItems: 'center'
       },
       received: {
-        marginLeft:15,
-        marginRight:55,
         marginTop:20,
+        marginLeft:10,
+        marginBottom:5,
         display: 'flex',
         alignContent:'center',
         alignItems:'center',
+        justifyContent:'center',
         backgroundColor: '#D4AC0D',
         color: 'white',
         borderTopRightRadius: '30px',
         borderBottomLeftRadius:'30px',
         borderBottomRightRadius:'30px',
-        flexDirection: 'row-reverse',
-        
-        
-        textAlign: 'end',
+        flexDirection: 'row',
+        textAlign: 'start',
         float: 'left',
       },
       sent: {
-        marginLeft:55,
-        marginRight:15,
+        marginLeft:150,
+        marginRight:5,
         marginTop:20,
+        marginBottom:5,
         display: 'flex',
         alignItems:'center',
         flexDirection: 'row',
@@ -88,7 +90,7 @@ const useStyles = makeStyles({
       sendMsg :{
         position: 'fixed',
         display: 'flex',
-        width: '100%',
+        
         bottom: 0,
         zIndex: 1,
         borderTop: '1px solid lightgray',
@@ -98,9 +100,20 @@ const useStyles = makeStyles({
         backgroundColor: '#fafafa',
       },
       msgs: {
-        margin: '10px 0',
+        marginBottom:10,
         display: 'flex',
         flexDirection: 'column',
+      },
+      e1:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center'
+      },
+      e2:{
+        display:'flex',
+        flexDirection:'row-reverse',
+        alignItems:'center',
+        
       },
     
     
@@ -112,7 +125,7 @@ const useStyles = makeStyles({
 
 
 function App(Props) {
-  const {doctor,headID,doctorID,head} = Props
+  const {doctor,headID,doctorID,head , genderOther} = Props
   console.log("doctor = " + doctor )
   console.log("headID = " + headID )
   console.log("doctorID = " + doctorID )
@@ -120,6 +133,7 @@ function App(Props) {
 
     const classes = useStyles();
   const [data, setData] = useState([])
+  const [URLImg,setURLImg ] = useState([])
   const [texting,setTexting] = useState("")
   const group = headID +" - "+doctorID
   console.log(group)
@@ -150,6 +164,15 @@ function App(Props) {
     })
     // console.log(firebase.firestore().collection('messages').doc('1'))
   }
+  useEffect(()=>{
+    if(genderOther == 'ذكر')
+    setURLImg(Male)
+    else setURLImg(Female)
+   
+
+              
+          
+  },[]) 
   
   const getData =() =>{
 
@@ -183,37 +206,43 @@ setTexting(event.target.value)
   }
   return (
     <>
-    <div style={{width:'100%',height:50,fontFamily: "Markazi Text",
-                      fontSize: "30px",display:'flex',justifyContent:'center'}}>
-                         <div style={{display:'flex',marginRight:40}}>
-                           
+     <div style={{width:395,height:50,fontFamily: "Markazi Text",marginRight:0,marginLeft:0,borderBottom: '3px solid rgba(0, 0, 0, 0.09)',
+                      fontSize: "30px",display:'flex',justifyContent:'center',paddingBottom:17}}>
+                         <div style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
 
-                         </div>
-                       <div style={{display:'flex',marginRight:10}}>
-                        رئيس القسم :{head}
+                         <div><img className={classes.im} src={URLImg} alt="" /> </div>
+                       <div style={{display:'flex',marginRight:7,}}>
+                         رئيس القسم:{head}
+
                          </div> 
+                
+                         </div>
                         </div>
     
    
 <ScrollToBottom className={ROOT_CSS}>
+<div>
 
 {data.map((item) => (
   
-  <div >
+  <div  className={classes.msgs}>
 
-                    <div className={classes.msgs}>
-                      
+                    <div className={item.senderId == doctorID ? classes.e1 : classes.e2}>
+                      {item.senderId !==headID&& <img className={classes.im} src={URLImg} alt="" />}
                         <div  className={item.senderId == doctorID ? classes.sent : classes.received}>
-                            <img className={classes.im} src={photoURL} alt="" />
+                            
                             <p className={classes.pa}>{item.content}</p>
                         </div>
                     </div>
                     
   </div>
                 ))}
+                </div>
                 </ScrollToBottom >
                 <div ref={messagesEndRef} />
-                <div style={{display:'flex',flexDirection:'row',width:400,height:50, backgroundColor:'black'}}>
+                <div style={{width:'397px',display:'flex',flexDirection:'row',height:50,marginRight:0,marginLeft:0,
+                 backgroundColor:'white',border: '3px solid rgba(0, 0, 0, 0.09)',
+                }}>
 
                  <Input 
                   inputProps={{
@@ -222,13 +251,13 @@ setTexting(event.target.value)
                       textAlign: "right",
                       fontFamily: "Markazi Text",
                       fontSize: "20px",
-                      color:'white'
+                      color:'black'
                     }
                   }}
-                 style={{ width: '78%',height:40, fontSize: '15px', fontWeight: '550', marginLeft: '5px', marginBottom: '-3px',display:'flex',justifyContent:'center',alignContent:'center' ,alignItems:'center'}} placeholder='...اكتب هنا' type="text" value={texting} onChange={handelText}  />
-                 <Button style={{ width: '18%',height:40, fontSize: '15px', fontWeight: '550', margin: '4px 5% -13px 5%', maxWidth: '200px'}} onClick={HandelAddDataBase}>
-                   <SendIcon style={{color:'white'}}/></Button>
-                </div>
+                  style={{ width: '87%',height:40, fontSize: '15px', fontWeight: '550', marginLeft: '2px', marginBottom: '-3px',display:'flex',justifyContent:'center',alignContent:'center' ,alignItems:'center'}} placeholder='...اكتب هنا' type="text" value={texting} onChange={handelText}  />
+                  <Button style={{ width: '13%',height:40, fontSize: '15px', fontWeight: '550', maxWidth: '200px'}} onClick={HandelAddDataBase}>
+                    <SendIcon style={{color:'black'}}/></Button>
+                 </div>
 
     </>
   );

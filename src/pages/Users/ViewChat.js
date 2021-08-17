@@ -75,6 +75,7 @@ export default function App(Props) {
   const [head,setHead] = React.useState();
   const [headID,setHeadID] = React.useState();
   const [doctorID,setDoctorID] = React.useState();
+  const [genderOther,setGenderOther] = React.useState();
   const  location  = useLocation();
   const {state} = location;
   useEffect(()=>{
@@ -90,7 +91,7 @@ export default function App(Props) {
           
         }
        if(w[kk].type == "head of department"){
-
+        setGenderOther(w[kk].gender)
          setHeadID(w[kk].id)
          setHead(w[kk].name)
        } 
@@ -111,7 +112,7 @@ export default function App(Props) {
     {flag&&<div className={classes.tit}>
        
     <div>
-        <ChatUser doctor={name} doctorID={doctorID} headID={headID} head={head}    />
+        <ChatUser doctor={name} doctorID={doctorID} headID={headID} head={head}  genderOther={genderOther}   />
         </div>
     </div>
     

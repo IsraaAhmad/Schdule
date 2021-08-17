@@ -127,15 +127,21 @@ const useStyles = makeStyles({
 
 
 function App(Props) {
-  const {otherName,headID,doctorID,setView , genderOther} = Props
-  console.log("first")
+  const {otherName,OtherID,myName,myID,setView , genderOther} = Props
+  console.log("otherName")
   console.log(otherName)
+  console.log("OtherID")
+  console.log(OtherID)
+  console.log("myName")
+  console.log(myName)
+  console.log("myID")
+  console.log(myID)
     const classes = useStyles();
   const [data, setData] = useState([])
   const [URLImg,setURLImg ] = useState([])
 
   const [texting,setTexting] = useState("")
-  const group = headID +" - "+doctorID
+  const group = OtherID +" - "+myID
   console.log(group)
   console.log("group")
   const messagesEndRef = useRef(null)
@@ -165,8 +171,8 @@ function App(Props) {
     console.log(d1)
        
     firebase.firestore().collection("messages").doc(group).collection(group).doc(d1).set({
-      senderId:headID,
-      anotherUserId:doctorID,
+      senderId:myID,
+      anotherUserId:OtherID,
       timestamp:d1,
       content:texting,
       type:'soso'
@@ -232,10 +238,10 @@ setTexting(event.target.value)
   
   <div className={classes.msgs}>
 
-                    <div className={item.senderId !== headID ? classes.e1 : classes.e2} >
+                    <div className={item.senderId !== myID ? classes.e1 : classes.e2} >
                       
-                           {item.senderId !== headID&&<img className={classes.im} src={URLImg} alt="" />}
-                        <div  className={item.senderId !== headID ? classes.sent : classes.received}>
+                           {item.senderId !== myID&&<img className={classes.im} src={URLImg} alt="" />}
+                        <div  className={item.senderId !== myID ? classes.sent : classes.received}>
                             <p className={classes.pa}>{item.content}</p>
                         </div>
                     </div>

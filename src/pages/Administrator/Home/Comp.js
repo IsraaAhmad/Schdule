@@ -44,13 +44,13 @@ name:{
 });
 
 export default function App(props) {
-  const {UrlImage , name , pathTo , DepId} = props
+  const {UrlImage , name , pathTo , DepId , instName} = props
   const  history  = useHistory();
 
   const classes = useStyles();
   const handelOnClick=() =>{
     // history.push(pathTo)
-    history.push({pathname:pathTo,state: { DepId: DepId }})
+    history.push({pathname:pathTo,state: { DepId: DepId , name:instName }})
   }
 
   return (

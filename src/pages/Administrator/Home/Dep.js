@@ -32,14 +32,14 @@ export default function App() {
   const classes = useStyles();
   return (
    <div  style={{height:1000}}className="back">
-      <DrawerAdminstrator/>
+      <DrawerAdminstrator name={state.name} DepId={state.number}/>
        <div className={classes.tot}>
          
-         <Comp UrlImage={room} name="القاعات" pathTo="/AdministratorRooms" DepId={state.number} />
-         <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule"/>
-         <Comp UrlImage={course} name="المساقات" pathTo="/AdmainistratorCourse" DepId={state.number}/>
-         <Comp UrlImage={teacher} name="المدرسين" pathTo="/AdministratorTeachers" DepId={state.number}/>
-         <Comp UrlImage={time} name="أوقات الدوام" pathTo="/Teacher"/>
+         <Comp UrlImage={room} name="القاعات" pathTo="/AdministratorRooms" DepId={state.number} instName={state.name} />
+         <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/AdministratorSchdule" DepId={state.number} instName={state.name}/>
+         <Comp UrlImage={course} name="المساقات" pathTo="/AdmainistratorCourse" DepId={state.number} instName={state.name}/>
+         <Comp UrlImage={teacher} name="المدرسين" pathTo="/AdministratorTeachers" DepId={state.number} instName={state.name}/>
+         <Comp UrlImage={time} name="أوقات الدوام" pathTo="/Time" DepId={state.number} instName={state.name}/>
 
 
 

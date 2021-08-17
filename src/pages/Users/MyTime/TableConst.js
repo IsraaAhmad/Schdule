@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 
@@ -111,13 +112,7 @@ axios.get(url).then(res => {console.log(res)},)
      field: "need",
      cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, },
     
-    { title: "الوزن",
-     field: "weight",
-     render:(rowData) =>
-     <Box component="fieldset" borderColor="transparent" dir="rtl" style={{display:'flex',alignItems:'center',alignContent:'center'}}>
-     <Rating name="read-only" value={rowData.weight}  readOnly max={4} />
-   </Box>,
-     cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, },
+  
    
 
     { title: "الايام",
@@ -130,6 +125,18 @@ axios.get(url).then(res => {console.log(res)},)
       render:(rowData) => 
       <div>
 
+        <TextField
+       id="time1"
+       label="من"
+       type="time"
+       value={rowData.FromTime}
+       InputLabelProps={{
+         shrink: true,
+        }}
+        inputProps={{
+          step: 300, // 5 min
+        }}
+        />
       <TextField
      id="time2"
      label="الى"
@@ -138,18 +145,6 @@ axios.get(url).then(res => {console.log(res)},)
      InputLabelProps={{shrink: true,}}
      inputProps={{step: 300, }}
      />
-      <TextField
-     id="time1"
-     label="من"
-     type="time"
-     value={rowData.FromTime}
-     InputLabelProps={{
-       shrink: true,
-      }}
-      inputProps={{
-        step: 300, // 5 min
-      }}
-      />
      </div>
      ,
       cellStyle: {fontSize:'20px',},},
@@ -187,7 +182,7 @@ axios.get(url).then(res => {console.log(res)},)
         icons={{
           Delete: props =>
           <div style={{marginLeft:20}}>
-             <DeleteIcon {...props} style={{color:'#963333'}} />
+             <DeleteOutlineIcon {...props} style={{color:'#963333'}} />
              </div>,}}
       
         
@@ -203,7 +198,10 @@ axios.get(url).then(res => {console.log(res)},)
             display:'flex',
             flexDirection:'row-reverse',},
         paging:false,
-        exportButton: true,
+        exportButton: {
+          csv: true,
+          pdf: false
+        },
         actionsColumnIndex:0,
         addRowPosition:'first',
         headerStyle:{

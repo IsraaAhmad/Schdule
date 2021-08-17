@@ -24,9 +24,9 @@ export default function App() {
   const classes = useStyles();
   return (
     <div  style={{height:1000}} className="back">
-<DrawerAdminstrator DepId={state.DepId}/>
+<DrawerAdminstrator DepId={state.DepId} name={state.name}/>
    <div className={classes.mar}>
-     <Test DepId={state.DepId}/>
+     <Test DepId={state.DepId} name={state.name}/>
    </div>
     </div>
   );

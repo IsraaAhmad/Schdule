@@ -74,10 +74,10 @@ export default function App() {
 
   return (
     <div style={{height:10000}} className="back">
-<DrawerAdminstrator DepId={state.DepId} />
+<DrawerAdminstrator DepId={state.DepId} name={state.name} />
 
 <div className={classes.root} >
-      <TableMainPage DepId={state.DepId}/>
+      <TableMainPage DepId={state.DepId} name={state.name}/>
       
      
  

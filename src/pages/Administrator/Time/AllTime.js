@@ -137,7 +137,7 @@ export default function ScrollableTabsButtonPrevent(Props) {
 
   return (
     <div>
-    <DrawerAdminstrator/>
+    <DrawerAdminstrator name={state.name} DepId={state.DepId}/>
     {hande&&<div>
 
     <div className={classes.root}>

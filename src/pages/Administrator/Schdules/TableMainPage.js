@@ -144,13 +144,13 @@ const [loading, setLoading] = React.useState(false);
 
     if(row.flag === "2"){
       history.push({
-        pathname: '/view',
+        pathname: '/view1',
         state: { name: row.name, DepId:DepId ,year:row.date  ,sem:sem1 ,namme:name}
       })
     }
     if(row.flag === "3"){
       history.push({
-        pathname: '/tableCreate',
+        pathname: '/tableCreate1',
         state: { name: row.name,DepId:DepId ,
           index:3 ,year:row.date,sem:sem1,namme:name
         }

@@ -6,7 +6,10 @@ import Teacher from "./pages/Admin/Teachers/Teacher.js";
 import AddSchdule from "./pages/Admin/Teachers/Teacher.js";
 import Drawer from "./pages/Users/DrawerUser";
 import View from "./pages/Admin/Schdules/View.js";
+import View1 from "./pages/Administrator/Schdules/View.js"
+
 import Create from "./pages/Admin/Schdules/Create.js";
+import Create1 from './pages/Administrator/Schdules/Create.js'
 import Time from "./pages/Administrator/Time/Time.js"
 import TimeTeacher from "./pages/Admin/Teachers/TimeTeacher";
 import AddCourse from "./pages/Admin/Course/CreateCourse.js"
@@ -20,15 +23,17 @@ import AdminHome from "./pages/Admin/Home/Home.js"
 import UsersHome from "./pages/Users/Home/Home.js"
 import AdministratorHome from "./pages/Administrator/Home/Home.js";
 import TableCreate from "./pages/Admin/Schdules/TableCreate.js";
+import TableCreate1 from "./pages/Administrator/Schdules/TableCreate.js"
 import AddCourseFromOtherDep from "./pages/Admin/Course/AddCourseFromOther.js"
 import AddCourseFromOtherDep1 from "./pages/Administrator/Course/AddCourseFromOther.js"
 import CreateSemester from "./pages/Administrator/Time/CreateTable.js"
-import Department from "./pages/Administrator/Department.js"
+
 import Dep from './pages/Administrator/Home/Dep.js'
 import AdministratorRooms from './pages/Administrator/Rooms/Rooms.js'
 import AdministratorTeachers from './pages/Administrator/Teachers/Teacher.js'
 import TeacherTable from './pages/Users/Schedule/Schedule.js'
 import AdmainistratorCourse from './pages/Administrator/Course/Course.js'
+import AdministratorSchdule from './pages/Administrator/Schdules/Schdules.js'
 
 
 
@@ -64,6 +69,8 @@ export default function App() {
         <Route exact path="/UsersHome" render={props => <UsersHome {...props} />} />
         <Route exact path="/AdministratorHome" render={props => <AdministratorHome {...props} />} />
         <Route exact path="/tableCreate" render={props => <TableCreate {...props} />} />
+        <Route exact path="/tableCreate1" render={props => <TableCreate1 {...props} />} />
+
         <Route exact path="/addCourseFromOtherDep" render={props => <AddCourseFromOtherDep {...props} />} />
         <Route exact path="/testing" render={props => <Testing {...props} />} />
         <Route exact path="/tableTime" render={props => <TableTime {...props} />} />
@@ -74,12 +81,15 @@ export default function App() {
         <Route exact path="/schdule" render={props => <Schdule {...props} />} />
         <Route exact path="/addSchdule" render={props => <AddSchdule {...props} />} />
         <Route exact path="/view" render={props => <View {...props} />} />
+        <Route exact path="/view1" render={props => <View1 {...props} />} />
+
         <Route exact path="/Create" render={props => <Create {...props} />} />
         <Route exact path="/timeTeacher" render={props => <TimeTeacher {...props} />} />
         <Route exact path="/time" render={props => <Time {...props} />} />
         <Route exact path="/MyTime" render={props => <MyTime {...props} />} />
         <Route exact path="/AddCourse" render={props => <AddCourse {...props} />} /> 
-        <Route exact path="/Department" render={props => <Department {...props} />} /> 
+        <Route exact path="/create1" render={props => <Create1 {...props} />} /> 
+    
         <Route exact path="/Dep" render={props => <Dep {...props} />} /> 
         <Route exact path="/AdministratorRooms" render={props => <AdministratorRooms {...props} />} /> 
         <Route exact path="/AdministratorTeachers" render={props => <AdministratorTeachers {...props} />} /> 
@@ -87,6 +97,7 @@ export default function App() {
         <Route exact path="/AdmainistratorCourse" render={props => <AdmainistratorCourse {...props} />} /> 
         <Route exact path="/AddCourse1" render={props => <AddCourse1 {...props} />} /> 
         <Route exact path="/AddCourseFromOtherDep1" render={props => <AddCourseFromOtherDep1 {...props} />} /> 
+        <Route exact path="/AdministratorSchdule" render={props => <AdministratorSchdule {...props} />} /> 
 
 
 

@@ -422,7 +422,7 @@ const classes = useStyles();
 
     { title:<div className={classes.colHeader}>اسم المساق </div>,
     field: "course" ,
-    editable: 'onAdd',
+    editable: 'never',
    
  
       cellStyle: {
@@ -433,7 +433,7 @@ const classes = useStyles();
     },
     { title:<div className={classes.colHeader}> رقم المساق</div>,
     field: "number" ,
-    editable: 'onAdd',
+    editable: 'never',
    
     cellStyle: {fontSize:'20px',},
               
@@ -595,17 +595,6 @@ const note = "الجدول الدراسي الخاص بدك لهذا الفصل 
     }}
         
         editable={{
-          onRowAdd: (newRow) => new Promise((resolve, reject) => {
-            const updatedRows = [...data, { id: Math.floor(Math.random() * 100), ...newRow }]
-            // handelAddInDataBase(newRow)
-           
-            
-            
-            setTimeout(() => {
-              setData(updatedRows)
-              resolve()
-            }, 2000)
-          }),
           
           
 

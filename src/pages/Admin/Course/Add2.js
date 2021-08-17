@@ -267,7 +267,7 @@ export default function CSSGrid(Props) {
     let url = "https://core-graduation.herokuapp.com/addCourseToDepartment?idDep="+DepId+"&number="+
     course+"&type=اجباري"+"&year="+year+"&sem="+semester+"&name="+nameCourse+"&numberOfHour="+hour+
     "&flag=1&toDepartments="+idDepartmant+"&specialty="+sec
-    // console.log(url)
+    console.log(url)
     // axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep=60ddc9735b4d43f8eaaabf83")
   axios.get(url).then(res => {console.log(res.data.response);},)
 

@@ -94,11 +94,11 @@ export default function App(Props) {
     {/* <DrawerAdminstrator/> */}
     <div className={classes.mar}>
      <div className={classes.title}>
-         <div>تفعيل</div>
-         <div style={{marginLeft:40}}>المجموعة</div>
+         <div>تــفعيـــل</div>
+         <div style={{marginLeft:0,marginRight:0}}>المـجمــوعة</div>
 
 
-         <div> مدة المحاضرة</div>
+         <div style={{marginRight:0}}> مدة المحاضرة</div>
          <div style={{display:'flex',flexDirection:'row'}}>
          بدء فراغ الجامعة 
          - انتهاء فراغ الجامعة

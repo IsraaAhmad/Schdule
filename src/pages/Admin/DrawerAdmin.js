@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{useEffect} from "react";
+import axios from 'axios';
 import clsx from 'clsx';
 import ViewChat from "./ViewChat.js"
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -78,14 +79,6 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    // appBarShift: {
-    //   width: `calc(100% - ${drawerWidth}px)`,
-    //   marginLeft: drawerWidth,
-    //   transition: theme.transitions.create(['margin', 'width'], {
-    //     easing: theme.transitions.easing.easeOut,
-    //     duration: theme.transitions.duration.enteringScreen,
-    //   }),
-    // },
     backgroundColor:"#045F5F",
   },
   fontJomhuria:{
@@ -190,6 +183,7 @@ export default function PersistentDrawerRight(Props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const [isNotify, setIsNotify] = React.useState(true);
   
   const [chat, setChat] = React.useState(false);
   const [notify, setNotify] = React.useState(false);
@@ -267,6 +261,29 @@ export default function PersistentDrawerRight(Props) {
     
    
   ]
+
+  useEffect(()=>{
+    let flagNotify = true
+    let url = "https://core-graduation.herokuapp.com/getNotification?instName="+name
+    axios.get(url)
+ 
+     
+    .then(res => {
+      
+        console.log(res.data.response);
+        let w = res.data.response
+        for(let k = 0 ; k<w.length;k++){
+          if(w[k].flag == "true") flagNotify = false
+        }
+        setIsNotify(flagNotify)
+       
+
+       
+       
+        
+          
+  },[]) 
+})
 
   const handelChat =()=> {
     setNotify(false)
@@ -373,7 +390,9 @@ export default function PersistentDrawerRight(Props) {
             </IconButton>
             
             <IconButton style={!notify?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}}  color="inherit" onClick={handelNotify}>
-              <Badge   badgeContent={<div style={{color:'red',fontSize:'35px'}}><FiberManualRecordIcon/></div>}>
+              <Badge  
+               badgeContent={!isNotify?<div style={{color:'red',fontSize:'35px'}}><FiberManualRecordIcon/></div>:
+               <div style={{color:'red',fontSize:'35px'}}></div>}>
                 <NotificationsIcon />
               </Badge>
             </IconButton>

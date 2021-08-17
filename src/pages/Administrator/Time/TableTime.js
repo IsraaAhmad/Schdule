@@ -28,7 +28,7 @@ export default function App() {
     <div style={{height:1200}}className="back">
      <DrawerAdminstrator name={state.name} DepId={state.DepId}/>
     <div className={classes.tot}>
-       <AllTime date={state.date} sem = {state.sem}/> 
+       <AllTime date={state.date} sem = {state.sem} name={state.name} DepId={state.DepId}/> 
        {/* <Test/> */}
     </div>
     </div>

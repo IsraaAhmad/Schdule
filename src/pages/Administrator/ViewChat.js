@@ -9,7 +9,7 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
 import Button from '@material-ui/core/Button';
-import Chat from "../../pages/LogIn/Chat.js"
+import ChatAdministrator from "../../pages/LogIn/ChatAdministrator.js"
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -69,12 +69,14 @@ const useStyles = makeStyles({
 
 export default function App(Props) {
     const {DepId , name} = Props;
+    console.log("total name")
+    console.log(name)
 
   const classes = useStyles();
   const [view, setView] = React.useState(true);
   const [doc, setDoc] = React.useState(false);
   const [flag,setFlag] = React.useState(false);
-  const [head,setHead] = React.useState();
+  const [headAll,setHeadAll] = React.useState();
   const [doctor,setDoctor] = React.useState();
   const [genderOther,setGenderOther] = React.useState();
 
@@ -92,14 +94,14 @@ export default function App(Props) {
   
   const handelOn = async() => {
   
-      axios.get("https://core-graduation.herokuapp.com/getUsers?idDep="+DepId)
+      axios.get("https://core-graduation.herokuapp.com/getAllUsers")
   
      
       .then(res => {
         let w = res.data.response
         console.log(w)
         for(let kk = 0 ;kk<w.length;kk++){
-          if(w[kk].name == name) setHead(w[kk].id)
+          if(w[kk].name == name) setHeadAll(w[kk].id)
           if(w[kk].name == doc.name){
             setDoctor(w[kk].id)
             setGenderOther(w[kk].gender)
@@ -116,7 +118,7 @@ export default function App(Props) {
   const {state} = location;
   useEffect(()=>{
     let listt = []
-    axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
+    axios.get("https://core-graduation.herokuapp.com/getAllUsers")
   
      
     .then(res => {
@@ -125,9 +127,12 @@ export default function App(Props) {
         let w = res.data.response;
         let x = 0
         for(let k = 0 ;k<w.length;k++){
-          let teach = {name:w[k].name,id:x}
-          x = x +1
-          listt[k] = teach
+          if(w[k].type == "head of department"){
+
+            let teach = {name:w[k].name,id:x}
+            x = x +1
+            listt[k] = teach
+          }
          }
 
         
@@ -174,7 +179,7 @@ export default function App(Props) {
     
     :
     <div>
-        <Chat otherName={doc} myName={name} headID={head} doctorID={doctor} setView={setView} genderOther={genderOther}/>
+        <ChatAdministrator otherName={doc} myName={name} myID={headAll} OtherID={doctor} setView={setView} genderOther={genderOther}/>
         </div>}
     </div>
     

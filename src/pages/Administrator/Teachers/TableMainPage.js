@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BeatLoader from "react-spinners/BeatLoader";
 import { makeStyles } from "@material-ui/core/styles";
+import TextField from '@material-ui/core/TextField';
 import { css } from "@emotion/react";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
@@ -19,6 +20,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import CommentIcon from '@material-ui/icons/Comment';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 
@@ -56,6 +58,7 @@ function TableR(Props) {
   const [loading, setLoading] = React.useState(false);
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [ren,setRen] = React.useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,29 +74,64 @@ function TableR(Props) {
   };
 
   const EXTENSIONS = ['xlsx', 'xls', 'csv']
-    const headerName = ["name"]
+    const headerName = ["name","gender","email"]
  
  
 const handelDeleteInDataBase =(selectedRow) =>{
 const id = selectedRow.name
 let url = "https://core-graduation.herokuapp.com/deleteInsFromDep?idDep="+DepId+"&name="+id
-axios.get(url).then(res => {console.log(res)},)
+axios.get(url).then(res => {},)
 }
 
 const handelAddInDataBase = (newRow) =>{
   let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep="+DepId+"&name="
-  +newRow.name
-  axios.get(url).then(res => {console.log(res)},)
+  +newRow.name+"&email="+newRow.email+"&gender="+newRow.gender
+  axios.get(url).then(res => {},)
 }
 
   
 
   const columns = [
+    { title: "البريد الالكتروني",
+    field: "email",
+    cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+    editComponent: (props) => 
+     
+
+    <TextField
+ 
+   value={props.value}
+   inputProps={{min: 0, style: { textAlign: 'right',
+    fontFamily:'Markazi Text',
+    fontSize:'25px', }}}
+   
+    onChange={(e) =>props.onChange(e.target.value)}
+    />
+     ,
+   },
     
+   { title: "الجنس ",
+    field: "gender",
+    lookup:{10:'ذكر',20:'انثى'},
+    cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+   },
     { title: "اسم المدرس",
      field: "name",
      initialEditValue: '###', validate: rowData => rowData.name? true : 'يجب ادخال اسم المدرس',
      cellStyle: {fontFamily: 'Markazi Text',fontSize:'25px',}, 
+     editComponent: (props) => 
+     
+
+     <TextField
+  
+    value={props.value}
+    inputProps={{min: 0, style: { textAlign: 'right',
+     fontFamily:'Markazi Text',
+     fontSize:'25px', }}}
+    
+     onChange={(e) =>props.onChange(e.target.value)}
+     />
+      ,
     },
    
 
@@ -119,12 +157,11 @@ const convertToJson = (headers, data) => {
 }
 
 const importExcel = (e) => {
-  console.log("from import execl")
   const file = e.target.files[0]
 
   const reader = new FileReader()
   reader.onload = (event) => {
-    //parse data
+   
 
     const bstr = event.target.result
     const workBook = XLSX.read(bstr, { type: "binary" })
@@ -134,27 +171,31 @@ const importExcel = (e) => {
     const workSheet = workBook.Sheets[workSheetName]
     //convert to array
     const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-    // console.log(fileData)7
+    
     const headers = fileData[0]
     
-  
+   
     // setCol(columns)
     
 
     //removing header
     fileData.splice(0, 1)
 
-
-    // setData(convertToJson(headers, fileData))
-    console.log("data")
     let listt = convertToJson(headers, fileData)
-    console.log(listt)
-  //   for (let k = 0;k<listt.length;k++){
-  //     let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep=60ddc9735b4d43f8eaaabf83&name="
-  // +listt[k].name
-  // axios.get(url).then(res => {console.log(res)},)
+   console.log(listt.length)
+   console.log(listt)
+    for (let k = 0;k<listt.length -1;k++){
+      let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep="+DepId+"&name="
+  +listt[k].name+"&email="+listt[k].email+"&gender="+listt[k].gender 
 
-  //   }
+  
+
+  axios.get(url).then(res => {
+    setRen((Math.random() ))
+    
+  })
+
+    }
   }
 
   if (file) {
@@ -171,25 +212,27 @@ const importExcel = (e) => {
   useEffect(()=>{
     let listt = []
     setLoading(true)
+   
     axios.get("https://core-graduation.herokuapp.com/getAllIsn?idDep="+DepId)
   
      
     .then(res => {
-      console.log(res)
         console.log(res.data.response);
         let w = res.data.response;
         for(let k = 0 ;k<w.length;k++){
-          let teach = {name:w[k].name}
+          let gend = 10
+          if(w[k].gender == "انثى") gend=20
+          let teach = {name:w[k].name,email:w[k].email,gender:gend}
           listt[k] = teach
           
 
         }
-        setLoading(false)
        setData(listt)
+       setLoading(false)
        },
         )
           
-  },[]) 
+  },[ren]) 
   
 
   const classes = useStyles();
@@ -268,7 +311,7 @@ const importExcel = (e) => {
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على  عامود واحد بعنوان اسم المدرس 
+            يحتوي على ثلاثة عواميد بعنوان اسم المدرس,الجنس,البريد الالكتروني
                 </div>
               </DialogContentText>
             </DialogContent>
@@ -295,7 +338,7 @@ const importExcel = (e) => {
         icons={{
           Delete: props =>
           <div style={{marginLeft:20}}>
-             <DeleteIcon {...props} style={{color:'#963333'}} />
+             <DeleteOutlineIcon {...props} style={{color:'#963333'}} />
              </div>,
         
         
@@ -324,7 +367,10 @@ const importExcel = (e) => {
           paging:false,
        
          
-          exportButton: true,
+          exportButton: {
+            csv: true,
+            pdf: false
+          },
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
@@ -332,7 +378,8 @@ const importExcel = (e) => {
             color:'white',
             fontFamily: 'Markazi Text',
             fontSize:'25px',
-            paddingRight:0
+            paddingRight:0,
+            zIndex: '0'
             
             
 

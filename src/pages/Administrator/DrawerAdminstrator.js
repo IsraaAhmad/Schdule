@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import ViewChat from "./ViewChat.js"
 import {
   BrowserRouter as Router,
   Switch,
@@ -78,14 +79,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    // appBarShift: {
-    //   width: `calc(100% - ${drawerWidth}px)`,
-    //   marginLeft: drawerWidth,
-    //   transition: theme.transitions.create(['margin', 'width'], {
-    //     easing: theme.transitions.easing.easeOut,
-    //     duration: theme.transitions.duration.enteringScreen,
-    //   }),
-    // },
+ 
     backgroundColor:"#045F5F",
   },
   fontJomhuria:{
@@ -150,6 +144,7 @@ export default function PersistentDrawerRight(Props) {
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const location  = useLocation();
+  const [chat, setChat] = React.useState(false);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -179,6 +174,13 @@ export default function PersistentDrawerRight(Props) {
   const handelLogOut =() =>{
     history.push("./")
     
+  }
+  const handelChat =()=> {
+   
+   setChat(!chat)
+   
+  
+  
   }
   const renderMenu = (
     <Menu
@@ -232,17 +234,8 @@ export default function PersistentDrawerRight(Props) {
             </IconButton>
 
 
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={""} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
             
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary" >
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+          
         
 
         <IconButton 
@@ -255,6 +248,11 @@ export default function PersistentDrawerRight(Props) {
               >
               <AccountCircle />
         </IconButton>
+            <IconButton aria-label="show 4 new mails" color="inherit" style={!chat?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}}  onClick={handelChat}>
+              <Badge >
+                <MailIcon />
+              </Badge>
+            </IconButton>
                 </div>
           <Typography variant="h6" noWrap className={classes.title}>
           
@@ -335,6 +333,16 @@ export default function PersistentDrawerRight(Props) {
         </List>
           </div>
       </Drawer>
+      {chat&&<div style={{
+        position:'fixed',
+        top:75,left:10,height: 500,
+        width: 400,
+        backgroundColor:'white',
+        zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
+        }}>
+        <ViewChat DepId={DepId} name={name}/>
+        
+      </div>}
     </div>
           
   );

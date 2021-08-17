@@ -58,6 +58,7 @@ function TableR(Props) {
   const [loading, setLoading] = React.useState(false);
   const [dialog,setDialog] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [ren,setRen] = React.useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -73,7 +74,7 @@ function TableR(Props) {
   };
 
   const EXTENSIONS = ['xlsx', 'xls', 'csv']
-    const headerName = ["name"]
+    const headerName = ["name","gender","email"]
  
  
 const handelDeleteInDataBase =(selectedRow) =>{
@@ -160,7 +161,7 @@ const importExcel = (e) => {
 
   const reader = new FileReader()
   reader.onload = (event) => {
-    //parse data
+   
 
     const bstr = event.target.result
     const workBook = XLSX.read(bstr, { type: "binary" })
@@ -173,19 +174,28 @@ const importExcel = (e) => {
     
     const headers = fileData[0]
     
-  
+   
     // setCol(columns)
     
 
     //removing header
     fileData.splice(0, 1)
 
-
-    // setData(convertToJson(headers, fileData))
-    
     let listt = convertToJson(headers, fileData)
+   console.log(listt.length)
+   console.log(listt)
+    for (let k = 0;k<listt.length -1;k++){
+      let url = "https://core-graduation.herokuapp.com/addInstToDepartment?idDep="+DepId+"&name="
+  +listt[k].name+"&email="+listt[k].email+"&gender="+listt[k].gender 
+
   
-  
+
+  axios.get(url).then(res => {
+    setRen((Math.random() ))
+    
+  })
+
+    }
   }
 
   if (file) {
@@ -222,7 +232,7 @@ const importExcel = (e) => {
        },
         )
           
-  },[]) 
+  },[ren]) 
   
 
   const classes = useStyles();
@@ -301,7 +311,7 @@ const importExcel = (e) => {
               execl
               امتداد
               'xlsx'او 'xls'او  'csv'
-              يحتوي على  عامود واحد بعنوان اسم المدرس 
+            يحتوي على ثلاثة عواميد بعنوان اسم المدرس,الجنس,البريد الالكتروني
                 </div>
               </DialogContentText>
             </DialogContent>
@@ -357,7 +367,10 @@ const importExcel = (e) => {
           paging:false,
        
          
-          exportButton: true,
+          exportButton: {
+            csv: true,
+            pdf: false
+          },
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{

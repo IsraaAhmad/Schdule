@@ -1,13 +1,12 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import clsx from 'clsx';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+
+import axios from 'axios';
+
 import ViewChat from "./ViewChat.js"
 import ViewNotify from "./ViewNotify.js"
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -150,6 +149,7 @@ export default function PersistentDrawerRight(Props) {
   const  history  = useHistory();
   const classes = useStyles();
   const theme = useTheme();
+  const [isNotify, setIsNotify] = React.useState(true);
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const location  = useLocation();
@@ -161,6 +161,29 @@ export default function PersistentDrawerRight(Props) {
   };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  useEffect(()=>{
+    let flagNotify = true
+    let url = "https://core-graduation.herokuapp.com/getNotification?instName="+InstName
+    axios.get(url)
+ 
+     
+    .then(res => {
+      
+        console.log(res.data.response);
+        let w = res.data.response
+        for(let k = 0 ; k<w.length;k++){
+          if(w[k].flag == "true") flagNotify = false
+        }
+        setIsNotify(flagNotify)
+       
+
+       
+       
+        
+          
+  },[]) 
+})
+  
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -198,6 +221,7 @@ export default function PersistentDrawerRight(Props) {
     
    
   ]
+
   const menuId = 'primary-search-account-menu';
   const handelLogOut = () =>{
     history.push("./")
@@ -265,7 +289,8 @@ export default function PersistentDrawerRight(Props) {
             </IconButton>
             
             <IconButton style={!notify?{backgroundColor:'#045F5F'}:{backgroundColor:'#16A1A1'}} color="inherit" onClick={handelNotify}>
-              <Badge color="secondary" >
+              <Badge badgeContent={!isNotify?<div style={{color:'red',fontSize:'35px'}}><FiberManualRecordIcon/></div>:
+               <div style={{color:'red',fontSize:'35px'}}></div>}>
                 <NotificationsIcon />
               </Badge>
             </IconButton>

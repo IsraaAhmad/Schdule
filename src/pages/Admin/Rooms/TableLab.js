@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import { MTableEditRow,MTableEditField } from 'material-table';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './tabler.css';
 import { createTheme } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -46,6 +47,11 @@ const useStyles = makeStyles({
     '& td': {
       fontSize: '30px',
     },
+
+  '.mat-sort-header-arrow' :{
+      color: 'red !important',
+      opacity: '1 !important',
+      }
     // backgroundColor:'red',
     // inputProps:{
     //   fontSize:'30px'
@@ -252,7 +258,7 @@ const handelEditInDataBase =(rowUp) =>{
     
       let listt = convertToJson(headers, fileData)
      
-      for (let k = 0;k<listt.length;k++){
+      for (let k = 0;k<listt.length -1;k++){
         let url = "https://core-graduation.herokuapp.com/addRoomToDepartment?idDep="+DepId+"&number="
     +listt[k].id+"&type="+listt[k].type+"&campous="+listt[k].location+"&name="+listt[k].name
   
@@ -341,8 +347,9 @@ const handelEditInDataBase =(rowUp) =>{
           <div style={{marginLeft:20}}>
 
             <EditIcon {...props} style={{color:'#045F5F'}} />
-              </div>
-           
+              </div>,
+          
+         
           }}
           
           
@@ -455,7 +462,10 @@ const handelEditInDataBase =(rowUp) =>{
           paging:false,
           
           
-          exportButton: true,
+          exportButton: {
+            csv: true,
+            pdf: false
+          },
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
