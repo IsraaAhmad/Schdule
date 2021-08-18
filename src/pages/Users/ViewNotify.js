@@ -83,9 +83,10 @@ const Emplist=[
     {note:"يرجى البدء باعداد الجدول الدراسي للفصل الدراسي بالاطلاع على المواعيد الدراسية للفصل ",hour:"3:30",flag:false},
 ]
 export default function App(Props) {
-    const {DepId , name} = Props;
+    const {DepId , name , DepName} = Props;
 console.log(name)
 console.log("name")
+const  history  = useHistory();
 
   const classes = useStyles();
   const [flag,setFlag] = React.useState(false);
@@ -110,7 +111,7 @@ console.log("name")
       let w = res.data.response
       let x = 0
       for(let k = (w.length)-1  ;k>=0;k--){
-        let teach = {flag:w[k].flag,from:w[k].from,instName:w[k].instName,note:w[k].note}
+        let teach = {flag:w[k].flag,from:w[k].from,instName:w[k].instName,note:w[k].note,time:w[k].time}
         listt[x] = teach
         x = x+1
        }
@@ -121,6 +122,27 @@ console.log("name")
         
           }
   ,[rend]) 
+  const handelGoToNotifications = (row) =>{
+    if(row.from == "headOfDep"){
+      
+      history.push({
+        pathname:'./TeacherTable',
+        state:{DepId:DepId,DepName:DepName,InstName:name}
+      })
+    }
+    else{
+      console.log(row)
+      const arr = row.time
+      const arr1  = arr.split(',')
+      console.log(arr1)
+      history.push({
+        pathname:'./UserNotifyTime',
+        state:{DepId:DepId,DepName:DepName,InstName:name ,sem:arr1[1],date:arr1[0]}
+      })
+    }
+    
+    
+  }
   const handelDone = (row) => {
     let x1 = "https://core-graduation.herokuapp.com/editNotification?instName="
     let x2  = row.instName
@@ -151,6 +173,7 @@ console.log("name")
                  margin:2
             
                 }}>
+                
                     {row.note}
                     {row.flag === "true"?
                 <Button onClick={() => handelDone(row)}><CheckIcon/></Button>
@@ -158,7 +181,10 @@ console.log("name")
                     <div></div>
                     }
                 </div>
+                <Button onClick={() => handelGoToNotifications(row)}>
+                  
                 <img src={Img} width='70px' height='70px' alt="" borderRadius="30px"></img>
+                  </Button>
              </div>
 
      ))}  

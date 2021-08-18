@@ -395,7 +395,7 @@ export default function PersistentDrawerRight(Props) {
         backgroundColor:'white',
         zIndex: '+2',border: '3px solid rgba(0, 0, 0, 0.09)',
         }}>
-        <ViewNotify DepId={DepId} name={InstName}/>
+        <ViewNotify DepId={DepId} name={InstName} DepName={DepName}/>
         
       </div>}
     </div>

@@ -365,9 +365,14 @@ export default function CSSGrid(Props) {
     const x5 = " , "
     const x6 = "يرجى البدء بانشاء الجدول الدراسي"
     const note = x1+x2+x3+x4+x5+x6
+    let sem1 = 2
+    if(value === "s2"){
+      sem1 = 1
+    }
+    const time1 = date1+","+sem1
   
     axios.get("https://core-graduation.herokuapp.com/addNotification?idDep=0&note="+note+
-    "&flag=2&time=0&hour=0")
+    "&flag=2&time="+time1+"&hour=0")
     .then(res => {console.log(res)
       Resolve() },)
     })
@@ -428,9 +433,14 @@ export default function CSSGrid(Props) {
     const x5 = " , "
     const x6 = "يرجى اضافة مواعيد الدوام الخاصة بك"
     const note = x1+x2+x3+x4+x5+x6
+    let sem1 = 2
+    if(value === "s2"){
+      sem1 = 1
+    }
+    const time1 = date1+","+sem1
   
     axios.get("https://core-graduation.herokuapp.com/addNotification?idDep=0&note="+note+
-    "&flag=3&time=0&hour=0")
+    "&flag=3&time="+time1+"&hour=0")
     .then(res => {console.log(res)
       Resolve() },)
     })

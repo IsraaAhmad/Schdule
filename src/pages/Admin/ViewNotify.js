@@ -84,7 +84,7 @@ const Emplist=[
 ]
 export default function App(Props) {
     const {DepId , name} = Props;
-
+    const  history  = useHistory();
   const classes = useStyles();
   const [flag,setFlag] = React.useState(false);
   const [data,setData] = React.useState();
@@ -108,7 +108,7 @@ export default function App(Props) {
       let w = res.data.response
       let x = 0
       for(let k = (w.length)-1  ;k>=0;k--){
-        let teach = {flag:w[k].flag,from:w[k].from,instName:w[k].instName,note:w[k].note}
+        let teach = {flag:w[k].flag,from:w[k].from,instName:w[k].instName,note:w[k].note,time:w[k].time}
         listt[x] = teach
         x = x+1
        }
@@ -119,6 +119,16 @@ export default function App(Props) {
         
           }
   ,[rend]) 
+  const handelGoToNotifications = (row) =>{
+    
+    const arr = row.time
+    const arr1  = arr.split(',')
+    console.log(arr1)
+    history.push({
+      pathname:'./AdminNotifyTime',
+      state:{DepId:DepId,name:name ,sem:arr1[1],date:arr1[0]}
+    })
+  }
   const handelDone = (row) => {
     let x1 = "https://core-graduation.herokuapp.com/editNotification?instName="
     let x2  = row.instName
@@ -149,14 +159,21 @@ export default function App(Props) {
                  margin:2
             
                 }}>
+                  <div onClick={() => handelGoToNotifications(row)}>
+
                     {row.note}
+                  </div>
+
                     {row.flag === "true"?
                 <Button onClick={() => handelDone(row)}><CheckIcon/></Button>
                     :
                     <div></div>
                     }
                 </div>
+                <Button onClick={() => handelGoToNotifications(row)}>
+                  
                 <img src={Img} width='70px' height='70px' alt="" borderRadius="30px"></img>
+                  </Button>
              </div>
 
      ))}  
