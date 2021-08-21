@@ -27,7 +27,7 @@ import TableCreate1 from "./pages/Administrator/Schdules/TableCreate.js"
 import AddCourseFromOtherDep from "./pages/Admin/Course/AddCourseFromOther.js"
 import AddCourseFromOtherDep1 from "./pages/Administrator/Course/AddCourseFromOther.js"
 import CreateSemester from "./pages/Administrator/Time/CreateTable.js"
-
+import Calender from "./pages/Users/Calender/Calender.js"
 import Dep from './pages/Administrator/Home/Dep.js'
 import AdministratorRooms from './pages/Administrator/Rooms/Rooms.js'
 import AdministratorTeachers from './pages/Administrator/Teachers/Teacher.js'
@@ -89,8 +89,8 @@ export default function App() {
         <Route exact path="/MyTime" render={props => <MyTime {...props} />} />
         <Route exact path="/AddCourse" render={props => <AddCourse {...props} />} /> 
         <Route exact path="/create1" render={props => <Create1 {...props} />} /> 
-        
         <Route exact path="/Dep" render={props => <Dep {...props} />} /> 
+        <Route exact path="/Calender" render={props => <Calender {...props} />} /> 
         <Route exact path="/AdministratorRooms" render={props => <AdministratorRooms {...props} />} /> 
         <Route exact path="/AdministratorTeachers" render={props => <AdministratorTeachers {...props} />} /> 
         <Route exact path="/TeacherTable" render={props => <TeacherTable {...props} />} /> 

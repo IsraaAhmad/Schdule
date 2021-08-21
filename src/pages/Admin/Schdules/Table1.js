@@ -50,7 +50,6 @@ const useStyles = makeStyles({
 function TableR(props) {
   const {name , DepId , year , sem ,namme} = props;
   const [inst,setInst] = React.useState({})
-  const [course,setCourse] = React.useState({})
   const [data, setData] = useState()
   const [newData, setNewData] = useState(false)
   const [totalDataRoom, setTotalDataRoom] = useState()
@@ -61,7 +60,6 @@ function TableR(props) {
   const mapIns=[]
   const mapRoom=[]
   const mapDays=[]
-  const mapCourse =[]
   const  history  = useHistory();
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
@@ -86,26 +84,7 @@ function TableR(props) {
     
   };
 
-  const course1 =() =>{
-    return new Promise((Resolve,Reject)=>{
-
-      axios.get("https://core-graduation.herokuapp.com/getAllMaterialsOfDepartment?idDep="+DepId)
-  
-     
-      .then(res => {
-          let w = res.data.response;
-          let x = 0
-
-          w.map(row => (
-            mapCourse[x++] = {name:row.name}
-               ))
-
-          Resolve()
-         },
-          )
-          
-    })
-  }
+ 
 
  const findInedx1 =(obj,da) =>{
    for(let i = 0;i<obj.length;i++){
@@ -200,9 +179,6 @@ const room1 =() =>{
 
 
     for (let i = 0;i<listdd.length;i++){
-      let  index3 = findInedx1(mapCourse,listdd[i].course)
-      listdd[i].course = index3
-
       let index1= findInedx1(mapRoom,listdd[i].room)
       listdd[i].room = index1
       let index = findInedx1(mapIns,listdd[i].teacher)
@@ -223,7 +199,7 @@ const room1 =() =>{
 
   const FilledData = async() =>{
     
-    await course1()
+    // await course1()
     await inst1()
     await room1()
     await day1()
@@ -232,27 +208,22 @@ const room1 =() =>{
     let list1 ={}
     let list2 ={}
     let list3 ={}
-    let list4 ={}
   
 
     let x = 0
     let y = 0
     let z = 0 
-    let q = 0
     
     
     mapRoom.map(row =>list1[x++] = row.name)
     mapIns.map(row =>list2[y++] = row.name)
     mapDays.map(row =>list3[z++] = row.name)
-    mapCourse.map(row =>list4[q++] = row.name)
-
 
     
          
           setInst(list2)
           setRooms(list1)
           setDays(list3)
-          setCourse(list4)
 
          
 
@@ -424,13 +395,26 @@ const classes = useStyles();
     />
     
    
- , cellStyle: {fontSize:'20px',},
+ ,
+   
+  
+    
+ 
+      cellStyle: {
+        //  fontFamily: 'Markazi Text',
+         fontSize:'20px',
+              },
               
     },
     { title:<div className={classes.colHeader}> ايام الدوام</div>,
     field: "day" ,
     lookup:days,
-    cellStyle: {fontSize:'20px',},
+   
+ 
+      cellStyle: {
+        //  fontFamily: 'Markazi Text',
+         fontSize:'20px',
+              },
               
     },
    
@@ -439,16 +423,18 @@ const classes = useStyles();
     { title:<div className={classes.colHeader}>اسم المساق </div>,
     field: "course" ,
     editable: 'onAdd',
-    lookup: course,
+   
  
-      cellStyle: {fontSize:'20px',},
+      cellStyle: {
+        //  fontFamily: 'Markazi Text',
+         fontSize:'20px',
+              },
               
     },
     { title:<div className={classes.colHeader}> رقم المساق</div>,
     field: "number" ,
     editable: 'onAdd',
-    
-    
+   
     cellStyle: {fontSize:'20px',},
               
     },
@@ -495,7 +481,6 @@ const note = "الجدول الدراسي الخاص بدك لهذا الفصل 
     let room1 = rooms[updateRow.room]
     let inst1 = inst[updateRow.teacher]
     let days1 = days[updateRow.day]
-    let co1 =course[updateRow.course]
     let num
     let nam
     {totalDataRoom.filter(course => (course.name === room1) || (course.number === room1)).map(cor => (
