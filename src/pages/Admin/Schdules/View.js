@@ -15,7 +15,7 @@ const useStyles = makeStyles({
         marginLeft:12
       },
       mar:{
-        width:1100,
+        width:1200,
         
       }
 });

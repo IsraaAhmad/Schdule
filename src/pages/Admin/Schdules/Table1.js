@@ -4,6 +4,16 @@ import MaterialTable from 'material-table';
 import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Dialog from "@material-ui/core/Dialog";
+import MenuItem from '@material-ui/core/MenuItem';
+import EventIcon from '@material-ui/icons/Event';
+import Menu from "@material-ui/core/Menu";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import IconButton from "@material-ui/core/IconButton";
+import ListItemText from "@material-ui/core/ListItemText";
+import DraftsIcon from "@material-ui/icons/Drafts";
+import PublishIcon from "@material-ui/icons/Publish";
+import GoogleCalender from './googleCalendar.png'
+
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -12,11 +22,43 @@ import TextField from '@material-ui/core/TextField';
 import BeatLoader from "react-spinners/BeatLoader";
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import  { useEffect } from 'react';
+import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios';
 import { useHistory ,useLocation } from 'react-router-dom';
 import TimerIcon from '@material-ui/icons/Timer';
 import { makeStyles } from "@material-ui/core/styles";
 import './b1.css'
+const StyledMenu = withStyles({
+  paper: {
+    border: "1px solid #d3d4d5"
+  }
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center"
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "center"
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    "&:focus": {
+      backgroundColor:'#045F5F',
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white
+      }
+    }
+  }
+}))(MenuItem);
+
 
 
 const useStyles = makeStyles({
@@ -67,7 +109,232 @@ function TableR(props) {
   const [dia2,setDia2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const [dia3,setDia3] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [startSemester, setStartSemester] = useState()
+  const [endSemester, setEndSemester] = useState()
   
+  var gapi = window.gapi
+  var CLIENT_ID = "682089646966-5fb6kgose720gc8f3l7uu1k6am50kudf.apps.googleusercontent.com"
+  var API_KEY = "AIzaSyAlrDnNRWEnRMDKhP6Jk7YjY1p7nQ2AACQ"
+  var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+  var SCOPES = "https://www.googleapis.com/auth/calendar";
+  let arabicDays = ["سبت","احد","اثنين","ثلاثاء","اربعاء","خميس","جمعة"]
+ 
+  
+
+  const addTimeToDate =(time,date)=>{
+    const d =""+date
+    const d1 = d.split(" ")
+    d1[4] = time+":00"
+
+    const val = d1[0]+" "+d1[1]+" "+d1[2]+" "+d1[3]+" "+d1[4]+" "+d1[5]+" "+d1[6]
+    return val
+    
+
+  }
+  const getStartAndEndSemester =(tab) => {
+    return new Promise((Resolve,Reject)=>{
+    axios.get("https://core-graduation.herokuapp.com/getTimesOfTable?idDep="+DepId+"&tableName="+tab)
+    .then(res => {
+              let w = res.data.response[0].startandend;
+              const qa = w.split("/")
+            
+              setStartSemester(qa[0])
+              setEndSemester(qa[1])
+             
+              
+            
+              Resolve() 
+})
+
+})
+  }
+  
+
+  const handelDateToExport = async() =>{
+    // await getStartAndEndSemester()
+   
+    let totEvent = []
+    let indexEvent = 0
+ 
+    
+    const allDay = ["Sat","Sun","Mon","Tue","Wed","Thu","Fri"]
+    let opDay = ["","","","","","",""]
+    
+    let index = -1
+    const ss = startSemester.split(" ")
+    for (let i =0 ;i<7;i++){if(ss[0] == allDay[i]) index=i}
+
+    let count = 0
+    var day = new Date(startSemester);
+    console.log(startSemester)
+    console.log(day)
+
+    for(let j = index ; j<index+7 ;j++){
+      
+      var nextDay = new Date(day);
+      nextDay.setDate(day.getDate() + count++);
+      opDay[j%7] = nextDay
+      
+
+    }
+   
+     
+    for(let k = 0 ; k<data.length;k++){
+      if (data[k].teacher == -1) continue
+      const days1 = data[k].day
+      let n = days[days1]
+      console.log(n)
+      console.log(data)
+      console.log(k)
+      const arrN = n.split(",")
+      for(let c =0;c<arrN.length;c++){
+        for(let o = 0;o<7;o++){
+          if(arabicDays[o] == arrN[c]){
+          
+            let startTime = addTimeToDate(data[k].FromTime,opDay[o])
+            var dt1 = new Date(startTime);
+           
+            let w1 =dt1.toISOString();
+            let endTime = addTimeToDate(data[k].ToTime,opDay[o])
+            var dt2 = new Date(endTime);
+
+            let w2 =dt2.toISOString();
+            let tit = data[k].course
+            let tea = data[k].teacher
+            let inst1 = inst[tea]
+            let z1 =  new Date(startSemester);
+            let z2 =  new Date(endSemester);
+            var time_difference = z2.getTime() - z1.getTime();  
+            var days_difference = time_difference / (1000 * 60 * 60 * 24);  
+            const zza = endSemester.split(" ")
+            let remender = days_difference % 7
+            let indexEnd =-1
+            const ss1 = endSemester.split(" ")
+            for (let ii =0 ;ii<7;ii++){if(ss1[0] == allDay[ii]) indexEnd=ii}
+           
+
+
+
+
+
+            let dd1 = days_difference/7
+            if(index < indexEnd ){
+              if(o >=index && o<=indexEnd) {
+                dd1 = (days_difference/7 )+1
+              }
+            }
+            if(index > indexEnd){
+              if(o<=indexEnd || o>=index ){
+                dd1 = (days_difference/7 )+1
+              }
+            }
+            console.log(" start index=" +index)
+            console.log("my index=" +o)
+            console.log("end index="+ indexEnd)
+            console.log("count="+ dd1)
+            console.log("*************************************")
+
+          //   if((index < o) && ( o < indexEnd)){
+          //  dd1 = (days_difference/7 )+1
+          //   } 
+          //   else dd1 = days_difference/7
+
+            
+            totEvent[indexEvent++] = {w1:w1,w2:w2,tit:tit,count:parseInt(dd1),teacher:inst1}
+
+            // await handelExportToGoogleCalender(w1,w2,tit)
+            
+          
+
+          }
+        }
+      }
+      console.log(totEvent)
+      handelExportToGoogleCalender(totEvent)
+    }
+    
+  }
+
+ 
+
+  const handelExportToGoogleCalender =(totEvent) =>{
+    
+    gapi.load('client:auth2', () => {
+      console.log('loaded client')
+
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES,
+      })
+
+      gapi.client.load('calendar', 'v3', () => console.log('bam!'))
+
+      gapi.auth2.getAuthInstance().signIn()
+      .then(() => {
+        var batch = gapi.client.newBatch();
+      
+        for(let b =0 ; b<totEvent.length;b++){
+            let rr = totEvent[b]
+            var event = {
+         
+              'summary': rr.tit +"/"+rr.teacher,
+              'location': 'Al-Najah National University ',
+              'description': '',
+              "event": {
+                'nested' : {
+                  "background": 'red',
+                  "foreground": 'black'
+                }
+              },
+              'start': {
+                'dateTime': rr.w1,
+                'timeZone': 'Israel'
+              },
+              'end': {
+                'dateTime': rr.w2,
+                'timeZone': 'Israel'
+              },
+              'recurrence': [
+                'RRULE:FREQ=WEEKLY;COUNT='+rr.count
+              ],
+              'reminders': {
+                'useDefault': false,
+                
+              }
+            };
+            
+            
+            
+           
+            batch.add(gapi.client.calendar.events.insert({
+              'calendarId': 'primary',
+              'resource': event
+          }));
+        }
+        batch.execute(event => {
+         
+          window.open("https://www.google.com/calendar/event")
+        })
+       })
+    })
+  
+
+  }
+  const openCalender =() =>{
+    window.open("https://www.google.com/calendar/event")  
+  }
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+ 
 
   
   const handleClose1 = () => {
@@ -192,6 +459,7 @@ const room1 =() =>{
   
   
     setData(listdd)
+    getStartAndEndSemester(w[0].tableName)
     setLoading(false)
   })
  
@@ -304,7 +572,7 @@ const classes = useStyles();
   const columns = [
     { title:<div className={classes.colHeader}>السنة الدراسية </div>,
     field: "year" ,
-    
+    editable: 'never',
     cellStyle: {fontSize:'20px'},
               
     },
@@ -514,7 +782,30 @@ const note = "الجدول الدراسي الخاص بدك لهذا الفصل 
        </div>
     
     :
-    <div>
+    <div><div >
+       
+    <StyledMenu
+      dir="rtl"
+      id="customized-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+    >
+      <StyledMenuItem   onClick={handelDateToExport}>
+        <ListItemIcon >
+          <PublishIcon fontSize="small"  />
+        </ListItemIcon>
+        <ListItemText  primary=" تصدير الجدول الى Google Calender" />
+      </StyledMenuItem>
+      <StyledMenuItem onClick={openCalender}>
+        <ListItemIcon>
+          <EventIcon fontSize="small" />
+        </ListItemIcon>
+        <ListItemText primary="الانتقال الى Google Calender" />
+      </StyledMenuItem>
+    </StyledMenu>
+    </div>
      <Button variant="contained" onClick={HandelOK}  style={{margin:10,backgroundColor:'#045F5F', color:'white',fontFamily:'Markazi Text',fontSize:'20px'}} size='medium'>
              اعتماد الجدول 
       </Button>
@@ -528,6 +819,32 @@ const note = "الجدول الدراسي الخاص بدك لهذا الفصل 
         data={data}
        
         columns={columns}
+        actions={[
+          {
+            icon: () => 
+            <div>
+          
+            <div >
+       
+    <label htmlFor="icon-button-file">
+      <IconButton
+        color="primary"
+        aria-label="upload picture"
+        component="span"
+        onClick={handleClick}
+        
+        >
+       <img src={GoogleCalender} alt="" width="35" height="35" />
+      </IconButton>
+    </label>
+        </div>
+         
+        </div>,
+         tooltip: "Google Calender ",
+         isFreeAction: true,
+         
+        }
+      ]}
         options={{
           searchFieldStyle:{
             fontFamily: 'Markazi Text',

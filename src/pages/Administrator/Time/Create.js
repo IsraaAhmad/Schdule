@@ -216,12 +216,12 @@ export default function CSSGrid(Props) {
   },
   })
   
-  const [selectedDate1, setSelectedDate1] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate1, setSelectedDate1] = React.useState(new Date('2021-08-18T21:11:54'));
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
   };
-  const [selectedDate2, setSelectedDate2] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate2, setSelectedDate2] = React.useState(new Date('2021-08-18T21:11:54'));
 
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
@@ -280,11 +280,21 @@ export default function CSSGrid(Props) {
     if (value === "s2"){
       value1 = "1"
     }
+    const data11 = ""+selectedDate1
+    const data2 = ""+selectedDate2
+    const st1 = data11.split(' ')
+    st1[4] = '06:00:00'
+    let start1 = st1[0]+" "+st1[1]+" "+st1[2]+" "+st1[3]+" "+st1[4]+" "+st1[5]
+    const en1 = data2.split(' ')
+    en1[4] = '06:00:00'
+    let end1 = en1[0]+" "+en1[1]+" "+en1[2]+" "+en1[3]+" "+en1[4]+" "+en1[5]
+    let TotalDate = start1 +"/"+end1
     console.log("date:  "+ date1)
     console.log("sem:   "+ value1)
-    console.log("start : " + selectedDate1)
-    console.log("end : " + selectedDate2)
-    let TotalDate = selectedDate1 +"/"+selectedDate2
+    console.log("start : " + start1)
+    console.log("end : " + end1)
+    console.log("TotalDate : " + TotalDate)
+
     let d0 ="08:00/17:00,1"
               let d1 ="08:00/17:00,1"
               let d2 ="08:00/17:00,1"
