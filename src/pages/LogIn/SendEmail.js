@@ -15,6 +15,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
 import { css } from "@emotion/react";
 import {
   BrowserRouter as Router,
@@ -23,12 +24,14 @@ import {
 } from "react-router-dom";
 import { Done } from "@material-ui/icons";
 
+
 // Can be a string as well. Need to ensure each key-value pair ends with ;
 const override = css`
   display: block;
   margin: 0 auto;
   border-color: red;
 `;
+
 
 
 const useStyles = makeStyles({
@@ -104,7 +107,7 @@ const useStyles = makeStyles({
 });
 
 export default function App(Props) {
-  const {setEmail} = Props
+  const {setEmail , email} = Props
   const classes = useStyles();
   const  history  = useHistory();
   const [flag,SetFlag] =React.useState(false);
@@ -116,11 +119,51 @@ export default function App(Props) {
 
   const [diaOK,setDiaOK] = React.useState(false);
   const [diaNO,setDiaNO] = React.useState(false);
+  const [diaNOCode,setDiaNOCode] = React.useState(false);
+
+  const [diaCode,setDiaCode] = React.useState(false);
 
   const [openOK, setOpenOK] = React.useState(false);
   const [openNO, setOpenNO] = React.useState(false);
+  const [openNOCode, setOpenNOCode] = React.useState(false);
 
-  
+
+   const [openCode, setOpenCode] = React.useState(false);
+  const [openCodeCancel, setOpenCodeCancel] = React.useState(false);
+
+
+
+  const handleCode = () =>{
+    console.log("ok")
+    let x  = document.getElementById('code').value
+    console.log(x)
+    console.log(userEmail)
+    let url = "http://core-graduation.herokuapp.com/sendEmailWithPassword?email="+userEmail+"&code="+x
+    axios.get(url)
+    .then(res => {
+      console.log(res)
+      if(res.data.response[0].state == "Failed"){
+        console.log("no")
+        FaildSendCode()
+        
+      }
+      else{
+        console.log("yes")
+        DoneSend()
+      }
+  })
+}
+  const handleCodeCancel = () =>{
+    console.log("cancel")
+    setDiaCode(false)
+  setOpenCode(false)
+  }
+
+  const handelOpenCode = () => {
+    // openCode(true);
+ 
+    
+  };
 
   
   const handleOK = () => {
@@ -131,6 +174,9 @@ export default function App(Props) {
 
   const handleNO = () => {
     setOpenNO(false);
+  };
+  const handleNOCode = () => {
+    setOpenNOCode(false);
   };
 
  const handelBack = () =>{
@@ -144,6 +190,13 @@ export default function App(Props) {
  const FaildSend = () =>{
     setOpenNO(true);
     setDiaNO(true)
+    setDiaCode(false)
+  setOpenCode(false)
+}
+
+const FaildSendCode = () =>{
+  setOpenNOCode(true);
+  setDiaNOCode(true)
 }
 const handelSend = () =>{
  
@@ -156,7 +209,8 @@ const handelSend = () =>{
           let w1 = res.data.response[0].state
           setLoading(false)
           if(w1 ==="Done"){
-              DoneSend()
+             EnterCode()
+              // DoneSend()
           }
           else{
               FaildSend()
@@ -171,6 +225,11 @@ const handelSend = () =>{
  
             
 }
+const EnterCode = () => {
+  setDiaCode(true)
+  setOpenCode(true)
+}
+
 
  
 const handelOnChangeNumber = (event)=>{
@@ -217,9 +276,10 @@ const handelOnChangeNumber = (event)=>{
               <div style = {{textAlign: 'right',
           fontFamily:'Markazi Text',
           fontSize:'20px', marginLeft:4,color:'white'}}>
-                 ارسال كلمة المرور 
+                 ارسال الكود الى البريد الالكتروني 
               </div>
       </Button>
+      
 
              <Button> 
              <div  onClick={handelBack} className={classes.forget}>رجوع</div>
@@ -284,6 +344,69 @@ const handelOnChangeNumber = (event)=>{
             </DialogActions>
           </Dialog>
             </div>}
+
+
+            {setDiaCode&&<div>
+              
+      <Dialog  dir="rtl" open={openCode} onClose={handelOpenCode} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">ارسال كود الى البريد الاكتروني</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            تم ارسال كود الى البريد الالكتروني الخاص بك , ادخلة في الفراغ
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="code"
+            label=""
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCode} color="primary">
+          <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+          </Button>
+          <Button onClick={handleCodeCancel} color="primary">
+          <CancelIcon style={{color:'red' }} fontSize='large'/>
+          </Button>
+        </DialogActions>
+      </Dialog>
+            </div>}
+
+
+
+            {setDiaNOCode&&<div>
+            <Dialog
+            open={openNOCode}
+            onClose={handleNOCode}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            dir='rtl'
+          >
+            <DialogTitle id="alert-dialog-title" >
+              <div style={{ fontFamily: 'Markazi Text',fontSize:'35px',borderRadius:'5px'}}>
+             
+              </div>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <div  style={{ fontFamily: 'Markazi Text',fontSize:'30px',}}>
+                 الكود الذي ادخلته غير صحيح
+                </div>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleNOCode} color="primary" autoFocus style={{ fontFamily: 'Markazi Text',fontSize:'35px',color:'#045F5F'}}>
+               <CancelIcon style={{color:'red' }} fontSize='large'/>
+              </Button>
+              
+            </DialogActions>
+          </Dialog>
+            </div>}
+
+
+
+            
 
     
        
