@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     display:'flex',
     flexDirection:'row',
     width:1100,
-    justifyContent:'space-between'
+    justifyContent:'space-around'
   }
   
 });
@@ -31,9 +31,8 @@ export default function App() {
    <div  style={{height:1000}}className="back">
       <DrawerUser DepName={state.DepName} DepId ={state.DepId} InstName = {state.InstName}/>
        <div className={classes.tot}>
-         <Comp UrlImage={course} name="مساقاتي" pathTo="/Rooms"
-               DepName={state.DepName} DepId ={state.DepId} InstName = {state.InstName}/>
-         <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/Schdule"
+       
+         <Comp UrlImage={schdule} name="الجدول الدراسي" pathTo="/TeacherTable"
                DepName={state.DepName} DepId ={state.DepId} InstName = {state.InstName}/>
          <Comp UrlImage={time} name="اوقات دوامي" pathTo="/MyTime"
                DepName={state.DepName} DepId ={state.DepId} InstName = {state.InstName}/>

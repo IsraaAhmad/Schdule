@@ -124,7 +124,7 @@ export default function ScrollableTabsButtonPrevent(props) {
 
   const handelSaveAndCreate =()=>{
     
-    let url ="http://192.168.1.7:3000/runCore?idDep="+DepId+"&tableName="+state.name+
+    let url ="http://192.168.1.200:3000/runCore?idDep="+DepId+"&tableName="+state.name+
     "&date="+year+"&semester="+state.sem+"&softFlag=true"
     console.log(url)
     setOpen(true);
@@ -134,7 +134,7 @@ export default function ScrollableTabsButtonPrevent(props) {
 
   const handelSaveAndCreate1 =()=>{
     
-    let url ="http://192.168.1.7:3000/runCore?idDep="+DepId+"&tableName="+state.name+
+    let url ="http://192.168.1.200:3000/runCore?idDep="+DepId+"&tableName="+state.name+
     "&date="+year+"&semester="+state.sem+"&softFlag=false"
     console.log(url)
     setOpen(true);

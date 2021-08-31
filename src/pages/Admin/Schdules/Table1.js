@@ -549,7 +549,7 @@ const room1 =() =>{
  },[newData]) 
   
  const handelIcon =(row) =>{
-  if (row.flagConflict === false)
+  if (row.flagConflict == false || row.flagConflict =="false")
      return <div style={{display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
       
       <CheckCircleIcon style={{color:'#045F5F ',fontSize:'35px',}}/>

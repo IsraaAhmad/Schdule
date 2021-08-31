@@ -276,7 +276,7 @@ const handelOnChangeNumber = (event)=>{
               <div style = {{textAlign: 'right',
           fontFamily:'Markazi Text',
           fontSize:'20px', marginLeft:4,color:'white'}}>
-                 ارسال الكود الى البريد الالكتروني 
+                 ارسال  
               </div>
       </Button>
       
@@ -349,7 +349,9 @@ const handelOnChangeNumber = (event)=>{
             {setDiaCode&&<div>
               
       <Dialog  dir="rtl" open={openCode} onClose={handelOpenCode} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">ارسال كود الى البريد الاكتروني</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          <div style ={{ fontFamily: 'Markazi Text',fontSize:'25px'}}>ارسال كود الى البريد الاكتروني
+            </div></DialogTitle>
         <DialogContent>
           <DialogContentText>
             تم ارسال كود الى البريد الالكتروني الخاص بك , ادخلة في الفراغ
@@ -364,10 +366,12 @@ const handelOnChangeNumber = (event)=>{
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCode} color="primary">
-          <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/>
+          {/* <CheckCircleIcon style={{color:'#045F5F' }} fontSize='large'/> */}
+         <div style ={{ fontFamily: 'Markazi Text',fontSize:'30px',color:'#045F5F'}}>تم</div> 
           </Button>
           <Button onClick={handleCodeCancel} color="primary">
-          <CancelIcon style={{color:'red' }} fontSize='large'/>
+          {/* <CancelIcon style={{color:'red' }} fontSize='large'/> */}
+          <div style ={{ fontFamily: 'Markazi Text',fontSize:'20px',color:'#045F5F'}}>الغاء</div>
           </Button>
         </DialogActions>
       </Dialog>

@@ -241,7 +241,7 @@ const handelOnChangePassword = (event) =>{
                  تسجيل الدخول
               </div>
       </Button>
-      {flag&&<label  style={{ color: 'red',fontWeight: 'bold'}}>**اسم المستخ\م او كلمة المرور غير صحيحة **</label>}
+      {flag&&<label  style={{ color: 'red',fontWeight: 'bold'}}>**اسم المستخدم او كلمة المرور غير صحيحة **</label>}
              <Button> 
              <div  onClick={handelEmail} className={classes.forget}>?هل نسيت كلمة المرور</div>
              </Button>

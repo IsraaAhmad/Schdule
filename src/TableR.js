@@ -113,7 +113,6 @@ function TableR() {
           search:false,
           paging:false,
           exportButton: false,
-          exportDelimiter:"doc",
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{

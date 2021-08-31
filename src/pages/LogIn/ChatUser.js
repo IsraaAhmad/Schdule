@@ -227,9 +227,9 @@ setTexting(event.target.value)
   
   <div  className={classes.msgs}>
 
-                    <div className={item.senderId == doctorID ? classes.e1 : classes.e2}>
-                      {item.senderId !==headID&& <img className={classes.im} src={URLImg} alt="" />}
-                        <div  className={item.senderId == doctorID ? classes.sent : classes.received}>
+                    <div className={item.senderId !== doctorID ? classes.e1 : classes.e2}>
+                      {item.senderId ===headID&& <img className={classes.im} src={URLImg} alt="" />}
+                        <div  className={item.senderId !== doctorID ? classes.sent : classes.received}>
                             
                             <p className={classes.pa}>{item.content}</p>
                         </div>

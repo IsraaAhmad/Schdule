@@ -504,7 +504,7 @@ function TableR(Props) {
             csv: true,
             pdf: false
           },
-          exportDelimiter:"doc",
+        
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
@@ -532,7 +532,7 @@ function TableR(Props) {
           deleteTooltip:"حذف",
           editTooltip:"تعديل",
           addTooltip:"اضافة ماده جديدة",
-          exportName:"csv حفظ",
+         
           editRow:{
             deleteText:"هل انت متأكد من حذف هذه الماده",
             cancelTooltip:"إلغاء",
@@ -546,6 +546,8 @@ function TableR(Props) {
         exportTitle:'تصدير',
         exportCSVName: " Excelتصدير ملف ",
         exportPDFName:  " PDF ملف ",
+      
+     
       }
       }}
         

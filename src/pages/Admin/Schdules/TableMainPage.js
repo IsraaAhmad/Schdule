@@ -297,7 +297,6 @@ const [loading, setLoading] = React.useState(false);
           search:false,
           paging:false,
           exportButton: false,
-          exportDelimiter:"doc",
           actionsColumnIndex:0,
           addRowPosition:'first',
           

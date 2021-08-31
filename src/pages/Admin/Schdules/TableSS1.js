@@ -595,7 +595,6 @@ const classes = useStyles();
             csv: true,
             pdf: false
           },
-          exportDelimiter:"doc",
           actionsColumnIndex:0,
           addRowPosition:'first',
           headerStyle:{
